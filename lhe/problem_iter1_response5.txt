@@ -1,0 +1,38 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Initialize the heuristic matrix with zeros
+    heuristic_matrix = torch.zeros_like(distance_matrix)
+
+    # Vehicle capacity is assumed to be 1 since demands are normalized by total vehicle capacity
+    vehicle_capacity = 1
+
+    # Calculate the Euclidean distance cost adjusted by the demand
+    # The assumption here is that the cost is inversely proportional to the demand
+    # which means higher demand nodes have a higher priority to be visited
+    demand_weighted_distance = distance_matrix / (demands[:, None] + 1e-6)  # adding a small constant to avoid division by zero
+
+    # Compute the heuristic: edges with lower cost and higher demand are more promising
+    # Negative values for undesirable edges (high cost/low demand)
+    # Positive values for promising ones (low cost/high demand)
+    heuristic_matrix = demand_weighted_distance
+
+    # Adjust the heuristic matrix by subtracting the maximum value for normalization and to avoid inf values
+    heuristic_matrix -= heuristic_matrix.max()
+
+    # Set the diagonal to a very negative value because a node cannot be connected to itself
+    torch.diagonal(heuristic_matrix, 0) = -float('inf')
+
+    # Adjust heuristic values for edges that exceed vehicle capacity
+    # Calculate the cumulative demands from the depot to each node
+    cumulative_demands = torch.cumsum(demands[1:], dim=0) + demands[0]
+
+    # Find the indices where cumulative demand exceeds the vehicle capacity
+    over_capacity_indices = (cumulative_demands > vehicle_capacity).nonzero(as_tuple=True)[0] + 1
+
+    # Set heuristic values for these edges to a very negative value
+    heuristic_matrix[over_capacity_indices[:, None], over_capacity_indices] = -float('inf')
+
+    return heuristic_matrix
+```

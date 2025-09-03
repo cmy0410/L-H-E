@@ -1,0 +1,34 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """Improved heuristics for the Capacitated Vehicle Routing Problem (CVRP) with edge considerations."""
+    num_customers = distance_matrix.size(0)
+    
+    # Capacity constraints based on demands
+    total_capacity = torch.sum(demands[1:])  # ignoring the depot at index 0
+    normalized_demands = demands[1:] / total_capacity  # Normalize the demands excluding the depot
+    
+    # Calculate the promising potential of each edge.
+    # An edge is promising if it connects low-demand nodes at relatively short distances.
+    heuristic_values = -torch.ones_like(distance_matrix) * float('inf')  # initiate with -inf
+    for i in range(num_customers):
+        for j in range(num_customers):
+            if i != j:
+                # Edge from i to j is considered if demands unmet by capacity can be satisfied
+                if demands[j] + demands[i] <= total_capacity:
+                    contribution = (distance_matrix[i, j] ** -1) * (1 - (normalized_demands[j] ** 2))
+                    heuristic_values[i, j] = contribution
+
+    # Upper-bound impactful contributions include penalty for high distances
+    heuristic_values[distance_matrix == 0] = -float('inf')  # Enable zero distances only for i==j
+    heuristic_values[distance_matrix > 1000] = -float('inf')  # cap for exceedingly high distances
+    
+    # Normalize heuristic to avoid NaNs/INFs
+    heuristic_values = torch.nan_to_num(heuristic_values, nan=0.0, posinf=0.0, neginf=-1000.0)  
+
+    # Optionally could introduce heuristic tweaking, like thresholds.
+    heuristic_values = torch.clip(heuristic_values, min=-1000.0, max=None)
+
+    return heuristic_values
+```

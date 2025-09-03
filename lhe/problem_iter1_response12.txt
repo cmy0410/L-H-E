@@ -1,0 +1,23 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Vehicle capacity is assumed to be 1 for normalized demands
+    vehicle_capacity = 1.0
+    
+    # Number of nodes
+    n = distance_matrix.shape[0]
+
+    # Calculate the edge weight reductions based on distances and demand penalties
+    edge_weights = torch.zeros_like(distance_matrix)
+
+    for i in range(n):
+        for j in range(n):
+            if i != j:
+                if demands[j] <= vehicle_capacity:  # If the demand for node j is within the capacity
+                    edge_weights[i, j] = max(0, vehicle_capacity - demands[j]) / distance_matrix[i, j]  # Favor shorter distances
+                else:
+                    edge_weights[i, j] = -1  # Penalize edges for unreachable nodes based on vehicle capacity
+
+    return edge_weights
+```

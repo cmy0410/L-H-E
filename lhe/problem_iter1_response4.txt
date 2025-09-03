@@ -1,0 +1,36 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Initialize the heuristics matrix with zeros
+    heuristics_matrix = torch.zeros_like(distance_matrix)
+
+    # Vehicle capacity is assumed to be the maximum demand
+    vehicle_capacity = torch.max(demands)
+
+    # Compute the demand difference matrix
+    demand_diff_matrix = torch.outer(demands, demands) - demands[:, None]
+
+    # Calculate the distance-weighted demand difference, avoiding division by zero
+    with torch.no_grad():
+        # Add a small epsilon to the denominator to avoid division by zero
+        epsilon = 1e-10
+        # Compute the heuristic values
+        heuristics_matrix = (demand_diff_matrix / (distance_matrix + epsilon)).clamp(min=0)
+
+    # Adjust the heuristic values to ensure no nan or inf values
+    heuristics_matrix[distance_matrix == torch.inf] = -float('inf')
+    heuristics_matrix[torch.isnan(heuristics_matrix)] = -float('inf')
+
+    # Set the diagonal to negative infinity to discourage visiting the same node
+    torch.fill_diagonal(heuristics_matrix, -float('inf'))
+
+    # Scale the heuristic values by the vehicle capacity
+    heuristics_matrix *= vehicle_capacity
+
+    # Ensure that the depot (index 0) has a demand of 0 to avoid self-loop issues
+    heuristics_matrix[:, 0] = -float('inf')
+    heuristics_matrix[0, :] = -float('inf')
+
+    return heuristics_matrix
+```

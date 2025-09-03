@@ -1,0 +1,33 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Vehicle capacity is assumed to be 1 since demands are normalized by capacity
+    capacity = 1
+    
+    # Calculate the demand difference matrix
+    demand_diff_matrix = torch.outer(demands, demands) - demands[:, None]
+    
+    # Set the diagonal to a large negative number (since a node to itself is not an edge)
+    torch diagonal = torch.diag_indices(demand_diff_matrix)
+    demand_diff_matrix[diagonal] = -float('inf')
+    
+    # Penalize edges that would result in overcapacity
+    overcapacity_penalty = demand_diff_matrix.clamp(max=capacity - 1e-5)  # Avoiding division by zero
+    overcapacity_penalty = -10.0 * overcapacity_penalty / capacity
+    
+    # Reward edges based on inverse distance, ensuring that 0 distances are not rewarded
+    # We add a small constant to the denominator to avoid division by zero
+    inv_distance_reward = 1.0 / (distance_matrix + 1e-5)
+    
+    # Combine the rewards and penalties
+    heuristics_matrix = inv_distance_reward + overcapacity_penalty
+    
+    # Scale the heuristics to avoid too large or too small values
+    heuristics_matrix = (heuristics_matrix - heuristics_matrix.min()) / (heuristics_matrix.max() - heuristics_matrix.min() + 1e-5)
+    
+    # Ensure that there are no NaNs or Infs
+    heuristics_matrix = torch.nan_to_num(heuristics_matrix, nan=-float('inf'), posinf=-float('inf'), neginf=-float('inf'))
+    
+    return heuristics_matrix
+```

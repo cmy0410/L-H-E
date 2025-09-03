@@ -1,0 +1,25 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """Calculate the promising edges for capacitated vehicle routing problem"""
+    vehicle_capacity = demands[0]
+    n = distance_matrix.size(0)
+    
+    # Initialize attentional bias matrix with zeros
+    bias_matrix = torch.zeros_like(distance_matrix)
+
+    # Iterate through each edge (i, j) where i is from depot and j is a customer
+    for i in range(n):
+        for j in range(n):
+            if i != j:
+                # Calculate demand related metrics
+                if demands[j] <= vehicle_capacity:
+                    # Favor shorter samples for eligible edges
+                    bias_matrix[i, j] = 1 / (distance_matrix[i, j] + 1e-5)  # avoid division by zero
+                else:
+                    # Penalize for edges reaching customers that exceed vehicle capacity
+                    bias_matrix[i, j] = -1 * demands[j]
+
+    return bias_matrix
+```

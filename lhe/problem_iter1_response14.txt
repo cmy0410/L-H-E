@@ -1,0 +1,19 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """A heuristic to prioritize edges based on demand to distance ratio."""
+    vehicle_capacity = demands.sum().item()  # Normalized total capacity
+    assert vehicle_capacity > 0, "Total capacity must be greater than zero."
+
+    # Calculate the demand and distance ratios
+    adjusted_demands = demands.view(-1, 1)  # Reshape for broadcasting
+    ratios = adjusted_demands / (distance_matrix + 1e-4)  # Avoid division by zero
+
+    # Consider promising edges where distance is low and demand is high
+    promising_edges = ratios * (distance_matrix < vehicle_capacity)  # Prioritize edges acceptable in terms of capacity
+    negative_edges = torch.where(distance_matrix >= vehicle_capacity, -1.0, 0.0)  # Undesirable as they exceed capacity
+
+    # Combine assessments ensuring no infinite or nan values
+    return promising_edges + negative_edges
+```

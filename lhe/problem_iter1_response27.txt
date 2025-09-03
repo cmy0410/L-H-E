@@ -1,0 +1,25 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """Heuristic for prioritizing edges based on distance and demand constraints."""
+
+    # Get the vehicle capacity relative to the normalized demands
+    vehicle_capacity = demands.sum() * 1.2  # Assume vehicle capacity is 120% of total demands to avoid overshooting
+
+    # Calculate demand ratios (normalized)
+    demand_ratios = demands / vehicle_capacity
+
+    # Create a promising edges matrix that considers both distance and demand proportions
+    promising_edges = (-distance_matrix + (1 / (1e-6 + demand_ratios.unsqueeze(1)))) * (distances < vehicle_capacity)
+
+    # Replace infinity and NaN values (resulting from division errors) with very large negative value
+    promising_edges = torch.where(torch.isinf(promising_edges) | torch.isnan(promising_edges), 
+                                   torch.full(promising_edges.shape, float('-inf')), 
+                                   promising_edges)
+    
+    # Optional bias to favor directly symmetric routes over longer paths
+    promising_edges -= distance_matrix
+
+    return promising_edges
+```

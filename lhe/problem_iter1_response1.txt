@@ -1,0 +1,25 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Compute the service cost for each customer, which is the product of demand and distance
+    service_cost = distance_matrix * demands.unsqueeze(1)
+
+    # Prevent divisions by zero or infinities by adding a small epsilon
+    epsilon = 1e-10
+
+    # Compute the heuristic value for each edge
+    # The heuristic promotes edges with lower distance and lower demand
+    # It also penalizes edges that would cause capacity overflow
+    heur_val = (1 / (service_cost + epsilon)) - (demands.unsqueeze(0) + demands.unsqueeze(1)) * (distance_matrix > 0).float()
+    
+    # Apply a mask to set the heuristic value to negative infinity for edges that exceed capacity
+    overflow_mask = (demands.unsqueeze(0) + demands.unsqueeze(1) > 1).float() * float('inf')
+    heur_val = torch.clamp(heur_val, min=-float('inf'))
+
+    # Adjust the heuristic for the depot (index 0)
+    heur_val[:, 0] = -float('inf')  # No demand at the depot, but we want to start and end there
+    heur_val[0, :] = 0  # The depot does not have a cost to visit itself
+
+    return heur_val
+```

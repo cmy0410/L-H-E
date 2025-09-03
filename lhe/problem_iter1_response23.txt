@@ -1,0 +1,34 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    total_capacity = demands.sum()
+    total_nodes = distance_matrix.shape[0]
+
+    # We handle the normalization by capacity and prevent division by zero
+    capacities = torch.ones(total_nodes) * total_capacity
+    capacities[0] = 1  # Depot should not have a proportion in the capacity calculation
+
+    normalized_demands = demands / capacities
+    normalized_demands[normalized_demands > 1] = 1  # Forces demands above capacity to maximum allowable
+
+    # Calculating scores based on distances and demands
+    promising_edges = distance_matrix.clone()
+    promising_edges[distance_matrix == 0] = float('inf')  # Prevent self-loops in optimization
+    
+    # Negative score weighted by demands
+    for i in range(1, total_nodes):  # Starting from customer nodes avoiding depot for the distance calculation
+        for j in range(1, total_nodes):
+            if i != j:
+                promising_edges[i, j] -= normalized_demands[i] * 0.1 * distance_matrix[i, j]
+    
+    # Handle constraints by potentially penalizing over-capacity connections
+    over_capacity_mask = (demands.unsqueeze(1) + demands.unsqueeze(0) > total_capacity).float()
+    promising_edges -= over_capacity_mask * float('inf')  # Penalizes impossible trips
+
+    # Keep the distances as positive or zero weighted based on the least promises
+    promising_edges = promising_edges - promising_edges.min().detach()  # Shift all to non-negative space
+    promising_edges[promising_edges < 0] = 0  # Ensure no negative values after normalization
+
+    return promising_edges
+```

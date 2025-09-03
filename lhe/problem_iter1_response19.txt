@@ -1,0 +1,25 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """A more complex and meaningful heuristic for the Capacitated Vehicle Routing Problem."""
+    n = distance_matrix.shape[0]
+    capacity = 1.0  # You can define the actual capacity value
+
+    # Scale demands to the range of current capacity available
+    scaled_demands = demands / capacity
+
+    # Calculate potential attractiveness: prioritize shorter distances with lower demands
+    attractiveness = (1 - scaled_demands.unsqueeze(1)) * (1 / (distance_matrix + 1e-10))  # Avoid divide by zero
+
+    # Determine an allowance by drastically reducing priority for overspent arcs
+    for i in range(n):
+        for j in range(n):
+            if scaled_demands[i] + scaled_demands[j] > 1.0:
+                attractiveness[i, j] *= -1  # Applying a negative scale on edges that exceed capacity
+
+    # Clip to ensure that unhappy edges remain negative without causing NaN or Inf
+    attractiveness = torch.clamp(attractiveness, min=-10, max=10)
+
+    return attractiveness
+```

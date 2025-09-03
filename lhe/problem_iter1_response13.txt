@@ -1,0 +1,32 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """Enhanced heuristics for the Capacitated Vehicle Routing Problem (CVRP)."""
+    # Number of nodes
+    n = distance_matrix.shape[0]
+    
+    # Initialize the heuristics score matrix
+    heuristics_matrix = torch.full_like(distance_matrix, -float('inf'), dtype=torch.float32)
+    
+    # Total capacity of a vehicle (assumption for normalization)
+    vehicle_capacity = demands[0].item()
+    
+    # Iterate through all pairs of nodes
+    for i in range(n):
+        for j in range(n):
+            if i != j:  # No self-loop
+                # Calculate potential promisingness of the edge (i -> j)
+                demand_ij = demands[j].item()  # Demand at node j
+                distance_ij = distance_matrix[i, j].item()  # Distance from i to j
+                
+                # If capacity allows for the movement and the edge has valid (non-negative) distance
+                if (demands[i] + demand_ij <= vehicle_capacity and 
+                    distance_ij > 0):
+                    heuristics_matrix[i, j] = (vehicle_capacity - demands[i].item()) / distance_ij
+                
+    # Ensure no NaN or Inf values: Replace -inf with -1 for scoring
+    heuristics_matrix[heuristics_matrix == -float('inf')] = -1
+
+    return heuristics_matrix
+```

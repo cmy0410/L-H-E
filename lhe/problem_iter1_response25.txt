@@ -1,0 +1,27 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    n = distance_matrix.shape[0]
+    total_capacity = torch.sum(demands[1:]).item()  # Total demand excluding depot
+    capacities = torch.full((n,), total_capacity / 2)  # Assume vehicles have half of total demand capacity
+
+    # Initialize a promising score matrix based on distance and demand
+    score_matrix = torch.zeros_like(distance_matrix)
+
+    # Avoid self-distances by setting them negatively (not promising)
+    score_matrix[torch.eye(n, dtype=torch.bool)] = -torch.inf
+
+    # Factor in distance and demand as indicators for heuristic
+    for i in range(1, n):
+        for j in range(1, n):
+            if distances[i, j] > 0:
+                # Heuristic: ess result potential: Lower distance with repayable need results in a better score
+                proximity_score = max((capacities[i] - demands[i]), 0) * max((capacities[j] - demands[j]), 0)
+                score_matrix[i, j] = (1 / distance_matrix[i, j]) * proximity_score if proximity_score > 0 else -1 / (1 + distance_matrix[i, j])
+
+    # Ensure no nan or inf in final results: feasible negativity should take zeroed position for soft-promisiness
+    score_matrix[~torch.isfinite(score_matrix)] = 0.0
+
+    return score_matrix
+```

@@ -1,0 +1,37 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """Heuristic that prioritizes shorter distances and lower customer demands for CVRP."""
+    # Number of nodes
+    n = distance_matrix.shape[0]
+    
+    # Initialize the heuristics matrix
+    heuristics_matrix = torch.zeros_like(distance_matrix)
+    
+    # Vehicle capacity threshold (max capacity is assumed to be 1.0 for normalized demands)
+    max_capacity = 1.0
+    
+    # Iterate through each possible edge
+    for i in range(n):
+        for j in range(n):
+            if i != j:  # No self-loops
+                demand_i = demands[i]
+                demand_j = demands[j]
+                
+                # Calculating the usage ratio of demand and the distance
+                total_demand = demand_i + demand_j
+                
+                # Ensure we don't exceed vehicle capacity
+                if total_demand <= max_capacity:
+                    # Positive bias for promising routes
+                    heuristics_matrix[i, j] = (max_capacity - total_demand) / max_capacity - distance_matrix[i, j]
+                else:
+                    # Negative bias if exceeding capacity
+                    heuristics_matrix[i, j] = -(total_demand - max_capacity) / max_capacity - distance_matrix[i, j]
+    
+    # Clip the values to avoid nan or inf occurrences
+    heuristics_matrix = torch.clamp(heuristics_matrix, min=-1e5, max=1e5)
+    
+    return heuristics_matrix
+```

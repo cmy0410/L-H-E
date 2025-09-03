@@ -1,0 +1,25 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Number of customers including the depot
+    n = distance_matrix.shape[0]
+    
+    # Initialize the heuristics matrix
+    heuristics_matrix = torch.zeros_like(distance_matrix)
+    
+    # Calculate theude indirect attration for each edge (depot indexed by 0)
+    for i in range(1, n):
+        for j in range(1, n):
+            if i != j:
+                # Create a bias based on the efficiency of getting demand to depot
+                if (demands[i] + demands[j]) <= 1.0:  # Check capacity constraints
+                    heuristics_matrix[i, j] = 1 / distance_matrix[i, j]  # More positive as distance reduces
+                
+                heuristics_matrix[j, i] = heuristics_matrix[i, j]  # Symmetric for undirected path
+    
+    # Avoid NaN issues by limiting heuristic values
+    heuristics_matrix[distance_matrix == 0] = -torch.inf  # No self-loops
+    
+    return heuristics_matrix
+```

@@ -1,0 +1,32 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """Improved heuristic for Capacitated Vehicle Routing Problem (CVRP)."""
+    # Initialize the heuristics matrix with negative values, representing undesirable edges.
+    heuristics_matrix = -torch.ones_like(distance_matrix)
+
+    # Get vehicle capacity inferred from the demands of the customers
+    vehicle_capacity = demands.sum().item() / 2  # assuming one vehicle handles only several visits
+    
+    # Calculate the effective capacity which is indirectly related to costs.
+    effective_capacity = vehicle_capacity - demands[1:]  # Exclude depot's zero demand
+    
+    # Avoid impossible routes: Only evaluate edges between the depot and pairs of nodes that satisfy capacity constrains
+    for i in range(1, distance_matrix.size(0)):
+        for j in range(1, distance_matrix.size(1)):
+            if i != j and demands[i] <= effective_capacity[j - 1] and demands[j] <= vehicle_capacity:
+                # Positive scores for routes between the depot and desirable customers
+                heuristics_matrix[i][j] = distance_matrix[i][j] / requests_efficiency(demands[i], distance_matrix[i][j])
+            elif i != j and demands[i] > vehicle_capacity:
+                # Penalize direct routes from customers exceeding their own capacities
+                heuristics_matrix[i][j] = -distance_matrix[i][j]  
+    
+    return heuristics_matrix
+
+def requests_efficiency(demand, distance):
+    """A helper function that determines the efficiency based on demand and distance."""
+    if distance > 0:
+        return torch.clamp(1 / distance, min=1e-6) * demand
+    return 1e-6
+```

@@ -1,0 +1,32 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """Improved heuristic for the Capacitated Vehicle Routing Problem (CVRP)."""
+    
+    n = distance_matrix.shape[0]
+    vehicle_capacity = 1.0  # Assuming normalized demands are in [0, 1]
+    
+    # Initialize the indicator matrix
+    heuristics_matrix = torch.zeros_like(distance_matrix)
+    
+    # Compute attractive and unattractive edges
+    for i in range(n):
+        for j in range(n):
+            if i != j:  # Do not consider edges to self
+                # Calculate both demand ratio and distance
+                demand_ratio = demands[j]  # Demand of the customer we are visiting
+                distance = distance_matrix[i, j]
+                
+                # Force the heuristic to assess a penalty if demand exceeds what supply can handle per vehicle
+                if demands[i] + demand_ratio > vehicle_capacity:
+                    heuristics_matrix[i, j] = -1 / (distance + 1e-6)  # Penalize for overshooting capacity
+                else:
+                    heuristics_matrix[i, j] = 1 / (distance + 1e-6)  # Favorable edge etiquette
+                    
+    # Ensure no NaN or Inf values by clamping high distances
+    heuristics_matrix[torch.isinf(heuristics_matrix)] = torch.min(heuristics_matrix[torch.isfinite(heuristics_matrix)])
+    heuristics_matrix[torch.isnan(heuristics_matrix)] = 0
+
+    return heuristics_matrix
+```

@@ -1,0 +1,42 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """
+    Heuristics function for Capacitated Vehicle Routing Problem (CVRP).
+    The function evaluates the distance between customers (including the depot) in relation to their demands,
+    aiming to encourage edges that minimize distance while satisfying vehicle capacity constraints.
+
+    Args:
+        distance_matrix (torch.Tensor): Distance matrix of shape (n, n).
+        demands (torch.Tensor): Vector of customer demands of shape (n,).
+    
+    Returns:
+        torch.Tensor: An indicator matrix of the same shape as the distance matrix, with
+                      promising edges showing positive values while undesirable edges show negative values.
+    """
+    vehicle_capacity = torch.sum(demands)  # Assuming the vehicle capacity is equal to the total demand
+    promises = torch.zeros_like(distance_matrix)
+    
+    depot_index = 0
+    # Evaluate edges between depot and customers
+    distance_from_depot = distance_matrix[depot_index, 1:]  # From depot to customers
+    demands_customers = demands[1:]  # Customer demands, excluding depot
+
+    # Calculating the heuristic value for edges from depot to customers
+    # Encouraging us to take shorter routes boosts promises while parameterized by the demand
+    promises[depot_index, 1:] = (vehicle_capacity - demands_customers) / distance_from_depot
+    promises[1:, depot_index] = promises[depot_index, 1:]  # Mirror the depot connections
+    
+    # For customer-to-customer connections
+    for i in range(1, len(demands)):
+        for j in range(1, len(demands)):
+            if i != j:
+                if demands[i] + demands[j] <= vehicle_capacity:
+                    # Generate a promise based on distance between two customers adjusted by their demands
+                    promises[i, j] = (vehicle_capacity - (demands[i] + demands[j])) / distance_matrix[i, j]
+                    promises[j, i] = promises[i, j]  # Mirror effect
+
+    # Clamping extreme values to avoid NaN or Inf
+    return torch.clamp(promises, min=-1e3, max=1e3)
+```

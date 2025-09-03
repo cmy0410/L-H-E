@@ -1,0 +1,25 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Compute the service cost which is the product of the distance and the demand at the destination node
+    service_cost = distance_matrix * demands.unsqueeze(0)
+
+    # Penalize edges leading to a node with a demand that would exceed the vehicle capacity
+    capacity_vector = demands.cumsum(dim=0) - demands
+    capacity_vector[0] = 0  # Depot has no demand
+    over_capacity_penalty = (capacity_vector.unsqueeze(1) > demands).float() * -1e6
+
+    # Calculate the heuristic: positive for edges with lower service cost and not exceeding capacity
+    heuristic_matrix = service_cost + over_capacity_penalty
+
+    # Subtract the max value to avoid inf, then normalize to stay away from zero for undesirable edges
+    heuristic_matrix -= heuristic_matrix.max()
+    heuristic_matrix = torch.clamp(heuristic_matrix, min=-1e6, max=0)
+
+    # Ensure the diagonal is zero since no self-loops should exist in the routing problem
+    torch диагонаl = torch.arange(distance_matrix.size(0)).repeat(distance_matrix.size(0), 1)
+    heuristic_matrix[diagonal, diagonal] = 0
+
+    return heuristic_matrix
+```

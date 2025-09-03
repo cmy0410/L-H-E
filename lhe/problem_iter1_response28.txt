@@ -1,0 +1,22 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """Calculate a promising heuristics for CVRP using distance and demands."""
+    vehicle_capacity = demands.sum()  # Assume total demand is equal to capacity for proportion
+	
+	# Identify whether the total demand may potentially exceed vehicle capacity
+    raised_demand = demands[:, None] + demands[None, :] > vehicle_capacity
+    
+    # Calculate the desirability based on distance, penalty for exceeding capacity
+    desirability = distance_matrix.clone()
+    desirability[raised_demand] += 1e3  # Giving a high penalty for exceeding capacity
+
+    # Normalizing distance of promising edges
+    min_dist = distance_matrix[distance_matrix > 0].min()  # Prevent zero distance
+    desirability = -1 * (desirability - min_dist) / (vehicle_capacity + 1e-6)
+
+    # Return heuristics - closer steps and matching demands have positive desirability
+    desirability[desirability < -1] = -1  # Keep at a reasonable negative limit
+    return desirability
+```

@@ -1,0 +1,25 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Subtracting demands vector from itself creates a matrix of demand differences
+    demand_diffs = demands.unsqueeze(0) - demands.unsqueeze(1)
+    # Set diagonal to a very negative number to discourage self-loops
+    demand_diffs = demand_diffs.fill_diagonal_(-float('inf'))
+    
+    # Compute the heuristic scores by combining distance and demand differences
+    # Negative demand_diffs (i.e., demand at j is less than at i) are more promising
+    # We normalize by the max distance to keep the score in a reasonable range
+    max_distance = distance_matrix.max()
+    heuristic_scores = - demand_diffs / (max_distance + 1e-10) + (1 - distance_matrix / max_distance)
+    
+    # Keep only the values that do not exceed vehicle capacity
+    # If the sum of demands at i and j exceeds the vehicle capacity, set to -inf
+    exceeds_capacity = (demands.unsqueeze(0) + demands.unsqueeze(1)) > 1
+    heuristic_scores[exceeds_capacity] = -float('inf')
+    
+    # Ensure there are no NaNs due to division by zero or other numerical issues
+    heuristic_scores = torch.nan_to_num(heuristic_scores, nan=-float('inf'))
+    
+    return heuristic_scores
+```

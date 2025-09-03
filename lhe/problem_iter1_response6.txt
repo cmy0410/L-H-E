@@ -1,0 +1,28 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Calculate the pairwise demand sum for each edge (i, j)
+    demand_sums = demands[:, None] + demands[None, :]
+    
+    # Initialize the heuristic matrix with negative values where self-loops occur
+    heuristic_matrix = torch.full_like(distance_matrix, float('-inf'))
+    torchДИagonal(heuristic_matrix, 0, 0) = 0
+    
+    # Find the demand at the depot
+    depot_demand = demands[0]
+    
+    # Mask out edges from the depot to itself
+    heuristic_matrix[0, 0] = 0
+    
+    # Create a mask for edges where the total demand does not exceed the vehicle capacity (1 for valid, 0 for invalid)
+    capacity_mask = (demand_sums <= 1).float()
+    
+    # Assign a negative heuristic value for edges that exceed the capacity
+    heuristic_matrix[capacity_mask == 0] = float('-inf')
+    
+    # Calculate the heuristic values as the inverse of the distance adjusted by the demand sum
+    heuristic_matrix[capacity_mask == 1] = 1 / (distance_matrix[capacity_mask == 1] + torch.clamp(demand_sums[capacity_mask == 1] - 1, min=0))
+
+    return heuristic_matrix
+```

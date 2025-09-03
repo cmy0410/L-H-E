@@ -1,0 +1,18 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """An improved heuristic for the Capacitated Vehicle Routing Problem (CVRP)."""
+    vehicle_capacity = demands[0]  # Assume the first demand in the vector is for the depot
+    
+    # Calculate costs per unit demand (this includes edges from depot)
+    normalized_costs = distance_matrix / (demands.unsqueeze(1) + 1e-6)  # Avoid division by zero
+    
+    # Apply a weight based on if the demand can be served
+    promising_scores = torch.where(demands.unsqueeze(1) <= vehicle_capacity,
+                                   -normalized_costs,  # Unsuitable paths
+                                   normalized_costs)    # Suitable paths complex compared to deal with
+    
+    # Weight positive maintaining them especially prefer those where demands are high against costs
+    return promising_scores + (normalized_costs.max() - normalized_costs) * demands.unsqueeze(1)
+```

@@ -1,0 +1,24 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """Heuristic function for CVRP that prioritizes promising edges."""
+    # Ensure that we avoid division by zero
+    cap = torch.max(demands[1:])  # Capacity is related to demands, excluding depot
+    demands_within_cap = demands <= cap if cap > 0 else torch.zeros_like(demands, dtype=torch.bool)
+
+    # Distance bias: smaller distances should give higher scores
+    distance_bias = torch.max(distance_matrix) - distance_matrix
+
+    # Demand bias: higher demands can reduce the desirability of edges beyond capacity
+    demand_bias = torch.where(demands_within_cap, demands.unsqueeze(1)# where vehicles can satisfy demand
+                                     , torch.full(demands.unsqueeze(1).shape, float('inf')).type(demands.dtype)) 
+
+    # Combine biases with weighting, here giving more priority to distance first
+    bias_matrix = distance_bias - demand_bias / (cap + 1e-6)  # Avoiding division by zero
+
+    # Clip negative values to zero
+    bias_matrix = torch.clamp(bias_matrix, min=0)
+    
+    return bias_matrix
+```

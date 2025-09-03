@@ -1,0 +1,26 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Vehicle capacity is assumed to be 1 since demands are normalized by it
+    vehicle_capacity = 1
+
+    # Compute the demand distance product for each edge
+    demand_distance_product = demands.unsqueeze(0) * demands.unsqueeze(1) * distance_matrix
+    
+    # Calculate the savings per edge: m * (2 * d_i + d_j) - d_ij where m is the vehicle capacity
+    # Savings are higher for edges with lower distance and higher demand
+    savings = 2 * vehicle_capacity * (demands + demands.t()) - demand_distance_product
+    
+    # Set the diagonal to a very negative value to make sure they're not chosen (self-loops)
+    savings = savings - torch.diag(torch.full_like(torch.diag(savings), float('-inf')))
+    
+    # Set edges where the total demand exceeds the vehicle capacity to a negative value
+    total_demand_per_edge = (demands + demands.t()).clamp(max=vehicle_capacity)
+    savings[distance_matrix > total_demand_per_edge] = -1
+    
+    # Set the depot node edges to zero (it's the starting and ending point)
+    savings[:, 0] = savings[0, :] = 0
+    
+    return savings
+```

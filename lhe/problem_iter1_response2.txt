@@ -1,0 +1,39 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Constants for heuristic adjustments
+    CAPACITY_PENALTY = -1000
+    DEMAND_BONUS = 10
+    DISTANCE_PENALTY = -1
+
+    # Matrix of demand sums if edge is added
+    demand_sums = torch.stack([
+        demands[:i] + demands[i+1:]
+        for i in range(len(demands))
+    ], dim=1)
+
+    # Find edges that would violate capacity constraint
+    over_capacity = demand_sums > 1  # Assuming demands are normalized by capacity
+
+    # Initialize heuristic matrix with negative penalty for capacity violations
+    heuristic_matrix = torch.full_like(distance_matrix, float('inf'))
+    heuristic_matrix[over_capacity] = CAPACITY_PENALTY
+
+    # Calculate a bonus based on the total demand of the edge
+    demand_bonus_matrix = demand_sums * DEMAND_BONUS
+
+    # Subtract distance penalty ( inverse to distances )
+    distance_penalty_matrix = distance_matrix * DISTANCE_PENALTY
+
+    # Update heuristic matrix
+    heuristic_matrix[~over_capacity] = demand_bonus_matrix[~over_capacity] + distance_penalty_matrix[~over_capacity]
+
+    # Set diagonal to zero since there's no distance from a node to itself
+    heuristic_matrix = torch.diag(0) + heuristic_matrix
+
+    # Replace infinite values with a large negative number
+    heuristic_matrix[heuristic_matrix == float('inf')] = CAPACITY_PENALTY
+
+    return heuristic_matrix
+```

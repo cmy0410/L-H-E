@@ -1,0 +1,28 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """Heuristics for solving CVRP."""
+    # Setting constants for penalty and reward
+    capacity = 1.0  # Assuming capacity is normalized, can be set appropriately
+    penalty_weight = 10.0
+    reward_weight = 5.0
+    
+    # Create an indicator an biases with initial values based on distance
+    bias_matrix = torch.zeros_like(distance_matrix)
+
+    # Calculate undesirable edges based on demand overload for each pair (i, j)
+    for i in range(demands.size(0)):
+        for j in range(demands.size(0)):
+            if i != j:
+                if demands[j] > capacity:  # demand exceeds capacity
+                    bias_matrix[i, j] -= penalty_weight  # impose strong penalty
+                elif demands[j] <= (capacity - demands[i]):  # can accommodate more
+                    bias_matrix[i, j] += reward_weight / (distance_matrix[i, j] + 1e-5)  # reward based on distance
+
+    # Ensure we don't create NaN or Inf values
+    bias_matrix[torch.isinf(bias_matrix)] = 0
+    bias_matrix[torch.isnan(bias_matrix)] = 0
+
+    return bias_matrix
+```

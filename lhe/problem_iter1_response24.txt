@@ -1,0 +1,32 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor, vehicle_capacity: float) -> torch.Tensor:
+    """Heuristic function to prioritize promising vehicle routes in CVRP."""
+    
+    n = distance_matrix.shape[0]
+    
+    # Initialize promising values
+    promising_matrix = torch.zeros_like(distance_matrix)
+
+    # Normalize demands by vehicle capacity
+    normalized_demands = demands / vehicle_capacity
+        
+    # Loop through each edge in the distance matrix
+    for i in range(n):
+        for j in range(n):
+            if i != j:
+                # Calculate promising score based on distance and demand
+                if normalized_demands[j] > 0:  # Only consider positive demands
+                    # Heuristic: blend of desirability and capacity consideration
+                    promising_score = (1 / distance_matrix[i, j]) * (vehicle_capacity - normalized_demands[j])
+                    # Neglect undesirable edges
+                    if promising_score > 0:
+                        promising_matrix[i, j] = promising_score
+
+    # Replace any potential inf or nan values with a finite number
+    promising_matrix[torch.isinf(promising_matrix)] = 0
+    promising_matrix[torch.isnan(promising_matrix)] = 0
+
+    return promising_matrix
+```

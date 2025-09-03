@@ -1,0 +1,614 @@
+[2025-01-13 15:55:27,702][root][INFO] - Workspace: /root/reevo-main/outputs/mvmoe_pomo-nco/2025-01-13_15-55-27
+[2025-01-13 15:55:27,702][root][INFO] - Project Root: /root/reevo-main
+[2025-01-13 15:55:27,703][root][INFO] - Using LLM: openai/gpt-4o-mini
+[2025-01-13 15:55:27,703][root][INFO] - Using Algorithm: reevo
+[2025-01-13 15:55:30,921][root][INFO] - Problem: mvmoe_pomo
+[2025-01-13 15:55:30,921][root][INFO] - Problem description: Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+[2025-01-13 15:55:30,921][root][INFO] - Function name: heuristics
+[2025-01-13 15:55:30,922][root][INFO] - Evaluating seed function...
+[2025-01-13 15:55:30,922][root][INFO] - Seed function code: 
+import torch
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """A trivial implementation to improve upon."""
+    return torch.zeros_like(distance_matrix)
+[2025-01-13 15:55:30,922][root][INFO] - Iteration 0: Running Code 0
+[2025-01-13 15:55:33,380][root][INFO] - Iteration 0: Code Run 0 successful!
+[2025-01-13 15:55:34,899][root][INFO] - Iteration 0, response_id 0: Objective value: 9.0625638961792
+[2025-01-13 15:55:34,900][root][INFO] - Iteration 0, response_id 0: obj
+[2025-01-13 15:55:34,901][root][INFO] - Iteration 0: Elitist: 9.0625638961792
+[2025-01-13 15:55:34,901][root][INFO] - Iteration 0 finished...
+[2025-01-13 15:55:34,901][root][INFO] - Best obj: 9.0625638961792, Best Code Path: problem_iter0_code0.py
+[2025-01-13 15:55:34,901][root][INFO] - Function Evals: 1
+[2025-01-13 15:55:35,155][root][INFO] - Initial Population Prompt: 
+System Prompt: 
+You are an expert in the domain of optimization heuristics. Your task is to design heuristics that can effectively solve optimization problems.
+Your response outputs Python code and nothing else. Format your code as a Python code string: "```python ... ```".
+
+User Prompt: 
+Write a heuristics function for Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+The `heuristics` function takes as input a distance matrix (shape: n by n) and a vector of customer demands (shape: n), where the depot node is indexed by 0 and the customer demands are normalized by the total vehicle capacity. It returns prior indicators of how promising it is to include each edge in a solution. The return is of the same shape as the distance matrix. The heuristics should contain negative values for undesirable edges and positive values for promising ones. Use efficient vectorized implementations.
+
+def heuristics_v1(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """A trivial implementation to improve upon."""
+    return torch.zeros_like(distance_matrix)
+
+
+Refer to the format of a trivial design above. Be very creative and give `heuristics_v2`. Output code only and enclose your code with Python code block: ```python ... ```.
+
+- Calculation of the output attentional bias matrix does not allow to produce nan or inf values
+[2025-01-13 15:55:36,288][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:55:40,186][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:55:48,310][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:55:55,290][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:56:02,090][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:56:08,816][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:56:15,177][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:56:21,201][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:56:26,104][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:56:32,108][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:56:38,428][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:56:45,750][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:56:52,232][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:56:59,425][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:57:05,400][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:57:11,630][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:57:17,952][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:57:25,585][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:57:31,663][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:57:38,821][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:57:45,137][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:57:52,439][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:57:58,214][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:58:03,291][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:58:09,751][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:58:17,124][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:58:24,074][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:58:29,800][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:58:36,604][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:58:46,192][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 15:58:50,882][root][INFO] - Iteration 1: Running Code 0
+[2025-01-13 15:58:52,739][root][INFO] - Iteration 1: Code Run 0 successful!
+[2025-01-13 15:58:52,739][root][INFO] - Iteration 1: Running Code 1
+[2025-01-13 15:58:55,138][root][INFO] - Iteration 1: Code Run 1 successful!
+[2025-01-13 15:58:55,139][root][INFO] - Iteration 1: Running Code 2
+[2025-01-13 15:58:57,868][root][INFO] - Iteration 1: Code Run 2 successful!
+[2025-01-13 15:58:57,869][root][INFO] - Iteration 1: Running Code 3
+[2025-01-13 15:58:59,927][root][INFO] - Iteration 1: Code Run 3 successful!
+[2025-01-13 15:58:59,928][root][INFO] - Iteration 1: Running Code 4
+[2025-01-13 15:59:02,446][root][INFO] - Iteration 1: Code Run 4 successful!
+[2025-01-13 15:59:02,446][root][INFO] - Iteration 1: Running Code 5
+[2025-01-13 15:59:04,451][root][INFO] - Iteration 1: Code Run 5 successful!
+[2025-01-13 15:59:04,451][root][INFO] - Iteration 1: Running Code 6
+[2025-01-13 15:59:06,962][root][INFO] - Iteration 1: Code Run 6 successful!
+[2025-01-13 15:59:06,963][root][INFO] - Iteration 1: Running Code 7
+[2025-01-13 15:59:08,971][root][INFO] - Iteration 1: Code Run 7 successful!
+[2025-01-13 15:59:08,972][root][INFO] - Iteration 1: Running Code 8
+[2025-01-13 15:59:11,506][root][INFO] - Iteration 1: Code Run 8 successful!
+[2025-01-13 15:59:11,507][root][INFO] - Iteration 1: Running Code 9
+[2025-01-13 15:59:13,999][root][INFO] - Iteration 1: Code Run 9 successful!
+[2025-01-13 15:59:14,000][root][INFO] - Iteration 1: Running Code 10
+[2025-01-13 15:59:16,448][root][INFO] - Iteration 1: Code Run 10 successful!
+[2025-01-13 15:59:16,448][root][INFO] - Iteration 1: Running Code 11
+[2025-01-13 15:59:18,958][root][INFO] - Iteration 1: Code Run 11 successful!
+[2025-01-13 15:59:18,958][root][INFO] - Iteration 1: Running Code 12
+[2025-01-13 15:59:21,472][root][INFO] - Iteration 1: Code Run 12 successful!
+[2025-01-13 15:59:21,472][root][INFO] - Iteration 1: Running Code 13
+[2025-01-13 15:59:24,080][root][INFO] - Iteration 1: Code Run 13 successful!
+[2025-01-13 15:59:24,080][root][INFO] - Iteration 1: Running Code 14
+[2025-01-13 15:59:26,055][root][INFO] - Iteration 1: Code Run 14 successful!
+[2025-01-13 15:59:26,056][root][INFO] - Iteration 1: Running Code 15
+[2025-01-13 15:59:28,086][root][INFO] - Iteration 1: Code Run 15 successful!
+[2025-01-13 15:59:28,086][root][INFO] - Iteration 1: Running Code 16
+[2025-01-13 15:59:30,722][root][INFO] - Iteration 1: Code Run 16 successful!
+[2025-01-13 15:59:30,722][root][INFO] - Iteration 1: Running Code 17
+[2025-01-13 15:59:32,783][root][INFO] - Iteration 1: Code Run 17 successful!
+[2025-01-13 15:59:32,783][root][INFO] - Iteration 1: Running Code 18
+[2025-01-13 15:59:35,377][root][INFO] - Iteration 1: Code Run 18 successful!
+[2025-01-13 15:59:35,377][root][INFO] - Iteration 1: Running Code 19
+[2025-01-13 15:59:38,253][root][INFO] - Iteration 1: Code Run 19 successful!
+[2025-01-13 15:59:38,253][root][INFO] - Iteration 1: Running Code 20
+[2025-01-13 15:59:40,842][root][INFO] - Iteration 1: Code Run 20 successful!
+[2025-01-13 15:59:40,843][root][INFO] - Iteration 1: Running Code 21
+[2025-01-13 15:59:43,450][root][INFO] - Iteration 1: Code Run 21 successful!
+[2025-01-13 15:59:43,450][root][INFO] - Iteration 1: Running Code 22
+[2025-01-13 15:59:45,707][root][INFO] - Iteration 1: Code Run 22 successful!
+[2025-01-13 15:59:45,708][root][INFO] - Iteration 1: Running Code 23
+[2025-01-13 15:59:48,285][root][INFO] - Iteration 1: Code Run 23 successful!
+[2025-01-13 15:59:48,285][root][INFO] - Iteration 1: Running Code 24
+[2025-01-13 15:59:50,380][root][INFO] - Iteration 1: Code Run 24 successful!
+[2025-01-13 15:59:50,380][root][INFO] - Iteration 1: Running Code 25
+[2025-01-13 15:59:53,006][root][INFO] - Iteration 1: Code Run 25 successful!
+[2025-01-13 15:59:53,006][root][INFO] - Iteration 1: Running Code 26
+[2025-01-13 15:59:55,363][root][INFO] - Iteration 1: Code Run 26 successful!
+[2025-01-13 15:59:55,363][root][INFO] - Iteration 1: Running Code 27
+[2025-01-13 15:59:58,057][root][INFO] - Iteration 1: Code Run 27 successful!
+[2025-01-13 15:59:58,058][root][INFO] - Iteration 1: Running Code 28
+[2025-01-13 16:00:00,720][root][INFO] - Iteration 1: Code Run 28 successful!
+[2025-01-13 16:00:00,720][root][INFO] - Iteration 1: Running Code 29
+[2025-01-13 16:00:03,318][root][INFO] - Iteration 1: Code Run 29 successful!
+[2025-01-13 16:00:03,319][root][INFO] - Iteration 1, response_id 0: Objective value: inf
+[2025-01-13 16:00:03,319][root][INFO] - Iteration 1, response_id 1: Objective value: inf
+[2025-01-13 16:00:03,319][root][INFO] - Iteration 1, response_id 2: Objective value: inf
+[2025-01-13 16:00:03,320][root][INFO] - Iteration 1, response_id 3: Objective value: inf
+[2025-01-13 16:00:03,320][root][INFO] - Iteration 1, response_id 4: Objective value: 9.04350757598877
+[2025-01-13 16:00:03,320][root][INFO] - Iteration 1, response_id 5: Objective value: inf
+[2025-01-13 16:00:03,320][root][INFO] - Iteration 1, response_id 6: Objective value: inf
+[2025-01-13 16:00:38,369][root][INFO] - Iteration 1, response_id 7: Objective value: 9.031949043273926
+[2025-01-13 16:00:38,370][root][INFO] - Iteration 1, response_id 8: Objective value: 9.065815925598145
+[2025-01-13 16:00:53,819][root][INFO] - Iteration 1, response_id 9: Objective value: 9.05833911895752
+[2025-01-13 16:00:53,820][root][INFO] - Iteration 1, response_id 10: Objective value: inf
+[2025-01-13 16:02:16,923][root][INFO] - Iteration 1, response_id 11: Objective value: 9.044644355773926
+[2025-01-13 16:02:16,924][root][INFO] - Iteration 1, response_id 12: Objective value: inf
+[2025-01-13 16:02:17,790][root][INFO] - Iteration 1, response_id 13: Objective value: inf
+[2025-01-13 16:02:17,790][root][INFO] - Iteration 1, response_id 14: Objective value: inf
+[2025-01-13 16:02:17,791][root][INFO] - Iteration 1, response_id 15: Objective value: inf
+[2025-01-13 16:02:17,791][root][INFO] - Iteration 1, response_id 16: Objective value: 9.049708366394043
+[2025-01-13 16:02:21,714][root][INFO] - Iteration 1, response_id 17: Objective value: 9.041910171508789
+[2025-01-13 16:02:21,714][root][INFO] - Iteration 1, response_id 18: Objective value: 9.059416770935059
+[2025-01-13 16:02:21,715][root][INFO] - Iteration 1, response_id 19: Objective value: inf
+[2025-01-13 16:02:21,715][root][INFO] - Iteration 1, response_id 20: Objective value: 9.066473960876465
+[2025-01-13 16:02:21,715][root][INFO] - Iteration 1, response_id 21: Objective value: inf
+[2025-01-13 16:02:21,715][root][INFO] - Iteration 1, response_id 22: Objective value: inf
+[2025-01-13 16:02:21,715][root][INFO] - Iteration 1, response_id 23: Objective value: inf
+[2025-01-13 16:02:21,715][root][INFO] - Iteration 1, response_id 24: Objective value: inf
+[2025-01-13 16:02:21,716][root][INFO] - Iteration 1, response_id 25: Objective value: 9.039581298828125
+[2025-01-13 16:02:21,716][root][INFO] - Iteration 1, response_id 26: Objective value: inf
+[2025-01-13 16:02:21,716][root][INFO] - Iteration 1, response_id 27: Objective value: inf
+[2025-01-13 16:02:21,716][root][INFO] - Iteration 1, response_id 28: Objective value: 9.05784797668457
+[2025-01-13 16:02:21,716][root][INFO] - Iteration 1, response_id 29: Objective value: 9.03769302368164
+[2025-01-13 16:02:21,716][root][INFO] - Iteration 1, response_id 0: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 1: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 2: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 3: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 4: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 5: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 6: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 7: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 8: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 9: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 10: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 11: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 12: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 13: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 14: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 15: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 16: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 17: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 18: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 19: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 20: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 21: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 22: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 23: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 24: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 25: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 26: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 27: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 28: obj
+[2025-01-13 16:02:21,717][root][INFO] - Iteration 1, response_id 29: obj
+[2025-01-13 16:02:21,718][root][INFO] - Iteration 1: Elitist: 9.031949043273926
+[2025-01-13 16:02:21,718][root][INFO] - Iteration 1 finished...
+[2025-01-13 16:02:21,718][root][INFO] - Best obj: 9.031949043273926, Best Code Path: problem_iter1_code7.py
+[2025-01-13 16:02:21,718][root][INFO] - Function Evals: 31
+[2025-01-13 16:02:23,059][root][INFO] - Short-term Reflection Prompt: 
+System Prompt: 
+You are an expert in the domain of optimization heuristics. Your task is to give hints to design better heuristics.
+
+User Prompt: 
+Below are two heuristics functions for Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+The `heuristics` function takes as input a distance matrix (shape: n by n) and a vector of customer demands (shape: n), where the depot node is indexed by 0 and the customer demands are normalized by the total vehicle capacity. It returns prior indicators of how promising it is to include each edge in a solution. The return is of the same shape as the distance matrix. The heuristics should contain negative values for undesirable edges and positive values for promising ones. Use efficient vectorized implementations.
+
+You are provided with two code versions below, where the second version performs better than the first one.
+
+[Worse code]
+
+    """Improved heuristic calculating promising edges based on distance and demand."""
+    
+    # Baseline value for unattractiveness of edges
+    unattractive_value = -float('inf')
+    
+    # Create initial matrix to accumulate scores
+    score_matrix = torch.full_like(distance_matrix, uninspired_value)
+
+    # Normalized vehicle capacity should be represented as 1 in the demands vector
+    normalized_capacities = demands / demands.sum()
+    
+    # Iterate through each node (customer)
+    for i in range(1, distance_matrix.shape[0]):  # start from index 1 to exclude depot
+        for j in range(1, distance_matrix.shape[0]):
+            if i != j:
+                # According to demand allocation feasibility
+                if demands[i] + demands[j] <= 1:  # assume 1 is total capacity for normalization
+                    # If we are able to accommodate both demands, prefer edges with low distance
+                    score_matrix[i, j] = 1 / (distance_matrix[i, j] + 1e-8)  # Minimize distance
+            
+                # Set unattractive scores for demanding edges that exceed capacity allocation potential
+                else:
+                    score_matrix[i, j] = unattractive_value
+
+    # To ensure we do not produce any infinite values in our scoring,
+    # let's perform limiters aiming small buffering towards avoidance of nan/inf.
+    score_matrix[score_matrix == -float('inf')] = -9999
+
+    return score_matrix
+
+[Better code]
+
+    """Improved implementation for estimating edge usefulness based on demand and distances."""
+    n = distance_matrix.shape[0]
+    vehicle_capacity = demands[0]  # capacity of the vehicle based on the depot
+  
+    # Calculate desirability score based on distance versus demand proportion
+    distances = distance_matrix.clone()
+    distances[distances == 0] = float('inf')  # Prevent division by big values
+
+    # Demand sum excluding depot
+    demands_excl_depot = demands[1:]  # Remove depot's demand for load consideration
+    load_score = (demands_excl_depot.unsqueeze(0) + demands_excl_depot.unsqueeze(1)) / vehicle_capacity
+ 
+    # Calculate desirability: lower distance and manageable demand increase potential for edges
+    desirability_matrix = (1 / (distances + 1e-6)) * (1 - load_score)
+
+    # Clamp the values to avoid overflow; enforce conditions that e.g., load wouldn't represent a valid edge.
+    desirability_matrix[load_score > 1] = -1  # Penalize edges where demand exceeds capacity
+    desirability_matrix[distances >= vehicle_capacity] = -1  # Penalize unrealistically long paths
+
+    # Ensure no NaN or Inf values are present
+    desirability_matrix = torch.clamp(desirability_matrix, min=-1.0, max=1.0)
+
+    return desirability_matrix
+
+You respond with some hints for designing better heuristics, based on the two code versions and using less than 20 words.
+[2025-01-13 16:02:23,957][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:02:24,013][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:02:24,210][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:02:24,258][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:02:24,271][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:02:24,302][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:02:24,368][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:02:24,737][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:02:24,758][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:02:24,780][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:02:26,207][root][INFO] - Crossover Prompt: 
+System Prompt: 
+You are an expert in the domain of optimization heuristics. Your task is to design heuristics that can effectively solve optimization problems.
+Your response outputs Python code and nothing else. Format your code as a Python code string: "```python ... ```".
+
+User Prompt: 
+Write a heuristics function for Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+The `heuristics` function takes as input a distance matrix (shape: n by n) and a vector of customer demands (shape: n), where the depot node is indexed by 0 and the customer demands are normalized by the total vehicle capacity. It returns prior indicators of how promising it is to include each edge in a solution. The return is of the same shape as the distance matrix. The heuristics should contain negative values for undesirable edges and positive values for promising ones. Use efficient vectorized implementations.
+
+
+[Worse code]
+def heuristics_v0(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+
+    """Improved heuristic calculating promising edges based on distance and demand."""
+    
+    # Baseline value for unattractiveness of edges
+    unattractive_value = -float('inf')
+    
+    # Create initial matrix to accumulate scores
+    score_matrix = torch.full_like(distance_matrix, uninspired_value)
+
+    # Normalized vehicle capacity should be represented as 1 in the demands vector
+    normalized_capacities = demands / demands.sum()
+    
+    # Iterate through each node (customer)
+    for i in range(1, distance_matrix.shape[0]):  # start from index 1 to exclude depot
+        for j in range(1, distance_matrix.shape[0]):
+            if i != j:
+                # According to demand allocation feasibility
+                if demands[i] + demands[j] <= 1:  # assume 1 is total capacity for normalization
+                    # If we are able to accommodate both demands, prefer edges with low distance
+                    score_matrix[i, j] = 1 / (distance_matrix[i, j] + 1e-8)  # Minimize distance
+            
+                # Set unattractive scores for demanding edges that exceed capacity allocation potential
+                else:
+                    score_matrix[i, j] = unattractive_value
+
+    # To ensure we do not produce any infinite values in our scoring,
+    # let's perform limiters aiming small buffering towards avoidance of nan/inf.
+    score_matrix[score_matrix == -float('inf')] = -9999
+
+    return score_matrix
+
+[Better code]
+def heuristics_v1(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+
+    """Improved implementation for estimating edge usefulness based on demand and distances."""
+    n = distance_matrix.shape[0]
+    vehicle_capacity = demands[0]  # capacity of the vehicle based on the depot
+  
+    # Calculate desirability score based on distance versus demand proportion
+    distances = distance_matrix.clone()
+    distances[distances == 0] = float('inf')  # Prevent division by big values
+
+    # Demand sum excluding depot
+    demands_excl_depot = demands[1:]  # Remove depot's demand for load consideration
+    load_score = (demands_excl_depot.unsqueeze(0) + demands_excl_depot.unsqueeze(1)) / vehicle_capacity
+ 
+    # Calculate desirability: lower distance and manageable demand increase potential for edges
+    desirability_matrix = (1 / (distances + 1e-6)) * (1 - load_score)
+
+    # Clamp the values to avoid overflow; enforce conditions that e.g., load wouldn't represent a valid edge.
+    desirability_matrix[load_score > 1] = -1  # Penalize edges where demand exceeds capacity
+    desirability_matrix[distances >= vehicle_capacity] = -1  # Penalize unrealistically long paths
+
+    # Ensure no NaN or Inf values are present
+    desirability_matrix = torch.clamp(desirability_matrix, min=-1.0, max=1.0)
+
+    return desirability_matrix
+
+[Reflection]
+1. Prioritize demand-based clustering to minimize total distance.
+2. Incorporate local search strategies for edge refinement.
+3. Use adaptive scoring based on cumulative vehicle loads.
+4. Explore multi-objective optimization to balance distance and demand.
+
+[Improved code]
+Please write an improved function `heuristics_v2`, according to the reflection. Output code only and enclose your code with Python code block: ```python ... ```.
+[2025-01-13 16:02:26,774][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:02:26,780][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:02:26,903][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:02:26,920][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:02:26,967][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:02:27,185][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:02:27,218][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:02:27,297][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:02:27,406][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:02:27,440][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:02:36,861][root][INFO] - Iteration 2: Running Code 0
+[2025-01-13 16:02:39,209][root][INFO] - Iteration 2: Code Run 0 successful!
+[2025-01-13 16:02:39,209][root][INFO] - Iteration 2: Running Code 1
+[2025-01-13 16:02:41,823][root][INFO] - Iteration 2: Code Run 1 successful!
+[2025-01-13 16:02:41,823][root][INFO] - Iteration 2: Running Code 2
+[2025-01-13 16:02:43,793][root][INFO] - Iteration 2: Code Run 2 successful!
+[2025-01-13 16:02:43,794][root][INFO] - Iteration 2: Running Code 3
+[2025-01-13 16:02:46,464][root][INFO] - Iteration 2: Code Run 3 successful!
+[2025-01-13 16:02:46,465][root][INFO] - Iteration 2: Running Code 4
+[2025-01-13 16:02:48,550][root][INFO] - Iteration 2: Code Run 4 successful!
+[2025-01-13 16:02:48,550][root][INFO] - Iteration 2: Running Code 5
+[2025-01-13 16:02:50,578][root][INFO] - Iteration 2: Code Run 5 successful!
+[2025-01-13 16:02:50,578][root][INFO] - Iteration 2: Running Code 6
+[2025-01-13 16:02:53,049][root][INFO] - Iteration 2: Code Run 6 successful!
+[2025-01-13 16:02:53,049][root][INFO] - Iteration 2: Running Code 7
+[2025-01-13 16:02:55,136][root][INFO] - Iteration 2: Code Run 7 successful!
+[2025-01-13 16:02:55,137][root][INFO] - Iteration 2: Running Code 8
+[2025-01-13 16:02:57,550][root][INFO] - Iteration 2: Code Run 8 successful!
+[2025-01-13 16:02:57,550][root][INFO] - Iteration 2: Running Code 9
+[2025-01-13 16:02:59,760][root][INFO] - Iteration 2: Code Run 9 successful!
+[2025-01-13 16:02:59,761][root][INFO] - Iteration 2, response_id 0: Objective value: 9.054191589355469
+[2025-01-13 16:02:59,761][root][INFO] - Iteration 2, response_id 1: Objective value: inf
+[2025-01-13 16:02:59,761][root][INFO] - Iteration 2, response_id 2: Objective value: inf
+[2025-01-13 16:02:59,761][root][INFO] - Iteration 2, response_id 3: Objective value: 9.027958869934082
+[2025-01-13 16:02:59,761][root][INFO] - Iteration 2, response_id 4: Objective value: inf
+[2025-01-13 16:02:59,762][root][INFO] - Iteration 2, response_id 5: Objective value: inf
+[2025-01-13 16:02:59,762][root][INFO] - Iteration 2, response_id 6: Objective value: inf
+[2025-01-13 16:02:59,762][root][INFO] - Iteration 2, response_id 7: Objective value: inf
+[2025-01-13 16:02:59,762][root][INFO] - Iteration 2, response_id 8: Objective value: inf
+[2025-01-13 16:03:00,978][root][INFO] - Iteration 2, response_id 9: Objective value: inf
+[2025-01-13 16:03:00,978][root][INFO] - Iteration 2, response_id 0: obj
+[2025-01-13 16:03:00,979][root][INFO] - Iteration 2, response_id 1: obj
+[2025-01-13 16:03:00,979][root][INFO] - Iteration 2, response_id 2: obj
+[2025-01-13 16:03:00,979][root][INFO] - Iteration 2, response_id 3: obj
+[2025-01-13 16:03:00,979][root][INFO] - Iteration 2, response_id 4: obj
+[2025-01-13 16:03:00,979][root][INFO] - Iteration 2, response_id 5: obj
+[2025-01-13 16:03:00,979][root][INFO] - Iteration 2, response_id 6: obj
+[2025-01-13 16:03:00,979][root][INFO] - Iteration 2, response_id 7: obj
+[2025-01-13 16:03:00,979][root][INFO] - Iteration 2, response_id 8: obj
+[2025-01-13 16:03:00,979][root][INFO] - Iteration 2, response_id 9: obj
+[2025-01-13 16:03:00,980][root][INFO] - Iteration 2: Elitist: 9.027958869934082
+[2025-01-13 16:03:00,980][root][INFO] - Iteration 2 finished...
+[2025-01-13 16:03:00,980][root][INFO] - Best obj: 9.027958869934082, Best Code Path: problem_iter2_code3.py
+[2025-01-13 16:03:00,980][root][INFO] - Function Evals: 41
+[2025-01-13 16:03:01,348][root][INFO] - Long-term Reflection Prompt: 
+System Prompt: 
+You are an expert in the domain of optimization heuristics. Your task is to give hints to design better heuristics.
+
+User Prompt: 
+Below is your prior long-term reflection on designing heuristics for Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+- Calculation of the output attentional bias matrix does not allow to produce nan or inf values
+
+Below are some newly gained insights.
+1. Prioritize demand-based clustering to minimize total distance.
+2. Incorporate local search strategies for edge refinement.
+3. Use adaptive scoring based on cumulative vehicle loads.
+4. Explore multi-objective optimization to balance distance and demand.
+1. Prioritize edges connecting low-demand nodes.
+2. Utilize clustering techniques for route optimization.
+3. Implement reinforcement learning for adaptive heuristics.
+4. Assess vehicle load distributions to influence desirability dynamically.
+1. Incorporate multi-objective trade-offs between distance and load.  
+2. Use adaptive penalty terms for demand exceedance.  
+3. Consider vehicle route optimization iteratively.  
+4. Integrate clustering methods to preprocess nodes.  
+5. Evaluate edge usefulness dynamically during optimization.
+1. Incorporate seasonal demand patterns.
+2. Utilize clustering for route optimization.
+3. Implement multi-objective scoring.
+4. Explore dynamic penalty adjustments.
+5. Leverage machine learning for predictive heuristics.
+1. Incorporate multi-objective factors: distance, demand fulfillment, and delivery time.
+2. Use clustering techniques to reduce search space.
+3. Implement adaptive penalties for capacity violations.
+4. Explore machine learning-based estimations for edge desirability.
+Incorporate more domain-specific constraints, consider clustering of nodes, and prioritize paths based on historical routing success.
+Focus on demand-distance trade-offs, incorporate adaptive penalties, and use vectorized operations for efficiency.
+Incorporate dynamic demand thresholds, factor in marginal distance impacts, and use clustering techniques for initial node selection.
+1. Enhance adaptability with dynamic capacity constraints.  
+2. Integrate clustering algorithms for initial route estimation.  
+3. Employ machine learning for predictive scoring.  
+4. Experiment with hybrid heuristics combining different techniques.  
+5. Utilize multi-objective optimization for balance.  
+1. Consider combining more metrics (e.g., time, multiple vehicle capacities).
+2. Implement dynamic edge scoring during problem solving.
+3. Use clustering to reduce search space before routing.
+4. Explore alternative routing algorithms for hybrid approaches.
+
+Write constructive hints for designing better heuristics, based on prior reflections and new insights and using less than 50 words.
+[2025-01-13 16:03:02,458][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:03:05,217][root][INFO] - Mutation Prompt: 
+System Prompt: 
+You are an expert in the domain of optimization heuristics. Your task is to design heuristics that can effectively solve optimization problems.
+Your response outputs Python code and nothing else. Format your code as a Python code string: "```python ... ```".
+
+User Prompt: 
+Write a heuristics function for Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+The `heuristics` function takes as input a distance matrix (shape: n by n) and a vector of customer demands (shape: n), where the depot node is indexed by 0 and the customer demands are normalized by the total vehicle capacity. It returns prior indicators of how promising it is to include each edge in a solution. The return is of the same shape as the distance matrix. The heuristics should contain negative values for undesirable edges and positive values for promising ones. Use efficient vectorized implementations.
+
+
+[Prior reflection]
+1. Leverage adaptive clustering to balance distance and demand before route planning.
+2. Integrate dynamic scoring mechanisms for edges based on vehicle loads.
+3. Implement machine learning to refine heuristics based on historical data and seasonal trends.
+4. Combine multi-objective optimization with real-time penalties for exceeding capacity.- Calculation of the output attentional bias matrix does not allow to produce nan or inf values
+
+[Code]
+def heuristics_v1(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+
+    """Improved heuristics for CVRP that incorporates clustering and adaptive penalties."""
+    vehicle_capacity = demands[0]  # Assume depot has the capacity
+    n = distance_matrix.shape[0]
+
+    # Use KMeans to cluster customers based on their demands
+    customer_demand_values = demands[1:]  # Skip depot
+    kmeans = KMeans(n_clusters=n_clusters)
+    cluster_labels = kmeans.fit_predict(customer_demand_values.unsqueeze(1).cpu())
+
+    # Initialize heuristic matrix
+    heuristics_matrix = torch.zeros_like(distance_matrix)
+
+    # Calculate a demand penalty based on clusters
+    for cluster in range(n_clusters):
+        cluster_indices = torch.where(cluster_labels == cluster)[0] + 1  # Offset by 1 to skip depot
+
+        # Calculate average demand in the cluster
+        avg_demand = customer_demand_values[cluster_indices - 1].mean()
+
+        for i in range(len(cluster_indices)):
+            for j in range(len(cluster_indices)):
+                if i != j:
+                    # Get actual index in demands which is offset by 1 due to depot
+                    from_idx = cluster_indices[i]
+                    to_idx = cluster_indices[j]
+
+                    # Calculate distance score
+                    distance_score = torch.exp(-distance_matrix[from_idx, to_idx])
+
+                    # Check capacity constraint
+                    is_under_capacity = demands[from_idx] + demands[to_idx] <= vehicle_capacity
+                    capacity_score = 1.0 if is_under_capacity else -1.0
+
+                    # Penalize the distance more for larger demands
+                    demand_penalty = avg_demand / (demands[to_idx] + 1e-10)  # Avoid division by zero
+                    heuristics_matrix[from_idx, to_idx] = distance_score * capacity_score * demand_penalty
+
+    # Normalize scores
+    min_score = heuristics_matrix.min()
+    max_score = heuristics_matrix.max()
+
+    normalized_scores = (heuristics_matrix - min_score) / (max_score - min_score + 1e-10)
+    return 2 * normalized_scores - 1  # Scale to -1 to 1 range
+
+[Improved code]
+Please write a mutated function `heuristics_v2`, according to the reflection. Output code only and enclose your code with Python code block: ```python ... ```.
+[2025-01-13 16:03:06,481][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:03:12,614][root][INFO] - Iteration 3: Running Code 0
+[2025-01-13 16:03:15,011][root][INFO] - Iteration 3: Code Run 0 successful!
+[2025-01-13 16:03:16,580][root][INFO] - Iteration 3, response_id 0: Objective value: inf
+[2025-01-13 16:03:16,580][root][INFO] - Iteration 3, response_id 0: obj
+[2025-01-13 16:03:16,580][root][INFO] - Iteration 3, response_id 1: obj
+[2025-01-13 16:03:16,580][root][INFO] - Iteration 3, response_id 2: obj
+[2025-01-13 16:03:16,580][root][INFO] - Iteration 3, response_id 3: obj
+[2025-01-13 16:03:16,580][root][INFO] - Iteration 3, response_id 4: obj
+[2025-01-13 16:03:16,580][root][INFO] - Iteration 3, response_id 5: obj
+[2025-01-13 16:03:16,580][root][INFO] - Iteration 3, response_id 6: obj
+[2025-01-13 16:03:16,580][root][INFO] - Iteration 3, response_id 7: obj
+[2025-01-13 16:03:16,581][root][INFO] - Iteration 3, response_id 8: obj
+[2025-01-13 16:03:16,581][root][INFO] - Iteration 3, response_id 9: obj
+[2025-01-13 16:03:16,581][root][INFO] - Iteration 3, response_id 10: obj
+[2025-01-13 16:03:16,581][root][INFO] - Iteration 3 finished...
+[2025-01-13 16:03:16,581][root][INFO] - Best obj: 9.027958869934082, Best Code Path: problem_iter2_code3.py
+[2025-01-13 16:03:16,581][root][INFO] - Function Evals: 42
+[2025-01-13 16:03:17,661][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:03:17,952][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:03:17,997][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:03:18,119][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:03:18,237][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:03:18,417][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:03:18,428][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:03:18,535][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:03:18,599][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:03:20,054][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:03:23,282][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:03:23,458][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:03:23,676][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:03:23,779][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:03:23,801][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:03:23,806][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:03:23,912][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:03:24,043][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:03:24,049][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:03:24,234][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:03:36,126][root][INFO] - Iteration 4: Running Code 0
+[2025-01-13 16:03:38,496][root][INFO] - Iteration 4: Code Run 0 successful!
+[2025-01-13 16:03:38,496][root][INFO] - Iteration 4: Running Code 1
+[2025-01-13 16:03:41,168][root][INFO] - Iteration 4: Code Run 1 successful!
+[2025-01-13 16:03:41,168][root][INFO] - Iteration 4: Running Code 2
+[2025-01-13 16:03:43,696][root][INFO] - Iteration 4: Code Run 2 successful!
+[2025-01-13 16:03:43,696][root][INFO] - Iteration 4: Running Code 3
+[2025-01-13 16:03:46,339][root][INFO] - Iteration 4: Code Run 3 successful!
+[2025-01-13 16:03:46,339][root][INFO] - Iteration 4: Running Code 4
+[2025-01-13 16:03:48,332][root][INFO] - Iteration 4: Code Run 4 successful!
+[2025-01-13 16:03:48,332][root][INFO] - Iteration 4: Running Code 5
+[2025-01-13 16:03:50,767][root][INFO] - Iteration 4: Code Run 5 successful!
+[2025-01-13 16:03:50,767][root][INFO] - Iteration 4: Running Code 6
+[2025-01-13 16:03:53,209][root][INFO] - Iteration 4: Code Run 6 successful!
+[2025-01-13 16:03:53,209][root][INFO] - Iteration 4: Running Code 7
+[2025-01-13 16:03:55,633][root][INFO] - Iteration 4: Code Run 7 successful!
+[2025-01-13 16:03:55,633][root][INFO] - Iteration 4: Running Code 8
+[2025-01-13 16:03:58,174][root][INFO] - Iteration 4: Code Run 8 successful!
+[2025-01-13 16:03:58,174][root][INFO] - Iteration 4: Running Code 9
+[2025-01-13 16:04:00,790][root][INFO] - Iteration 4: Code Run 9 successful!
+[2025-01-13 16:04:00,791][root][INFO] - Iteration 4, response_id 0: Objective value: inf
+[2025-01-13 16:04:00,791][root][INFO] - Iteration 4, response_id 1: Objective value: inf
+[2025-01-13 16:04:00,791][root][INFO] - Iteration 4, response_id 2: Objective value: inf
+[2025-01-13 16:04:00,791][root][INFO] - Iteration 4, response_id 3: Objective value: inf
+[2025-01-13 16:04:00,791][root][INFO] - Iteration 4, response_id 4: Objective value: inf
+[2025-01-13 16:04:00,791][root][INFO] - Iteration 4, response_id 5: Objective value: inf
+[2025-01-13 16:04:00,792][root][INFO] - Iteration 4, response_id 6: Objective value: inf
+[2025-01-13 16:04:00,792][root][INFO] - Iteration 4, response_id 7: Objective value: inf
+[2025-01-13 16:04:00,792][root][INFO] - Iteration 4, response_id 8: Objective value: inf
+[2025-01-13 16:04:02,310][root][INFO] - Iteration 4, response_id 9: Objective value: inf
+[2025-01-13 16:04:02,311][root][INFO] - Iteration 4, response_id 0: obj
+[2025-01-13 16:04:02,311][root][INFO] - Iteration 4, response_id 1: obj
+[2025-01-13 16:04:02,311][root][INFO] - Iteration 4, response_id 2: obj
+[2025-01-13 16:04:02,311][root][INFO] - Iteration 4, response_id 3: obj
+[2025-01-13 16:04:02,311][root][INFO] - Iteration 4, response_id 4: obj
+[2025-01-13 16:04:02,311][root][INFO] - Iteration 4, response_id 5: obj
+[2025-01-13 16:04:02,311][root][INFO] - Iteration 4, response_id 6: obj
+[2025-01-13 16:04:02,311][root][INFO] - Iteration 4, response_id 7: obj
+[2025-01-13 16:04:02,311][root][INFO] - Iteration 4, response_id 8: obj
+[2025-01-13 16:04:02,312][root][INFO] - Iteration 4, response_id 9: obj
+[2025-01-13 16:04:02,312][root][INFO] - Iteration 4 finished...
+[2025-01-13 16:04:02,312][root][INFO] - Best obj: 9.027958869934082, Best Code Path: problem_iter2_code3.py
+[2025-01-13 16:04:02,312][root][INFO] - Function Evals: 52
+[2025-01-13 16:04:04,450][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:04:06,630][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-01-13 16:04:16,663][root][INFO] - Iteration 5: Running Code 0
+[2025-01-13 16:04:18,899][root][INFO] - Iteration 5: Code Run 0 successful!
+[2025-01-13 16:04:20,418][root][INFO] - Iteration 5, response_id 0: Objective value: inf
+[2025-01-13 16:04:20,418][root][INFO] - Iteration 5, response_id 0: obj
+[2025-01-13 16:04:20,418][root][INFO] - Iteration 5, response_id 1: obj
+[2025-01-13 16:04:20,418][root][INFO] - Iteration 5, response_id 2: obj
+[2025-01-13 16:04:20,418][root][INFO] - Iteration 5, response_id 3: obj
+[2025-01-13 16:04:20,419][root][INFO] - Iteration 5, response_id 4: obj
+[2025-01-13 16:04:20,419][root][INFO] - Iteration 5, response_id 5: obj
+[2025-01-13 16:04:20,419][root][INFO] - Iteration 5, response_id 6: obj
+[2025-01-13 16:04:20,419][root][INFO] - Iteration 5, response_id 7: obj
+[2025-01-13 16:04:20,419][root][INFO] - Iteration 5, response_id 8: obj
+[2025-01-13 16:04:20,419][root][INFO] - Iteration 5, response_id 9: obj
+[2025-01-13 16:04:20,419][root][INFO] - Iteration 5, response_id 10: obj
+[2025-01-13 16:04:20,419][root][INFO] - Iteration 5 finished...
+[2025-01-13 16:04:20,419][root][INFO] - Best obj: 9.027958869934082, Best Code Path: problem_iter2_code3.py
+[2025-01-13 16:04:20,419][root][INFO] - Function Evals: 53

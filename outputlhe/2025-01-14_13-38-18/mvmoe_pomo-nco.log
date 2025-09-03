@@ -1,0 +1,88 @@
+[2025-01-14 13:38:18,096][root][INFO] - Workspace: /root/reevo-main/outputs/mvmoe_pomo-nco/2025-01-14_13-38-18
+[2025-01-14 13:38:18,096][root][INFO] - Project Root: /root/reevo-main
+[2025-01-14 13:38:18,097][root][INFO] - Using LLM: GLM-4-Air
+[2025-01-14 13:38:18,097][root][INFO] - Using Algorithm: reevo
+[2025-01-14 13:38:21,189][root][INFO] - Problem: mvmoe_pomo
+[2025-01-14 13:38:21,189][root][INFO] - Problem description: Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+[2025-01-14 13:38:21,189][root][INFO] - Function name: heuristics
+[2025-01-14 13:38:21,189][root][INFO] - Evaluating seed function...
+[2025-01-14 13:38:21,189][root][INFO] - Seed function code: 
+import torch
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """A trivial implementation to improve upon."""
+    return torch.zeros_like(distance_matrix)
+[2025-01-14 13:38:21,189][root][INFO] - Iteration 0: Running Code 0
+[2025-01-14 13:38:23,517][root][INFO] - Iteration 0: Code Run 0 successful!
+[2025-01-14 13:39:18,161][root][INFO] - Iteration 0, response_id 0: Objective value: 15.650461196899414
+[2025-01-14 13:39:18,161][root][INFO] - Iteration 0, response_id 0: 0bj
+[2025-01-14 13:39:18,161][root][INFO] - Iteration 0: Elitist: 15.650461196899414
+[2025-01-14 13:39:18,161][root][INFO] - Iteration 0 finished...
+[2025-01-14 13:39:18,162][root][INFO] - Best obj: 15.650461196899414, Best Code Path: problem_iter0_code0.py
+[2025-01-14 13:39:18,162][root][INFO] - Function Evals: 1
+[2025-01-14 13:39:18,162][root][INFO] - Initial Population Prompt: 
+System Prompt: 
+You are an expert in the domain of optimization heuristics. Your task is to design heuristics that can effectively solve optimization problems.
+Your response outputs Python code and nothing else. Format your code as a Python code string: "```python ... ```".
+
+User Prompt: 
+Write a heuristics function for Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+The `heuristics` function takes as input a distance matrix (shape: n by n) and a vector of customer demands (shape: n), where the depot node is indexed by 0 and the customer demands are normalized by the total vehicle capacity. It returns prior indicators of how promising it is to include each edge in a solution. The return is of the same shape as the distance matrix. The heuristics should contain negative values for undesirable edges and positive values for promising ones. Use efficient vectorized implementations.
+
+def heuristics_v1(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """A trivial implementation to improve upon."""
+    return torch.zeros_like(distance_matrix)
+
+
+Refer to the format of a trivial design above. Be very creative and give `heuristics_v2`. Output code only and enclose your code with Python code block: ```python ... ```.
+
+- Calculation of the output attentional bias matrix does not allow to produce nan or inf values
+[2025-01-14 13:39:18,646][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-01-14 13:39:18,647][zhipuai.core._http_client][INFO] - Retrying request to /chat/completions in 0.840526 seconds
+[2025-01-14 13:39:19,558][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-01-14 13:39:19,559][zhipuai.core._http_client][INFO] - Retrying request to /chat/completions in 1.722011 seconds
+[2025-01-14 13:39:21,352][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-01-14 13:39:21,353][zhipuai.core._http_client][INFO] - Retrying request to /chat/completions in 3.796831 seconds
+[2025-01-14 13:39:25,246][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-01-14 13:39:25,247][utils.llm_client.base][ERROR] - Error code: 429, with error text {"error":{"code":"1113","message":"您的账户已欠费，请充值后重试。"}}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 567, in _request
+    return self._retry_request(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 622, in _retry_request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 567, in _request
+    return self._retry_request(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 622, in _retry_request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 567, in _request
+    return self._retry_request(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 622, in _retry_request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIReachLimitError: Error code: 429, with error text {"error":{"code":"1113","message":"您的账户已欠费，请充值后重试。"}}
+[2025-01-14 13:39:25,252][utils.llm_client.base][INFO] - Attempt 1 failed with error: Error code: 429, with error text {"error":{"code":"1113","message":"您的账户已欠费，请充值后重试。"}}
+[2025-01-14 13:39:26,324][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-01-14 13:39:26,325][zhipuai.core._http_client][INFO] - Retrying request to /chat/completions in 0.789636 seconds
+[2025-01-14 13:39:27,187][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-01-14 13:39:27,188][zhipuai.core._http_client][INFO] - Retrying request to /chat/completions in 1.924942 seconds

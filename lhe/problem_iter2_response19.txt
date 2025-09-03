@@ -1,0 +1,15 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Normalize demands to sum up to 1
+    demands = demands / demands.sum()
+    
+    # Check if a node can be reached within the vehicle capacity
+    can_reach = demands.unsqueeze(0) <= 1 - demands.unsqueeze(1)
+    
+    # Compute a promising score based on point-to-point distances and demand constraints
+    promising_score = 1 / (distance_matrix + 1e-6) * can_reach
+    
+    return promising_score
+```

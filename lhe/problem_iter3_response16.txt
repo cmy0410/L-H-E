@@ -1,0 +1,11 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    demands_normalized = demands.unsqueeze(-1)
+    dist_matrix_norm = distance_matrix / distance_matrix.max()
+    bias = 1 - dist_matrix_norm + demands_normalized
+    bias[bias == float('inf')] = 0
+    bias[bias < 0] = 0
+    return bias
+```

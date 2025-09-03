@@ -1,0 +1,28 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Initialize the heuristic matrix with zeros
+    heuristic_matrix = torch.zeros_like(distance_matrix)
+    
+    # The capacity is assumed to be the sum of all demands
+    capacity = torch.sum(demands)
+    
+    # Calculate the demand difference matrix and adjust for self-demand
+    demand_diff_matrix = torch.outer(demands, demands) - demands[:, None] - demands[None, :]
+    demand_diff_matrix -= torch.diag(demands)
+    
+    # Normalize the heuristic by capacity and distance, and adjust by demand differences
+    heuristic_matrix = capacity / (distance_matrix + 1e-10) - demand_diff_matrix
+    
+    # Set diagonal to a very negative value as you can't have a route to the same node
+    heuristic_matrix[torch.arange(len(demands)), torch.arange(len(demands))] = -float('inf')
+    
+    # Set the heuristic value for the depot to a high value for all nodes based on demand and distance
+    heuristic_matrix[0, 1:] = capacity * demands[1:] / (distance_matrix[0, 1:] + 1e-10)
+    
+    # Avoid negative values for edges by setting them to a very low positive number
+    heuristic_matrix[heuristic_matrix < 0] = 1e-10
+    
+    return heuristic_matrix
+```

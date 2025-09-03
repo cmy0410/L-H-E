@@ -1,0 +1,17 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Calculate the sum of demands for each pair of nodes
+    demand_matrix = demands[:, None] + demands
+    
+    # Calculate a normalized version of the distance matrix to penalize long distances
+    normalized_distance_matrix = distance_matrix / distance_matrix.max()
+    
+    # Calculate the attentional bias matrix based on a combination of distances and demands
+    attention_bias_matrix = 1 / (normalized_distance_matrix + demand_matrix)
+    attention_bias_matrix[torch.isnan(attention_bias_matrix)] = 0  # Replace nan values with 0
+    attention_bias_matrix[torch.isinf(attention_bias_matrix)] = 0  # Replace inf values with 0
+    
+    return attention_bias_matrix
+```

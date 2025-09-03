@@ -1,0 +1,28 @@
+```python
+import numpy as np
+
+def heuristics_v2(distance_matrix, demands):
+    n_nodes = len(demands)
+    capacity = np.sum(demands)
+    normalized_demands = demands / capacity
+
+    # Mask the diagonal to avoid self-loops
+    mask = np.eye(n_nodes, dtype=bool)
+    heuristic_values = np.zeros_like(distance_matrix)
+    heuristic_values[mask] = -np.inf
+
+    # Initialize heuristic with inverse distance
+    heuristic_values = 1.0 / (distance_matrix + 1e-10)
+
+    # Apply penalty for demand higher than capacity
+    heuristic_values[demands[:, None] + demands[None, :] > capacity] = -np.inf
+
+    # Adjust heuristic based on demand satisfaction
+    combined_demands = np.outer(normalized_demands, normalized_demands)
+    heuristic_values -= (combined_demands - 1) * (1 + heuristic_values)
+
+    # Set heuristic values to visit the depot again to -inf
+    heuristic_values[:, 0] = -np.inf
+
+    return heuristic_values
+```

@@ -1,0 +1,18 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Calculate the demand matrix indicating the demand ratio between nodes
+    demand_matrix = demands.unsqueeze(0) * demands.unsqueeze(1)
+
+    # Calculate the distance ratio matrix
+    distance_ratio = distance_matrix / torch.clamp(distance_matrix.max(), min=1e-6)
+
+    # Combine demand matrix and distance ratio to create the attentional bias matrix
+    attentional_bias = demand_matrix / distance_ratio
+
+    # Set values greater than 1e6 to 1e6 and less than -1e6 to -1e6
+    attentional_bias = torch.clamp(attentional_bias, min=-1e6, max=1e6)
+
+    return attentional_bias
+```

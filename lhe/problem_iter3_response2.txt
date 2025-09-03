@@ -1,0 +1,40 @@
+```python
+import numpy as np
+
+def heuristics_v2(distance_matrix: np.ndarray, demands: np.ndarray) -> np.ndarray:
+    capacity = np.sum(demands)
+    n_nodes = len(demands)
+    
+    # Create a mask for the diagonal (self-loops) and set them to a large negative number
+    np.fill_diagonal(distance_matrix, np.inf)
+    
+    # Calculate the demand difference matrix and adjust for self-loops
+    demand_diff = np.subtract.outer(demands, demands)
+    demand_diff[np.eye(n_nodes, dtype=bool)] = -np.inf
+    demand_diff[demand_diff == 0] = -np.inf
+    
+    # Scale down the demand difference to make it less dominant than distance
+    scaled_demand_diff = demand_diff / (capacity + 1e-10)
+    
+    # Calculate the inverse distance matrix and clip it to avoid numerical issues
+    inverse_distance = 1.0 / (distance_matrix + 1e-10)
+    inverse_distance = np.clip(inverse_distance, 0, 1e10)
+    
+    # Combine inverse distance and scaled demand difference for heuristic values
+    heuristic_values = inverse_distance + scaled_demand_diff
+    
+    # Compute the cumulative demand array for each node
+    cumulative_demand = np.cumsum(np.insert(demands, 0, 0))
+    
+    # Penalize edges that would cause capacity overflow
+    for i in range(1, n_nodes):
+        for j in range(1, n_nodes):
+            if cumulative_demand[j] - cumulative_demand[i] + demands[i] > capacity:
+                heuristic_values[j, i] = -np.inf
+    
+    # Reset the heuristic values for the depot column to -inf, except for the depot itself
+    heuristic_values[:, 0] = -np.inf
+    heuristic_values[0, 0] = 0  # Depot to itself is not penalized
+
+    return heuristic_values
+```

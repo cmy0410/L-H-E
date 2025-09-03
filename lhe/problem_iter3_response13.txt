@@ -1,0 +1,14 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    inv_distance = 1.0 / distance_matrix
+    inv_distance[torch.isinf(inv_distance)] = 0  # Set infinity values to 0 to prevent issues
+    inv_distance[torch.isnan(inv_distance)] = 0  # Set NaN values to 0 to prevent issues
+    
+    demand_diff = (demands.unsqueeze(0) - demands.unsqueeze(1))
+    
+    attention_bias = (inv_distance - 1) * demand_diff
+    
+    return attention_bias
+```

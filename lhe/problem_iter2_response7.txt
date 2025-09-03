@@ -1,0 +1,27 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Initial values for the heuristic matrix, start with a negative value for all edges
+    heuristic_matrix = -distance_matrix
+
+    # Add a large negative value for self-loops ( depot to depot ) as they are not allowed
+    heuristic_matrix[torch.arange(len(demands)), torch.arange(len(demands))] = float('-inf')
+
+    # Subtract the demand of each node from the heuristic value to encourage lower demand edges
+    heuristic_matrix -= demands.unsqueeze(0) - demands.unsqueeze(1)
+
+    # Apply a large negative penalty to edges that would result in exceeding the vehicle capacity
+    demand_pairs = demands.unsqueeze(0) + demands.unsqueeze(1)
+    over_capacity_penalty = (demand_pairs > 1).float() * float('-inf')
+    heuristic_matrix += over_capacity_penalty
+
+    # Encourage returning to the depot by setting the heuristic value for the depot to depot edge
+    # This value is set to a smaller negative value than other self-loops to reflect the end of a route
+    heuristic_matrix[0, 0] = -sum(demands) / 2
+
+    # Clamp negative values to avoid extremely large negative penalties that could lead to numerical issues
+    heuristic_matrix = torch.clamp(heuristic_matrix, min=-float('inf'), max=0)
+
+    return heuristic_matrix
+```

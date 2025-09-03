@@ -1,0 +1,50 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """
+    Improved heuristics function for CVRP that considers the demand constraints.
+    
+    Args:
+    - distance_matrix: torch.Tensor of shape (n, n), where n is the number of nodes.
+    - demands: torch.Tensor of shape (n), customer demands normalized by vehicle capacity.
+
+    Returns:
+    - heuristics_matrix: torch.Tensor of shape (n, n), containing heuristics values.
+    """
+
+    # Number of nodes excluding the depot
+    n_customers = demands.shape[0]
+    
+    # Initialize the heuristics matrix with zeros
+    heuristics_matrix = torch.zeros_like(distance_matrix)
+    
+    # Create a mask for the depot-customer and customer-customer edges
+    depot_mask = torch.eye(n_customers, device=distance_matrix.device)
+    customer_mask = torch.triu(torch.ones(n_customers, n_customers), diagonal=1, device=distance_matrix.device)
+    
+    # Calculate the maximum demand that can be served by a vehicle
+    max_demand_per_vehicle = demands.sum() / (n_customers - 1)
+    
+    # Compute the heuristic value for depot-customer edges
+    heuristics_matrix[0, 1:] = -(distance_matrix[0, 1:] + demands[1:] - max_demand_per_vehicle)
+    
+    # Compute the heuristic value for customer-customer edges
+    for i in range(1, n_customers):
+        for j in range(i+1, n_customers):
+            # Check if adding the current demand would exceed the vehicle capacity
+            if demands[i] + demands[j] <= max_demand_per_vehicle:
+                # If not, consider the edge
+                heuristics_matrix[i, j] = -distance_matrix[i, j]
+            else:
+                # If the demand is too high, penalize the edge
+                heuristics_matrix[i, j] = torch.inf
+        
+        # Ensure the heuristics for the depot are zero for customer-customer paths
+        heuristics_matrix[i, 0] = 0
+
+    # Apply the masks to ensure the depot-customer and customer-customer edges are considered
+    heuristics_matrix = heuristics_matrix * customer_mask
+    
+    return heuristics_matrix
+```

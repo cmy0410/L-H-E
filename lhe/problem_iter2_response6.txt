@@ -1,0 +1,29 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Initialize the heuristic matrix with zeros
+    heuristic_matrix = torch.zeros_like(distance_matrix)
+
+    # The capacity is assumed to be the sum of all demands
+    capacity = torch.sum(demands)
+
+    # Calculate the demand difference matrix, penalize edges where the sum of demands exceeds capacity
+    demand_diff_matrix = torch.outer(demands, demands) - capacity
+    demand_diff_matrix[demand_diff_matrix > 0] = float('-inf')
+    demand_diff_matrix = torch.clamp(demand_diff_matrix, min=-float('inf'))
+
+    # Calculate heuristic values by scaling demand differences and distances
+    heuristic_matrix = demand_diff_matrix + (capacity / (distance_matrix + 1e-10))
+
+    # Avoid self-loops by setting diagonal to negative infinity
+    heuristic_matrix[torch.arange(len(demands)), torch.arange(len(demands))] = -float('inf')
+
+    # Depot to customer edges are encouraged based on the demand of the customer and distance
+    heuristic_matrix[0, 1:] = demands[1:] / (distance_matrix[0, 1:] + 1e-10)
+
+    # Customer to depot edges are discouraged based on the distance alone
+    heuristic_matrix[1:, 0] = -distance_matrix[1:, 0] / (distance_matrix[1:, 0] + 1e-10)
+
+    return heuristic_matrix
+```

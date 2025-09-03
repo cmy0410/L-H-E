@@ -1,0 +1,40 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """
+    Heuristics function for the Capacitated Vehicle Routing Problem (CVRP).
+    
+    :param distance_matrix: torch.Tensor, shape (n, n), distance matrix where n is the number of nodes
+    :param demands: torch.Tensor, shape (n,), customer demands normalized by the total vehicle capacity
+    :return: torch.Tensor, shape (n, n), heuristic values indicating the promise of including each edge in a solution
+    """
+    # Create a tensor of ones for the depot node to handle the demand of the depot
+    depot_demand = torch.ones(1, demands.shape[0])
+    demands = torch.cat((depot_demand, demands), dim=0)
+
+    # Calculate the total demand that can be served by each node
+    total_demand_served = torch.sum(demands[:-1])
+
+    # Create a tensor of ones for the depot node to handle the demand of the depot
+    depot_capacity = torch.ones(1, demands.shape[0])
+    capacity_mask = demands <= depot_capacity
+
+    # Calculate the remaining capacity after visiting each node
+    remaining_capacity = torch.cumsum(demands[:-1] * capacity_mask[:-1], dim=0)
+
+    # Calculate the heuristic value for each edge
+    # Edges that lead to exceeding the capacity should have a negative value
+    # Edges that maintain or increase the capacity should have a positive value
+    heuristic_values = torch.where(
+        capacity_mask[:-1] & (remaining_capacity >= demands[1:]),
+        distance_matrix[1:, :-1] - (total_demand_served - remaining_capacity[1:]),
+        -distance_matrix[1:, :-1]
+    )
+
+    # Apply a negative mask to penalize edges that cannot be included due to capacity constraints
+    negative_mask = torch.logical_not(capacity_mask[:-1] & (remaining_capacity < demands[1:]))
+    heuristic_values[negative_mask] *= -1
+
+    return heuristic_values
+```

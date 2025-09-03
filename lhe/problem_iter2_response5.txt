@@ -1,0 +1,32 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Initialize heuristic matrix with negative distance values
+    heuristic_matrix = -distance_matrix.clone()
+    
+    # Set diagonal to -inf to prevent self-loops
+    torch.fill_(heuristic_matrix.diagonal(), float('-inf'))
+    
+    # Adjust heuristic for capacity constraints and demand distribution
+    demand_pairs = demands.unsqueeze(0) + demands.unsqueeze(1)
+    over_capacity_mask = demand_pairs > 1
+    
+    # Apply a heavy penalty to edges that would cause capacity overflow
+    heuristic_matrix[over_capacity_mask] = float('-inf')
+    
+    # Encourage lower demand edges
+    heuristic_matrix -= demands.unsqueeze(0)
+    
+    # Further penalize edges connected to high demand nodes
+    high_demand_penalty = (demands > 0.95).float() * float('-inf')
+    heuristic_matrix += high_demand_penalty.unsqueeze(0)
+    
+    # Encourage returning to the depot by slightly reducing the penalty for the depot to itself
+    heuristic_matrix[0, 0] += sum(demands) * 0.5
+    
+    # Ensure no NaNs or infs due to arithmetic operations
+    heuristic_matrix = torch.nan_to_num(heuristic_matrix, nan=-float('inf'), posinf=-float('inf'), neginf=-float('inf'))
+    
+    return heuristic_matrix
+```

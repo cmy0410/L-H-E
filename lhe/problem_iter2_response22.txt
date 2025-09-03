@@ -1,0 +1,41 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """
+    Improved heuristics function for Capacitated Vehicle Routing Problem (CVRP).
+    
+    Args:
+    - distance_matrix: torch.Tensor of shape (n, n), distance between each pair of nodes.
+    - demands: torch.Tensor of shape (n,), demand of each node except the depot (index 0).
+    
+    Returns:
+    - heuristics_matrix: torch.Tensor of shape (n, n), indicating the promise of each edge.
+    """
+    # Assuming the demands are normalized by the total vehicle capacity
+    # and the depot node (index 0) does not have a demand.
+    # Calculate the vehicle capacity as the maximum demand plus some buffer.
+    max_demand = demands.max() + 1e-3  # Adding a small buffer to avoid numerical issues
+    vehicle_capacity = torch.full_like(demands, max_demand)
+    
+    # Create a tensor of ones for the depot node to represent the return journey.
+    depot_capacity = torch.full_like(demands[:-1], 1)
+    
+    # Create a tensor that represents the remaining capacity of the vehicle at each node.
+    remaining_capacity = vehicle_capacity - demands
+    
+    # Calculate the heuristic value as the product of the remaining capacity and the distance.
+    # This assumes that edges with larger distances are less desirable due to time constraints.
+    heuristics_matrix = remaining_capacity[None, :] * distance_matrix[:, None]
+    
+    # Apply a penalty for negative values (demand exceeds capacity) or if the edge starts from the depot.
+    # The penalty is set to be the absolute value of the demand.
+    penalty = torch.where(heuristics_matrix < 0, torch.abs(demands[None, :]), torch.zeros_like(heuristics_matrix))
+    heuristics_matrix += penalty
+    
+    # Ensure the heuristics for the depot node are always negative as including the depot node itself
+    # does not make sense in terms of adding edges.
+    heuristics_matrix[0, :] = torch.full_like(heuristics_matrix[0, :], -1e6)
+    
+    return heuristics_matrix
+```

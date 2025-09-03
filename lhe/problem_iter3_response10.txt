@@ -1,0 +1,9 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    max_demand = demands.max()
+    scaled_matrix = distance_matrix / max_demand
+    edge_weights = torch.reciprocal(scaled_matrix + 0.1)  # Smooth reciprocal to avoid division by zero
+    return edge_weights
+```

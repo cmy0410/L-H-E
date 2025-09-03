@@ -1,0 +1,30 @@
+```python
+def heuristics_v2(distance_matrix, demands):
+    n = len(demands)
+    capacity = torch.sum(demands)
+    heuristics_matrix = torch.zeros((n, n))
+
+    # Normalize demands by capacity
+    normalized_demands = demands / capacity
+
+    # Compute edge utility score: inverse distance adjusted by demand
+    epsilon = 1e-10
+    edge_utility = 1 / (distance_matrix + epsilon)
+
+    # Set diagonal to zero as self-loops are not part of the solution
+    torch diagonal_mask = torch.arange(n).repeat(n, 1) == torch.arange(n).unsqueeze(0).T
+    heuristics_matrix[diagonal_mask] = 0
+
+    # Penalize depot connections directly
+    heuristics_matrix[0, :] = -torch.inf
+    heuristics_matrix[:, 0] = -torch.inf
+
+    # Calculate heuristic values, factoring in the normalized demand
+    heuristics_matrix = heuristics_matrix * edge_utility * (1 - normalized_demands[:, None])
+
+    # Penalize edges where the combined demand of two nodes exceeds the vehicle capacity
+    demand_pairs = (normalized_demands[:, None] + normalized_demands[None, :]) > 1
+    heuristics_matrix[demand_pairs] = -torch.inf
+
+    return heuristics_matrix
+```

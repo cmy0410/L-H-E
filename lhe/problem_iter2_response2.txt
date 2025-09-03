@@ -1,0 +1,38 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Initial values for the heuristic matrix, negative for all edges
+    heuristic_matrix = -distance_matrix
+    
+    # Set self-loops to a large negative value (depot to depot and customer to customer)
+    heuristic_matrix.diagonal().fill_(float('-inf'))
+
+    # Normalize demands by the max demand to get a ratio
+    max_demand = torch.max(demands)
+    demand_ratio = demands / max_demand
+
+    # Demand pair matrix, adjust for over-capacity penalties
+    demand_pairs = demand_ratio.unsqueeze(0) + demand_ratio.unsqueeze(1)
+    over_capacity_mask = demand_pairs > 1
+    over_capacity_penalty = over_capacity_mask.float() * float('-inf')
+    
+    # Apply over-capacity penalty to the heuristic matrix
+    heuristic_matrix += over_capacity_penalty
+
+    # Subtract the demand ratio from the heuristic values to encourage lower demand edges
+    heuristic_matrix -= demand_ratio.unsqueeze(0) - demand_ratio.unsqueeze(1)
+
+    # Adjust heuristic values for returning to the depot
+    # Subtract a penalty for edges that would return to the depot with high demand
+    heuristic_matrix[0, :] += (1 - demand_ratio) * float('-inf')
+    heuristic_matrix[:, 0] += (1 - demand_ratio) * float('-inf')
+
+    # Encourage the depot to itself edge by reducing the penalty
+    heuristic_matrix[0, 0] += sum(demand_ratio)
+
+    # Ensure no NaNs or Infs due to operations
+    heuristic_matrix = torch.nan_to_num(heuristic_matrix, nan=-float('inf'), posinf=-float('inf'), neginf=-float('inf'))
+
+    return heuristic_matrix
+```

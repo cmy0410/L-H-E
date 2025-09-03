@@ -1,0 +1,14 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    total_demand = demands.sum()
+    demand_normalized = demands / total_demand
+
+    normalized_matrix = distance_matrix / distance_matrix.max()
+
+    bias_matrix = -normalized_matrix + demand_normalized.view(-1, 1) + demand_normalized.view(1, -1)
+    bias_matrix = torch.clamp(bias_matrix, min=-1.0, max=1.0)
+
+    return bias_matrix
+```

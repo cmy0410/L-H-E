@@ -1,0 +1,8 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    demand_factor = 1 + demands.unsqueeze(0) + demands.unsqueeze(1)  # Consider the demands of nodes in the distance calculation
+    feasible_edges = (demand_factor <= 1).float()  # Penalize edges with combined high demand
+    return -distance_matrix * feasible_edges + (1-feasible_edges) * torch.mean(distance_matrix[feasible_edges==1])  # Promising edges are close and feasible
+```

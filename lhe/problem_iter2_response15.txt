@@ -1,0 +1,21 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    num_nodes = distance_matrix.size(0)
+    edge_promising = torch.zeros_like(distance_matrix)
+
+    # Calculate attentional bias based on the ratio of demand and distance
+    # Avoid division by zero in ratio calculation
+    non_zero_mask = (distance_matrix != 0)
+    ratio = torch.zeros_like(distance_matrix)
+    ratio[non_zero_mask] = demands[None, :] / distance_matrix[non_zero_mask]
+
+    # Penalize edges with high demand to distance ratio
+    edge_promising[ratio > 1] = -1
+
+    # Promote edges with low demand to distance ratio
+    edge_promising[ratio <= 0.1] = 1
+
+    return edge_promising
+```

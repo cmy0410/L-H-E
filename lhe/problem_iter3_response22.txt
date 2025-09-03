@@ -1,0 +1,13 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Calculate the attractiveness of each edge based on distance and demand
+    distance_attractiveness = 1 / (distance_matrix + 1e-6)  # Avoid division by zero
+    demand_attractiveness = demands.unsqueeze(0) * demands.unsqueeze(1)
+    
+    # Combine distance and demand attractiveness with emphasis on demand
+    attentional_bias_matrix = 0.7 * distance_attractiveness + 0.3 * demand_attractiveness
+    
+    return attentional_bias_matrix
+```

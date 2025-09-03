@@ -1,0 +1,41 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """
+    Improved heuristics for CVRP that considers the potential of each edge to form part of a solution.
+    Edges with a negative score are less desirable, while positive scores indicate promising edges.
+    The function utilizes vectorized operations for efficiency.
+    """
+    # Assuming the first row and first column are for the depot and should not be considered as edges.
+    distance_matrix = distance_matrix[1:, 1:]
+    demands = demands[1:]
+    
+    # Calculate the marginal gain for each edge, which is the difference between the total demand
+    # of the current node and the demand of the incoming node.
+    marginal_gain = (demands.unsqueeze(0) - demands.unsqueeze(1)).clamp(min=0)
+    
+    # Calculate the capacity left in the vehicle after visiting the current node.
+    remaining_capacity = torch.cat([torch.tensor([0], dtype=torch.float32), demands[:-1]], dim=0) - marginal_gain
+    
+    # Compute the minimum capacity left in the vehicle over all possible edges (excluding the depot).
+    min_remaining_capacity = remaining_capacity.min(dim=0)[0]
+    
+    # Create an attentional bias matrix where the bias for edges with negative marginal gain is set to 0.
+    # Edges that would cause the capacity to drop below the minimum remaining capacity have a negative bias.
+    # All other edges have a positive bias equal to the product of the remaining capacity and the distance.
+    attentional_bias = torch.where(
+        marginal_gain < 0,
+        torch.zeros_like(distance_matrix),
+        distance_matrix * remaining_capacity.unsqueeze(1)
+    )
+    
+    # Apply a penalty for edges that would cause the capacity to drop below the minimum remaining capacity.
+    attentional_bias = torch.where(
+        remaining_capacity.unsqueeze(1) <= min_remaining_capacity,
+        -torch.inf,
+        attentional_bias
+    )
+    
+    return attentional_bias
+```

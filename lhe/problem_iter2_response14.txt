@@ -1,0 +1,30 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    vehicle_capacity = demands.sum()
+    
+    # Calculate the importance of each edge based on demand and distance
+    demand_importance = 1 / (1 + demands)
+    distance_importance = 1 / (1 + distance_matrix)
+    
+    # Normalize importance values
+    max_demand_importance = demand_importance.max()
+    demand_importance /= max_demand_importance
+    max_distance_importance = distance_importance.max()
+    distance_importance /= max_distance_importance
+    
+    # Combine demand and distance importance
+    attention_bias = demand_importance * distance_importance
+    
+    # Exclude NaN and Inf values
+    attention_bias[torch.isnan(attention_bias)] = 0
+    attention_bias[torch.isinf(attention_bias)] = 0
+    
+    return attention_bias
+
+distance_matrix = torch.rand(5, 5)
+demands = torch.tensor([0.2, 0.3, 0.1, 0.2, 0.4])
+
+heuristics_v2(distance_matrix, demands)
+```

@@ -1,0 +1,21 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    n = distance_matrix.size(0)
+    
+    # Calculate the normalized demands
+    total_demand = torch.sum(demands)
+    normalized_demands = demands / total_demand
+    
+    # Calculate the demand matrix
+    demand_matrix = normalized_demands.unsqueeze(1) * torch.ones((1, n))
+    
+    # Calculate the attentional bias matrix based on distance and demand
+    attentional_bias = -distance_matrix + demand_matrix
+    
+    # Set undesirable edges to negative values
+    attentional_bias[distance_matrix == float('inf')] = float('-inf')
+    
+    return attentional_bias
+```

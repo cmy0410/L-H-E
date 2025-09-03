@@ -1,0 +1,21 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """A more advanced heuristics implementation using distance and demands information."""
+    max_demand = demands.max()
+    
+    # Generate edge attractiveness based on distances and demands
+    demand_bias = demands.unsqueeze(-1) + demands.unsqueeze(0)
+    dist_bias = 1 / distance_matrix.clamp(min=1e-6)  # Avoid zero distances causing issues
+    attention_bias = dist_bias - demand_bias / max_demand
+    
+    # Ignore self-attention and entries leading to infeasible routes
+    mask = torch.eye(distance_matrix.size(0), dtype=torch.bool)
+    mask |= (demand_bias >= max_demand) | torch.isinf(attention_bias) | torch.isnan(attention_bias)
+    
+    attention_bias[mask] = float('-inf')  # Set undesirable edges to negative infinity
+    
+    return attention_bias
+
+```  

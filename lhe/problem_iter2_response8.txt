@@ -1,0 +1,25 @@
+```python
+def heuristics_v2(distance_matrix, demands):
+    # Initial values for the heuristic matrix, negative for all edges
+    heuristic_matrix = -distance_matrix
+    
+    # Set the diagonal to a large negative value since no node should be connected to itself
+    heuristic_matrix diagonal = torch.fill_diagonal(heuristic_matrix, float('-inf'))
+    
+    # Subtract the demand of each customer from the heuristic value
+    # This encourages lower demand edges and penalizes higher demand ones
+    heuristic_matrix -= demands.unsqueeze(0) + demands.unsqueeze(1)
+    
+    # Apply a large negative penalty to edges that would result in overcapacity
+    demand_pairs = demands.unsqueeze(0) + demands.unsqueeze(1)
+    over_capacity_penalty = (demand_pairs > 1).float() * float('-inf')
+    heuristic_matrix += over_capacity_penalty
+    
+    # Reduce the penalty for the depot to itself to allow for return trips
+    heuristic_matrix[0, 0] += torch.sum(demands)
+    
+    # Ensure that the heuristic values are within an acceptable range to avoid extreme values
+    heuristic_matrix = torch.clamp(heuristic_matrix, min=-float('inf'), max=0)
+
+    return heuristic_matrix
+```

@@ -1,0 +1,21 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Initialize the attentional bias matrix
+    attn_bias = torch.zeros_like(distance_matrix)
+    
+    # Calculate the normalized demand increments
+    demand_increments = demands.unsqueeze(0) - demands.unsqueeze(1)
+    
+    # Avoid division by zero
+    demand_increments = torch.where(demand_increments == 0, torch.finfo(torch.float32).eps, demand_increments)
+    
+    # Calculate promising edges where demand difference decreases and distance decreases
+    attn_bias = 1 / demand_increments + 1 / distance_matrix
+    
+    # Filter out nan or inf values
+    attn_bias[(torch.isnan(attn_bias) | torch.isinf(attn_bias))] = 0
+    
+    return attn_bias
+```

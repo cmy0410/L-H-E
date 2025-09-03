@@ -1,0 +1,39 @@
+```python
+import numpy as np
+
+def heuristics_v2(distance_matrix: np.ndarray, demands: np.ndarray) -> np.ndarray:
+    n = len(demands)
+    vehicle_capacity = 1.0  # Assuming the vehicle capacity is normalized to 1
+
+    # Normalize demands by the vehicle capacity
+    normalized_demands = demands / vehicle_capacity
+
+    # Use an epsilon to avoid division by zero when inverting distances
+    epsilon = 1e-10
+    # Calculate inverse distance and clip it to avoid very large values
+    inverse_distance = 1 / (distance_matrix + epsilon)
+    inverse_distance = np.clip(inverse_distance, 0, 1e10)
+
+    # Avoid self-loops by setting the diagonal to a very negative number
+    heuristics_matrix = np.full_like(distance_matrix, -np.inf)
+    np.fill_diagonal(heuristics_matrix, -np.inf)
+
+    # Create a matrix to hold combined demands
+    combined_demands = np.dot(np.ones((n, 1)), normalized_demands) + normalized_demands
+
+    # Penalize edges where combined demand exceeds vehicle capacity
+    overcapacity_penalty = (combined_demands > vehicle_capacity) * -np.inf
+
+    # Calculate the penalty for each edge based on overcapacity
+    heuristics_matrix -= overcapacity_penalty
+
+    # Reward promising edges with a score based on inverse distance and demand satisfaction
+    demand_satisfaction = 1 - np.dot(normalized_demands[:, np.newaxis], normalized_demands[np.newaxis, :])
+    heuristics_matrix += inverse_distance * demand_satisfaction
+
+    # Reset self-loops and depot connections
+    heuristics_matrix[np.arange(n), np.arange(n)] = -np.inf
+    heuristics_matrix[:, 0] = heuristics_matrix[0, :] = 0
+
+    return heuristics_matrix
+```

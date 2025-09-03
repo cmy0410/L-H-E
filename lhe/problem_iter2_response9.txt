@@ -1,0 +1,28 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Initialize the heuristic matrix with the inverse of the distance matrix
+    # to prioritize shorter distances positively
+    heuristic_matrix = 1 / (distance_matrix + 1e-10)
+    
+    # Subtract the demand of each customer from the heuristic value
+    # This prioritizes routes with lower demand
+    heuristic_matrix -= demands[:, None]
+
+    # Subtract twice the demand for the source node (depot) since it must return empty
+    heuristic_matrix[0, 1:] -= 2 * demands[1:]
+
+    # Penalize overcapacity edges harshly by setting them to a very negative value
+    demand_pairs = demands.unsqueeze(0) + demands.unsqueeze(1)
+    over_capacity_penalty = (demand_pairs > 1).float() * float('-inf')
+    heuristic_matrix += over_capacity_penalty
+
+    # Set diagonal to -inf since self-loops are not allowed
+    heuristic_matrix[torch.arange(len(demands)), torch.arange(len(demands))] = -float('inf')
+
+    # Avoid negative values for edges by setting them to a small positive number
+    heuristic_matrix = torch.clamp(heuristic_matrix, min=0)
+
+    return heuristic_matrix
+```

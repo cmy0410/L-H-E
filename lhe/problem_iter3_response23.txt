@@ -1,0 +1,17 @@
+```python
+import torch
+import numpy as np
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    c = torch.mean(distance_matrix)  # calculate mean distance for normalization
+    demand_max = torch.max(demands)  # maximum demand among nodes
+
+    # Create an edge promising matrix where promising edges are favored by being closer and have lower demand
+    edge_promising = c / distance_matrix - demands / demand_max
+
+    # Handle extreme cases (prevent nan or inf values)
+    edge_promising[torch.isnan(edge_promising)] = 0
+    edge_promising[torch.isinf(edge_promising)] = edge_promising[torch.isfinite(edge_promising)].max() * 2
+    
+    return edge_promising
+```

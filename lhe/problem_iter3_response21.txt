@@ -1,0 +1,18 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    capacity = 1
+    normalized_demands = capacity * demands
+
+    max_demand = torch.max(normalized_demands)
+    normalized_demands += (max_demand - normalized_demands)  # to avoid capacity overflow
+
+    demand_difference = torch.abs(normalized_demands[:, None] - normalized_demands[None, :])
+    
+    edge_promising = -demand_difference + 100 / (distance_matrix + 1)
+
+    edge_promising[demand_difference == 0] = -100  # avoid picking edges between nodes with 0 demand difference
+
+    return edge_promising
+```

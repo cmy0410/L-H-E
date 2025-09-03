@@ -1,0 +1,14 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    total_demands = torch.sum(demands)
+    normalize_distance = distance_matrix / torch.max(distance_matrix)
+    demands_normalized_percent = demands / total_demands
+
+    demand_bias_dst = demands_normalized_percent[:, None]
+    distance_normalized_t = normalize_distance.transpose(0, 1)
+    demand_biased_solution = torch.mm(demand_bias_dst, distance_normalized_t).t().detach()
+
+    return demand_biased_solution
+```

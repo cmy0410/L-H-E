@@ -1,0 +1,15 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    total_demand = demands.sum()
+    demand_diff = torch.abs(demands.unsqueeze(0) - demands.unsqueeze(1)) / total_demand
+    distance_normalized = distance_matrix / distance_matrix.max()
+    
+    attention_bias = 1 / (1 + demand_diff) * 1 / (1 + distance_normalized)
+    
+    attention_bias[demand_diff == float('inf')] = 0
+    attention_bias[torch.isnan(attention_bias)] = 0
+    
+    return attention_bias
+```

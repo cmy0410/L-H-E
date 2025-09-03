@@ -1,0 +1,37 @@
+```python
+def heuristics_v2(distance_matrix, demands):
+    capacity = np.sum(demands)
+    n_nodes = len(demands)
+    
+    # Mask the diagonal as we cannot have self-loops in the routing
+    mask = np.eye(n_nodes, dtype=bool)
+    distance_matrix[mask] = np.inf  # Prevent self-loops
+    
+    # Calculate the demand difference matrix
+    demand_diff = np.subtract.outer(demands, demands)
+    demand_diff[mask | (demand_diff == 0)] = -np.inf  # Avoid self-loops and zero demand nodes
+    
+    # Scale the demand differences
+    scaled_demand_diff = demand_diff / (capacity + 1e-10)
+    
+    # Calculate the inverse distance matrix
+    inverse_distance = 1.0 / (distance_matrix + 1e-10)
+    
+    # Combine inverse distance and scaled demand difference
+    heuristic_values = inverse_distance + scaled_demand_diff
+    
+    # Penalize edges for capacity overflow without enumerating routes
+    demand_cumsum = np.cumsum(demands)
+    for i in range(n_nodes):
+        for j in range(n_nodes):
+            if i != j:
+                # Calculate the total demand if visiting node j after node i
+                total_demand = demand_cumsum[j] + (demand_cumsum[i-1] if i > 0 else 0)
+                if total_demand > capacity:
+                    heuristic_values[j, i] = -np.inf
+    
+    # Returning to the depot is not allowed except for the last node in a route
+    heuristic_values[:, 0] = -np.inf
+    
+    return heuristic_values
+```

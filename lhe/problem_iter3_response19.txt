@@ -1,0 +1,16 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    scale_factor = 1000  # Adjust scale factor as needed
+    
+    # Calculating penalty based on normalized demand differences
+    demand_diffs = torch.abs(demands.unsqueeze(0) - demands.unsqueeze(1)) / demands.max()
+    demand_penalty = scale_factor * demand_diffs
+    
+    # Penalize diagonal elements (returning to the same node)
+    torch.fill_diagonal(demand_penalty, float('inf'))
+    
+    # Combining distance and demand penalties
+    return -distance_matrix + demand_penalty
+```

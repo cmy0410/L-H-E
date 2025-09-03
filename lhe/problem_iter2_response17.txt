@@ -1,0 +1,20 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    n = distance_matrix.size(0)
+    
+    # Normalize the demands such that the sum of demands is equal to n - 1
+    normalized_demands = demands / torch.sum(demands) * (n - 1)
+    
+    # Calculate the attentional bias matrix based on the distance and demand
+    attention_bias = -(distance_matrix + 1 / normalized_demands.view(-1, 1))
+    
+    # Set negative infinity for edges where the demand exceeds the vehicle capacity
+    attention_bias[normalized_demands.view(-1, 1) > 1] = float('-inf')
+    
+    # Ensure no nan or inf values in the attention_bias matrix
+    attention_bias[torch.isnan(attention_bias) | torch.isinf(attention_bias)] = 0
+    
+    return attention_bias
+```  

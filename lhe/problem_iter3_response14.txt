@@ -1,0 +1,21 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    n = distance_matrix.size(0)
+    vehicle_capacity = demands.sum().item()
+
+    # Normalize demands
+    normalized_demands = demands / vehicle_capacity
+
+    # Calculate the savings for each edge
+    savings = torch.zeros_like(distance_matrix)
+    for i in range(1, n):
+        for j in range(i+1, n):
+            savings[i, j] = 2 * normalized_demands[i] + 2 * normalized_demands[j] - distance_matrix[0, i] - distance_matrix[0, j]
+
+    # Avoid nan or inf values
+    savings[(torch.isnan(savings) + torch.isinf(savings))] = -1e6
+
+    return savings
+```

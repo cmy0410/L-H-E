@@ -1,0 +1,19 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    demand_penalty = 1000  # Penalty for exceeding vehicle capacity
+    # Calculate the remaining capacity in each vehicle after servicing each node
+    remaining_capacity = 1 - demands
+    remaining_capacity = torch.cat((torch.zeros(1), remaining_capacity))  # Add the depot node
+    remaining_capacity_cumsum = remaining_capacity.cumsum(dim=0)
+
+    # Calculate the cost of adding another demand to each vehicle
+    capacity_shortage = torch.clamp(remaining_capacity_cumsum - 1, min=0)
+    demand_cost = demand_penalty * capacity_shortage
+
+    # Calculate the attentional bias based on distance and demand cost
+    attention_bias = -distance_matrix + demand_cost
+
+    return attention_bias
+```

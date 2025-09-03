@@ -1,0 +1,21 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    total_demand = demands.sum()
+    normalized_demand = demands / total_demand
+    capacity = 1.0  # Total vehicle capacity normalized to 1
+
+    distance_scaled = distance_matrix / distance_matrix.max()
+
+    distance_heuristic = 1 / (distance_scaled + 1)
+
+    demand_heuristic = torch.where(normalized_demand <= capacity, 1 / normalized_demand, torch.zeros_like(normalized_demand))
+
+    attention_bias = distance_heuristic * demand_heuristic
+
+    attention_bias[torch.isnan(attention_bias)] = 0
+    attention_bias[torch.isinf(attention_bias)] = 0
+    
+    return attention_bias
+```

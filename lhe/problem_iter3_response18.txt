@@ -1,0 +1,19 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    max_demand = torch.max(demands)
+    
+    distance_normalized = distance_matrix / torch.max(distance_matrix)
+    demand_normalized = demands / max_demand
+    
+    distance_weighted = 1 - distance_normalized  # Promote shorter distances
+    demand_weighted = demand_normalized  # Consider demands
+    
+    attention_bias = distance_weighted * demand_weighted
+    
+    # Remove nan or inf values
+    attention_bias[torch.isnan(attention_bias) | torch.isinf(attention_bias)] = torch.min(attention_bias[~torch.isnan(attention_bias) & ~torch.isinf(attention_bias)])
+    
+    return attention_bias
+```

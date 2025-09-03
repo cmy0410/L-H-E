@@ -1,0 +1,214 @@
+[2025-03-03 12:04:04,906][root][INFO] - Workspace: /root/reevo-main/outputs/mvmoe_pomo-nco/2025-03-03_12-04-04
+[2025-03-03 12:04:04,906][root][INFO] - Project Root: /root/reevo-main
+[2025-03-03 12:04:04,907][root][INFO] - Using LLM: GLM-3-turbo
+[2025-03-03 12:04:04,907][root][INFO] - Using Algorithm: reevo
+[2025-03-03 12:04:08,357][root][INFO] - Problem: mvmoe_pomo
+[2025-03-03 12:04:08,357][root][INFO] - Problem description: Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+[2025-03-03 12:04:08,357][root][INFO] - Function name: heuristics
+[2025-03-03 12:04:08,358][root][INFO] - Evaluating seed function...
+[2025-03-03 12:04:08,358][root][INFO] - Seed function code: 
+import torch
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """A trivial implementation to improve upon."""
+    return torch.zeros_like(distance_matrix)
+[2025-03-03 12:04:08,358][root][INFO] - Iteration 0: Running Code 0
+[2025-03-03 12:04:10,942][root][INFO] - Iteration 0: Code Run 0 successful!
+[2025-03-03 12:05:07,329][root][INFO] - Iteration 0, response_id 0: Objective value: 15.671195030212402
+[2025-03-03 12:05:07,329][root][INFO] - Iteration 0, response_id 0: 0bj
+[2025-03-03 12:05:07,330][root][INFO] - Iteration 0: Elitist: 15.671195030212402
+[2025-03-03 12:05:07,330][root][INFO] - Iteration 0 finished...
+[2025-03-03 12:05:07,330][root][INFO] - Best obj: 15.671195030212402, Best Code Path: problem_iter0_code0.py
+[2025-03-03 12:05:07,330][root][INFO] - Function Evals: 1
+[2025-03-03 12:05:07,330][root][INFO] - Initial Population Prompt: 
+System Prompt: 
+You are an expert in the domain of optimization heuristics. Your task is to design heuristics that can effectively solve optimization problems.
+Your response outputs Python code and nothing else. Format your code as a Python code string: "```python ... ```".
+
+User Prompt: 
+Write a heuristics function for Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+The `heuristics` function takes as input a distance matrix (shape: n by n) and a vector of customer demands (shape: n), where the depot node is indexed by 0 and the customer demands are normalized by the total vehicle capacity. It returns prior indicators of how promising it is to include each edge in a solution. The return is of the same shape as the distance matrix. The heuristics should contain negative values for undesirable edges and positive values for promising ones. Use efficient vectorized implementations.
+
+def heuristics_v1(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """A trivial implementation to improve upon."""
+    return torch.zeros_like(distance_matrix)
+
+
+Refer to the format of a trivial design above. Be very creative and give `heuristics_v2`. Output code only and enclose your code with Python code block: ```python ... ```.
+
+- Calculation of the output attentional bias matrix does not allow to produce nan or inf values
+[2025-03-03 12:05:08,656][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 12:05:08,657][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 12:05:08,660][utils.llm_client.base][INFO] - Attempt 1 failed with error: Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 12:05:09,938][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 12:05:09,939][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 12:05:09,940][utils.llm_client.base][INFO] - Attempt 2 failed with error: Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 12:05:11,299][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 12:05:11,299][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 12:05:11,300][utils.llm_client.base][INFO] - Attempt 3 failed with error: Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 12:05:12,549][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 12:05:12,550][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 12:05:12,551][utils.llm_client.base][INFO] - Attempt 4 failed with error: Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 12:05:13,799][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 12:05:13,800][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 12:05:13,802][utils.llm_client.base][INFO] - Attempt 5 failed with error: Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 12:05:15,065][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 12:05:15,066][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 12:05:15,066][utils.llm_client.base][INFO] - Attempt 6 failed with error: Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 12:05:16,347][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 12:05:16,348][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 12:05:16,348][utils.llm_client.base][INFO] - Attempt 7 failed with error: Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 12:05:17,643][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 12:05:17,643][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 12:05:17,644][utils.llm_client.base][INFO] - Attempt 8 failed with error: Error code: 400, with error text {"error":{"message":"GLM-3-turbo is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}

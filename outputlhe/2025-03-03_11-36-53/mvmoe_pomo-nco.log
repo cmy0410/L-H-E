@@ -1,0 +1,522 @@
+[2025-03-03 11:36:53,440][root][INFO] - Workspace: /root/reevo-main/outputs/mvmoe_pomo-nco/2025-03-03_11-36-53
+[2025-03-03 11:36:53,440][root][INFO] - Project Root: /root/reevo-main
+[2025-03-03 11:36:53,441][root][INFO] - Using LLM: GLM-4-Flash
+[2025-03-03 11:36:53,441][root][INFO] - Using Algorithm: reevo
+[2025-03-03 11:36:56,862][root][INFO] - Problem: mvmoe_pomo
+[2025-03-03 11:36:56,862][root][INFO] - Problem description: Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+[2025-03-03 11:36:56,862][root][INFO] - Function name: heuristics
+[2025-03-03 11:36:56,863][root][INFO] - Evaluating seed function...
+[2025-03-03 11:36:56,863][root][INFO] - Seed function code: 
+import torch
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """A trivial implementation to improve upon."""
+    return torch.zeros_like(distance_matrix)
+[2025-03-03 11:36:56,863][root][INFO] - Iteration 0: Running Code 0
+[2025-03-03 11:36:59,308][root][INFO] - Iteration 0: Code Run 0 successful!
+[2025-03-03 11:37:59,121][root][INFO] - Iteration 0, response_id 0: Objective value: 15.653764724731445
+[2025-03-03 11:37:59,122][root][INFO] - Iteration 0, response_id 0: 0bj
+[2025-03-03 11:37:59,122][root][INFO] - Iteration 0: Elitist: 15.653764724731445
+[2025-03-03 11:37:59,123][root][INFO] - Iteration 0 finished...
+[2025-03-03 11:37:59,123][root][INFO] - Best obj: 15.653764724731445, Best Code Path: problem_iter0_code0.py
+[2025-03-03 11:37:59,123][root][INFO] - Function Evals: 1
+[2025-03-03 11:37:59,123][root][INFO] - Initial Population Prompt: 
+System Prompt: 
+You are an expert in the domain of optimization heuristics. Your task is to design heuristics that can effectively solve optimization problems.
+Your response outputs Python code and nothing else. Format your code as a Python code string: "```python ... ```".
+
+User Prompt: 
+Write a heuristics function for Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+The `heuristics` function takes as input a distance matrix (shape: n by n) and a vector of customer demands (shape: n), where the depot node is indexed by 0 and the customer demands are normalized by the total vehicle capacity. It returns prior indicators of how promising it is to include each edge in a solution. The return is of the same shape as the distance matrix. The heuristics should contain negative values for undesirable edges and positive values for promising ones. Use efficient vectorized implementations.
+
+def heuristics_v1(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """A trivial implementation to improve upon."""
+    return torch.zeros_like(distance_matrix)
+
+
+Refer to the format of a trivial design above. Be very creative and give `heuristics_v2`. Output code only and enclose your code with Python code block: ```python ... ```.
+
+- Calculation of the output attentional bias matrix does not allow to produce nan or inf values
+[2025-03-03 11:38:00,261][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 11:38:00,262][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:00,265][utils.llm_client.base][INFO] - Attempt 1 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:01,596][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 11:38:01,596][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:01,597][utils.llm_client.base][INFO] - Attempt 2 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:02,824][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 11:38:02,826][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:02,828][utils.llm_client.base][INFO] - Attempt 3 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:04,059][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 11:38:04,060][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:04,062][utils.llm_client.base][INFO] - Attempt 4 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:05,298][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 11:38:05,299][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:05,301][utils.llm_client.base][INFO] - Attempt 5 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:06,532][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 11:38:06,533][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:06,535][utils.llm_client.base][INFO] - Attempt 6 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:07,763][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 11:38:07,764][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:07,766][utils.llm_client.base][INFO] - Attempt 7 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:09,005][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 11:38:09,006][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:09,008][utils.llm_client.base][INFO] - Attempt 8 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:10,242][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 11:38:10,243][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:10,245][utils.llm_client.base][INFO] - Attempt 9 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:11,588][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 11:38:11,589][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:11,591][utils.llm_client.base][INFO] - Attempt 10 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:12,834][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 11:38:12,836][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:12,837][utils.llm_client.base][INFO] - Attempt 11 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:14,163][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 11:38:14,166][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:14,168][utils.llm_client.base][INFO] - Attempt 12 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:15,405][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 11:38:15,406][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:15,408][utils.llm_client.base][INFO] - Attempt 13 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:16,657][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 11:38:16,658][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:16,658][utils.llm_client.base][INFO] - Attempt 14 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:17,892][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 11:38:17,893][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:17,895][utils.llm_client.base][INFO] - Attempt 15 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:19,132][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 11:38:19,133][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:19,134][utils.llm_client.base][INFO] - Attempt 16 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:20,366][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 11:38:20,367][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:20,368][utils.llm_client.base][INFO] - Attempt 17 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:21,610][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 11:38:21,611][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:21,613][utils.llm_client.base][INFO] - Attempt 18 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:22,952][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 11:38:22,953][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:22,954][utils.llm_client.base][INFO] - Attempt 19 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:24,201][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 11:38:24,202][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:24,204][utils.llm_client.base][INFO] - Attempt 20 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:25,441][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 11:38:25,442][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:25,444][utils.llm_client.base][INFO] - Attempt 21 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:26,704][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-03-03 11:38:26,705][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-03-03 11:38:26,707][utils.llm_client.base][INFO] - Attempt 22 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Flash is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}

@@ -1,0 +1,55 @@
+[2025-02-25 12:38:04,506][root][INFO] - Workspace: /root/reevo-main/outputs/mvmoe_pomo-nco/2025-02-25_12-38-04
+[2025-02-25 12:38:04,506][root][INFO] - Project Root: /root/reevo-main
+[2025-02-25 12:38:04,507][root][INFO] - Using LLM: openai/gpt-3.5-turbo-0613
+[2025-02-25 12:38:04,507][root][INFO] - Using Algorithm: reevo
+[2025-02-25 12:38:07,886][root][INFO] - Problem: mvmoe_pomo
+[2025-02-25 12:38:07,886][root][INFO] - Problem description: Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+[2025-02-25 12:38:07,886][root][INFO] - Function name: heuristics
+[2025-02-25 12:38:07,886][root][INFO] - Evaluating seed function...
+[2025-02-25 12:38:07,886][root][INFO] - Seed function code: 
+import torch
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """A trivial implementation to improve upon."""
+    return torch.zeros_like(distance_matrix)
+[2025-02-25 12:38:07,887][root][INFO] - Iteration 0: Running Code 0
+[2025-02-25 12:38:10,221][root][INFO] - Iteration 0: Code Run 0 successful!
+[2025-02-25 12:39:08,843][root][INFO] - Iteration 0, response_id 0: Objective value: 15.67566204071045
+[2025-02-25 12:39:08,845][root][INFO] - Iteration 0: Elitist: 15.67566204071045
+[2025-02-25 12:39:08,845][root][INFO] - Iteration 0 finished...
+[2025-02-25 12:39:08,845][root][INFO] - Best obj: 15.67566204071045, Best Code Path: problem_iter0_code0.py
+[2025-02-25 12:39:08,845][root][INFO] - Function Evals: 1
+[2025-02-25 12:39:09,354][root][INFO] - Initial Population Prompt: 
+System Prompt: 
+You are an expert in the domain of optimization heuristics. Your task is to design heuristics that can effectively solve optimization problems.
+Your response outputs Python code and nothing else. Format your code as a Python code string: "```python ... ```".
+
+User Prompt: 
+Write a heuristics function for Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+The `heuristics` function takes as input a distance matrix (shape: n by n) and a vector of customer demands (shape: n), where the depot node is indexed by 0 and the customer demands are normalized by the total vehicle capacity. It returns prior indicators of how promising it is to include each edge in a solution. The return is of the same shape as the distance matrix. The heuristics should contain negative values for undesirable edges and positive values for promising ones. Use efficient vectorized implementations.
+
+def heuristics_v1(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """A trivial implementation to improve upon."""
+    return torch.zeros_like(distance_matrix)
+
+
+Refer to the format of a trivial design above. Be very creative and give `heuristics_v2`. Output code only and enclose your code with Python code block: ```python ... ```.
+
+- Calculation of the output attentional bias matrix does not allow to produce nan or inf values
+[2025-02-25 12:39:10,823][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-02-25 12:39:12,549][root][INFO] - Iteration 1: Running Code 0
+[2025-02-25 12:39:15,005][root][INFO] - Iteration 1: Code Run 0 successful!
+[2025-02-25 12:40:17,618][root][INFO] - Iteration 1, response_id 0: Objective value: 15.66272258758545
+[2025-02-25 12:40:17,618][root][INFO] - Iteration 1: Elitist: 15.66272258758545
+[2025-02-25 12:40:17,618][root][INFO] - Iteration 1 finished...
+[2025-02-25 12:40:17,618][root][INFO] - Best obj: 15.66272258758545, Best Code Path: problem_iter1_code0.py
+[2025-02-25 12:40:17,618][root][INFO] - Function Evals: 2
+[2025-02-25 12:40:18,797][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-02-25 12:40:21,000][root][INFO] - Iteration 2: Running Code 0
+[2025-02-25 12:40:23,455][root][INFO] - Iteration 2: Code Run 0 successful!
+[2025-02-25 12:41:16,349][root][INFO] - Iteration 2, response_id 0: Objective value: 15.667006492614746
+[2025-02-25 12:41:16,350][root][INFO] - Iteration 2 finished...
+[2025-02-25 12:41:16,350][root][INFO] - Best obj: 15.66272258758545, Best Code Path: problem_iter1_code0.py
+[2025-02-25 12:41:16,350][root][INFO] - Function Evals: 3
+[2025-02-25 12:41:18,238][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-02-25 12:41:20,404][root][INFO] - Iteration 3: Running Code 0
+[2025-02-25 12:41:22,804][root][INFO] - Iteration 3: Code Run 0 successful!

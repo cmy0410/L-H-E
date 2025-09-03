@@ -1,0 +1,154 @@
+[2025-02-24 12:41:47,553][root][INFO] - Workspace: /root/reevo-main/outputs/mvmoe_pomo-nco/2025-02-24_12-41-47
+[2025-02-24 12:41:47,554][root][INFO] - Project Root: /root/reevo-main
+[2025-02-24 12:41:47,554][root][INFO] - Using LLM: openai/gpt-3.5-turbo-0613
+[2025-02-24 12:41:47,554][root][INFO] - Using Algorithm: reevo
+[2025-02-24 12:41:51,366][root][INFO] - Problem: mvmoe_pomo
+[2025-02-24 12:41:51,366][root][INFO] - Problem description: Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+[2025-02-24 12:41:51,366][root][INFO] - Function name: heuristics
+[2025-02-24 12:41:51,366][root][INFO] - Evaluating seed function...
+[2025-02-24 12:41:51,367][root][INFO] - Seed function code: 
+import torch
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """A trivial implementation to improve upon."""
+    return torch.zeros_like(distance_matrix)
+[2025-02-24 12:41:51,367][root][INFO] - Iteration 0: Running Code 0
+[2025-02-24 12:41:54,302][root][INFO] - Iteration 0: Code Run 0 successful!
+[2025-02-24 12:42:56,247][root][INFO] - Iteration 0, response_id 0: Objective value: 15.660435676574707
+[2025-02-24 12:42:56,248][root][INFO] - Iteration 0: Elitist: 15.660435676574707
+[2025-02-24 12:42:56,248][root][INFO] - Iteration 0 finished...
+[2025-02-24 12:42:56,248][root][INFO] - Best obj: 15.660435676574707, Best Code Path: problem_iter0_code0.py
+[2025-02-24 12:42:56,248][root][INFO] - Function Evals: 1
+[2025-02-24 12:42:56,709][root][INFO] - Initial Population Prompt: 
+System Prompt: 
+You are an expert in the domain of optimization heuristics. Your task is to design heuristics that can effectively solve optimization problems.
+Your response outputs Python code and nothing else. Format your code as a Python code string: "```python ... ```".
+
+User Prompt: 
+Write a heuristics function for Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+The `heuristics` function takes as input a distance matrix (shape: n by n) and a vector of customer demands (shape: n), where the depot node is indexed by 0 and the customer demands are normalized by the total vehicle capacity. It returns prior indicators of how promising it is to include each edge in a solution. The return is of the same shape as the distance matrix. The heuristics should contain negative values for undesirable edges and positive values for promising ones. Use efficient vectorized implementations.
+
+def heuristics_v1(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """A trivial implementation to improve upon."""
+    return torch.zeros_like(distance_matrix)
+
+
+Refer to the format of a trivial design above. Be very creative and give `heuristics_v2`. Output code only and enclose your code with Python code block: ```python ... ```.
+
+- Calculation of the output attentional bias matrix does not allow to produce nan or inf values
+[2025-02-24 12:42:58,569][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-02-24 12:42:59,989][root][INFO] - Iteration 1: Running Code 0
+[2025-02-24 12:43:02,413][root][INFO] - Iteration 1: Code Run 0 successful!
+[2025-02-24 12:44:07,751][root][INFO] - Iteration 1, response_id 0: Objective value: 15.66224193572998
+[2025-02-24 12:44:07,751][root][INFO] - Iteration 1 finished...
+[2025-02-24 12:44:07,751][root][INFO] - Best obj: 15.660435676574707, Best Code Path: problem_iter0_code0.py
+[2025-02-24 12:44:07,751][root][INFO] - Function Evals: 2
+[2025-02-24 12:44:08,856][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-02-24 12:44:12,706][root][INFO] - Iteration 2: Running Code 0
+[2025-02-24 12:44:15,144][root][INFO] - Iteration 2: Code Run 0 successful!
+[2025-02-24 12:45:10,129][root][INFO] - Iteration 2, response_id 0: Objective value: 15.6744384765625
+[2025-02-24 12:45:10,130][root][INFO] - Iteration 2 finished...
+[2025-02-24 12:45:10,130][root][INFO] - Best obj: 15.660435676574707, Best Code Path: problem_iter0_code0.py
+[2025-02-24 12:45:10,130][root][INFO] - Function Evals: 3
+[2025-02-24 12:45:11,426][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-02-24 12:45:17,084][root][INFO] - Iteration 3: Running Code 0
+[2025-02-24 12:45:19,496][root][INFO] - Iteration 3: Code Run 0 successful!
+[2025-02-24 12:46:16,084][root][INFO] - Iteration 3, response_id 0: Objective value: 15.658358573913574
+[2025-02-24 12:46:16,084][root][INFO] - Iteration 3: Elitist: 15.658358573913574
+[2025-02-24 12:46:16,085][root][INFO] - Iteration 3 finished...
+[2025-02-24 12:46:16,085][root][INFO] - Best obj: 15.658358573913574, Best Code Path: problem_iter3_code0.py
+[2025-02-24 12:46:16,085][root][INFO] - Function Evals: 4
+[2025-02-24 12:46:17,110][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-02-24 12:46:19,466][root][INFO] - Iteration 4: Running Code 0
+[2025-02-24 12:46:21,942][root][INFO] - Iteration 4: Code Run 0 successful!
+[2025-02-24 12:47:19,629][root][INFO] - Iteration 4, response_id 0: Objective value: 15.6701021194458
+[2025-02-24 12:47:19,629][root][INFO] - Iteration 4 finished...
+[2025-02-24 12:47:19,629][root][INFO] - Best obj: 15.658358573913574, Best Code Path: problem_iter3_code0.py
+[2025-02-24 12:47:19,629][root][INFO] - Function Evals: 5
+[2025-02-24 12:47:19,755][root][INFO] - Best Code Overall: import torch
+import torch
+
+# Improved heuristics function for Capacitated Vehicle Routing Problem
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    num_nodes = distance_matrix.size(0)
+    
+    # Calculate the pairwise capacity utilization matrix
+    capacity_utilization_matrix = demands.view(-1, 1) + demands.view(1, -1)
+    
+    # Mask out the infeasible edges where the total demand will exceed capacity
+    infeasible_mask = capacity_utilization_matrix > 1
+    feasible_mask = ~infeasible_mask
+    feasible_distance = distance_matrix * feasible_mask.to(torch.float)
+    
+    # Calculate the inverted distance (lower distance is more promising)
+    max_distance = feasible_distance.max()
+    inverted_distance = max_distance - feasible_distance
+    
+    # Add small value to invert the relationship and prevent inf values due to division by zero
+    inverted_dist_with_bias = inverted_distance + 1 / torch.clamp(feasible_distance, min=1e-6)
+    
+    return inverted_dist_with_bias
+[2025-02-24 12:47:19,755][root][INFO] - Best Code Path Overall: problem_iter3_code0.py
+[2025-02-24 12:47:19,755][root][INFO] - Running validation script...: /root/reevo-main/problems/mvmoe_pomo/eval_test.py
+[2025-02-24 12:55:34,086][root][INFO] - Time: 494.331 s
+[2025-02-24 12:55:34,087][root][INFO] - Validation script finished. Results are saved in best_code_overall_val_stdout.txt.
+[2025-02-24 12:55:34,087][root][INFO] - [*] Running ...
+[2025-02-24 12:55:34,087][root][INFO] - There are 3698944 (3.70 million) parameters in this neural network
+[2025-02-24 12:55:34,087][root][INFO] - >> Checkpoint (Epoch: 5000) Loaded!
+[2025-02-24 12:55:34,087][root][INFO] - 999999999999999999999999999
+[2025-02-24 12:55:34,087][root][INFO] - 10
+[2025-02-24 12:55:34,087][root][INFO] - episode  10/100, Elapsed[0.94m], Remain[8.45m], score:15.765, aug_score:15.661
+[2025-02-24 12:55:34,087][root][INFO] - score_AM.在这
+[2025-02-24 12:55:34,087][root][INFO] - <utils.AverageMeter object at 0x7f7122b1dad0>
+[2025-02-24 12:55:34,087][root][INFO] - 999999999999999999999999999
+[2025-02-24 12:55:34,087][root][INFO] - 10
+[2025-02-24 12:55:34,087][root][INFO] - episode  20/100, Elapsed[1.77m], Remain[7.07m], score:15.605, aug_score:15.480
+[2025-02-24 12:55:34,087][root][INFO] - score_AM.在这
+[2025-02-24 12:55:34,087][root][INFO] - <utils.AverageMeter object at 0x7f7122b1dad0>
+[2025-02-24 12:55:34,087][root][INFO] - 999999999999999999999999999
+[2025-02-24 12:55:34,087][root][INFO] - 10
+[2025-02-24 12:55:34,087][root][INFO] - episode  30/100, Elapsed[2.57m], Remain[5.99m], score:15.445, aug_score:15.274
+[2025-02-24 12:55:34,087][root][INFO] - score_AM.在这
+[2025-02-24 12:55:34,087][root][INFO] - <utils.AverageMeter object at 0x7f7122b1dad0>
+[2025-02-24 12:55:34,087][root][INFO] - 999999999999999999999999999
+[2025-02-24 12:55:34,088][root][INFO] - 10
+[2025-02-24 12:55:34,088][root][INFO] - episode  40/100, Elapsed[3.36m], Remain[5.04m], score:16.022, aug_score:15.897
+[2025-02-24 12:55:34,088][root][INFO] - score_AM.在这
+[2025-02-24 12:55:34,088][root][INFO] - <utils.AverageMeter object at 0x7f7122b1dad0>
+[2025-02-24 12:55:34,088][root][INFO] - 999999999999999999999999999
+[2025-02-24 12:55:34,088][root][INFO] - 10
+[2025-02-24 12:55:34,088][root][INFO] - episode  50/100, Elapsed[4.15m], Remain[4.15m], score:16.343, aug_score:16.199
+[2025-02-24 12:55:34,088][root][INFO] - score_AM.在这
+[2025-02-24 12:55:34,088][root][INFO] - <utils.AverageMeter object at 0x7f7122b1dad0>
+[2025-02-24 12:55:34,088][root][INFO] - 999999999999999999999999999
+[2025-02-24 12:55:34,088][root][INFO] - 10
+[2025-02-24 12:55:34,088][root][INFO] - episode  60/100, Elapsed[4.95m], Remain[3.30m], score:15.703, aug_score:15.553
+[2025-02-24 12:55:34,088][root][INFO] - score_AM.在这
+[2025-02-24 12:55:34,088][root][INFO] - <utils.AverageMeter object at 0x7f7122b1dad0>
+[2025-02-24 12:55:34,088][root][INFO] - 999999999999999999999999999
+[2025-02-24 12:55:34,088][root][INFO] - 10
+[2025-02-24 12:55:34,088][root][INFO] - episode  70/100, Elapsed[5.74m], Remain[2.46m], score:15.758, aug_score:15.618
+[2025-02-24 12:55:34,088][root][INFO] - score_AM.在这
+[2025-02-24 12:55:34,088][root][INFO] - <utils.AverageMeter object at 0x7f7122b1dad0>
+[2025-02-24 12:55:34,088][root][INFO] - 999999999999999999999999999
+[2025-02-24 12:55:34,088][root][INFO] - 10
+[2025-02-24 12:55:34,088][root][INFO] - episode  80/100, Elapsed[6.53m], Remain[1.63m], score:15.619, aug_score:15.437
+[2025-02-24 12:55:34,088][root][INFO] - score_AM.在这
+[2025-02-24 12:55:34,088][root][INFO] - <utils.AverageMeter object at 0x7f7122b1dad0>
+[2025-02-24 12:55:34,088][root][INFO] - 999999999999999999999999999
+[2025-02-24 12:55:34,088][root][INFO] - 10
+[2025-02-24 12:55:34,088][root][INFO] - episode  90/100, Elapsed[7.32m], Remain[0.81m], score:16.590, aug_score:16.465
+[2025-02-24 12:55:34,088][root][INFO] - score_AM.在这
+[2025-02-24 12:55:34,088][root][INFO] - <utils.AverageMeter object at 0x7f7122b1dad0>
+[2025-02-24 12:55:34,088][root][INFO] - 999999999999999999999999999
+[2025-02-24 12:55:34,088][root][INFO] - 10
+[2025-02-24 12:55:34,089][root][INFO] - episode 100/100, Elapsed[8.18m], Remain[0.00m], score:15.740, aug_score:15.616
+[2025-02-24 12:55:34,089][root][INFO] - score_AM.在这
+[2025-02-24 12:55:34,089][root][INFO] - <utils.AverageMeter object at 0x7f7122b1dad0>
+[2025-02-24 12:55:34,089][root][INFO] - 
+[2025-02-24 12:55:34,089][root][INFO] - *** Test Done on CVRP ***
+[2025-02-24 12:55:34,089][root][INFO] - NO-AUG SCORE: 15.8590, Gap: 2.5808
+[2025-02-24 12:55:34,089][root][INFO] - AUGMENTATION SCORE: 15.7200, Gap: 1.6693
+[2025-02-24 12:55:34,089][root][INFO] - 15.859 (2.581%)
+[2025-02-24 12:55:34,089][root][INFO] - 15.720 (1.669%)
+[2025-02-24 12:55:34,089][root][INFO] - [*] Average for -1: (15.859023284912109, 15.719950771331787)
+[2025-02-24 12:55:34,089][root][INFO] - Time: 494.331 s

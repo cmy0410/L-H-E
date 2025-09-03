@@ -1,0 +1,1094 @@
+[2025-01-06 11:26:54,458][root][INFO] - Workspace: /root/reevo-main/outputs/mvmoe_pomo-nco/2025-01-06_11-26-54
+[2025-01-06 11:26:54,458][root][INFO] - Project Root: /root/reevo-main
+[2025-01-06 11:26:54,459][root][INFO] - Using LLM: GLM-4-Air
+[2025-01-06 11:26:54,459][root][INFO] - Using Algorithm: reevo
+[2025-01-06 11:26:57,601][root][INFO] - Problem: mvmoe_pomo
+[2025-01-06 11:26:57,601][root][INFO] - Problem description: Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+[2025-01-06 11:26:57,601][root][INFO] - Function name: heuristics
+[2025-01-06 11:26:57,602][root][INFO] - Evaluating seed function...
+[2025-01-06 11:26:57,602][root][INFO] - Seed function code: 
+import torch
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """A trivial implementation to improve upon."""
+    return torch.zeros_like(distance_matrix)
+[2025-01-06 11:26:57,602][root][INFO] - Iteration 0: Running Code 0
+[2025-01-06 11:26:59,820][root][INFO] - Iteration 0: Code Run 0 successful!
+[2025-01-06 11:27:16,375][root][INFO] - Iteration 0, response_id 0: Objective value: 10.398561477661133
+[2025-01-06 11:27:16,375][root][INFO] - Iteration 0, response_id 0: 0bj
+[2025-01-06 11:27:16,375][root][INFO] - Iteration 0: Elitist: 10.398561477661133
+[2025-01-06 11:27:16,375][root][INFO] - Iteration 0 finished...
+[2025-01-06 11:27:16,375][root][INFO] - Best obj: 10.398561477661133, Best Code Path: problem_iter0_code0.py
+[2025-01-06 11:27:16,375][root][INFO] - Function Evals: 1
+[2025-01-06 11:27:16,375][root][INFO] - Initial Population Prompt: 
+System Prompt: 
+You are an expert in the domain of optimization heuristics. Your task is to design heuristics that can effectively solve optimization problems.
+Your response outputs Python code and nothing else. Format your code as a Python code string: "```python ... ```".
+
+User Prompt: 
+Write a heuristics function for Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+The `heuristics` function takes as input a distance matrix (shape: n by n) and a vector of customer demands (shape: n), where the depot node is indexed by 0 and the customer demands are normalized by the total vehicle capacity. It returns prior indicators of how promising it is to include each edge in a solution. The return is of the same shape as the distance matrix. The heuristics should contain negative values for undesirable edges and positive values for promising ones. Use efficient vectorized implementations.
+
+def heuristics_v1(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """A trivial implementation to improve upon."""
+    return torch.zeros_like(distance_matrix)
+
+
+Refer to the format of a trivial design above. Be very creative and give `heuristics_v2`. Output code only and enclose your code with Python code block: ```python ... ```.
+
+- Calculation of the output attentional bias matrix does not allow to produce nan or inf values
+[2025-01-06 11:27:17,344][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:17,348][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,352][utils.llm_client.base][INFO] - Attempt 1 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,369][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:17,370][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,372][utils.llm_client.base][INFO] - Attempt 1 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,376][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:17,377][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,379][utils.llm_client.base][INFO] - Attempt 1 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,382][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:17,382][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,383][utils.llm_client.base][INFO] - Attempt 1 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,451][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:17,452][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,453][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:17,454][utils.llm_client.base][INFO] - Attempt 1 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,455][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,458][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:17,458][utils.llm_client.base][INFO] - Attempt 1 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,460][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,461][utils.llm_client.base][INFO] - Attempt 1 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,469][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:17,471][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,472][utils.llm_client.base][INFO] - Attempt 1 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,562][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:17,563][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,565][utils.llm_client.base][INFO] - Attempt 1 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,607][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:17,609][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,610][utils.llm_client.base][INFO] - Attempt 1 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,717][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:17,719][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,721][utils.llm_client.base][INFO] - Attempt 1 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,728][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:17,729][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,729][utils.llm_client.base][INFO] - Attempt 1 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,738][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:17,739][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,740][utils.llm_client.base][INFO] - Attempt 1 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,747][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:17,749][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,750][utils.llm_client.base][INFO] - Attempt 1 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,821][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:17,825][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,826][utils.llm_client.base][INFO] - Attempt 1 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,828][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:17,828][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,829][utils.llm_client.base][INFO] - Attempt 1 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,832][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:17,833][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,835][utils.llm_client.base][INFO] - Attempt 1 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,842][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:17,843][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,845][utils.llm_client.base][INFO] - Attempt 1 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,857][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:17,857][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,858][utils.llm_client.base][INFO] - Attempt 1 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,867][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:17,873][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:17,874][utils.llm_client.base][INFO] - Attempt 1 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,209][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:19,210][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,211][utils.llm_client.base][INFO] - Attempt 2 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,229][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:19,230][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,230][utils.llm_client.base][INFO] - Attempt 2 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,268][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:19,268][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,269][utils.llm_client.base][INFO] - Attempt 2 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,299][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:19,300][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,301][utils.llm_client.base][INFO] - Attempt 2 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,313][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:19,314][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,316][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:19,316][utils.llm_client.base][INFO] - Attempt 2 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,318][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,319][utils.llm_client.base][INFO] - Attempt 2 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,361][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:19,362][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,363][utils.llm_client.base][INFO] - Attempt 2 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,462][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:19,463][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,465][utils.llm_client.base][INFO] - Attempt 2 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,566][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:19,567][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,568][utils.llm_client.base][INFO] - Attempt 2 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,601][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:19,603][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,604][utils.llm_client.base][INFO] - Attempt 2 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,631][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:19,632][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,633][utils.llm_client.base][INFO] - Attempt 2 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,665][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:19,666][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,668][utils.llm_client.base][INFO] - Attempt 2 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,677][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:19,677][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,678][utils.llm_client.base][INFO] - Attempt 2 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,694][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:19,695][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,696][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:19,696][utils.llm_client.base][INFO] - Attempt 2 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,696][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,697][utils.llm_client.base][INFO] - Attempt 2 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,771][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:19,772][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,773][utils.llm_client.base][INFO] - Attempt 2 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,775][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:19,775][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,776][utils.llm_client.base][INFO] - Attempt 2 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,812][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:19,812][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:19,813][utils.llm_client.base][INFO] - Attempt 2 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:21,099][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:21,100][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:21,102][utils.llm_client.base][INFO] - Attempt 3 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:21,110][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:21,111][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:21,113][utils.llm_client.base][INFO] - Attempt 3 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:21,133][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:21,134][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:21,135][utils.llm_client.base][INFO] - Attempt 3 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:21,194][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:21,195][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:21,195][utils.llm_client.base][INFO] - Attempt 3 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:21,210][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:21,211][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:21,213][utils.llm_client.base][INFO] - Attempt 3 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:21,216][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:21,218][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:21,219][utils.llm_client.base][INFO] - Attempt 3 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:21,272][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:21,286][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:21,287][utils.llm_client.base][INFO] - Attempt 3 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:21,344][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:21,346][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:21,347][utils.llm_client.base][INFO] - Attempt 3 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:21,469][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:21,469][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:21,470][utils.llm_client.base][INFO] - Attempt 3 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:21,500][httpx][INFO] - HTTP Request: POST https://openrouter.ai/api/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2025-01-06 11:27:21,502][utils.llm_client.base][ERROR] - Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/zhipuai.py", line 14, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/api_resource/chat/completions.py", line 96, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 809, in post
+    return cast(ResponseT, self.request(cast_type, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 495, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/zhipuai/core/_http_client.py", line 582, in _request
+    raise self._make_status_error(err.response) from None
+zhipuai.core._errors.APIRequestFailedError: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}
+[2025-01-06 11:27:21,503][utils.llm_client.base][INFO] - Attempt 3 failed with error: Error code: 400, with error text {"error":{"message":"GLM-4-Air is not a valid model ID","code":400},"user_id":"user_2qw8DsHJhXuUMUNsujU7LnUOOAy"}

@@ -1,0 +1,38 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    n = demands.shape[0]
+    capacity = torch.tensor([1.0] * n).repeat(n, 1).transpose(0, 1)
+    cumulative_demand = torch.cumsum(demands, dim=0)
+    
+    # Create masks for valid edges and edges to/from the depot
+    depot_mask = torch.eye(n, dtype=torch.bool)
+    valid_edge_mask = ~depot_mask & torch.triu(torch.ones(n, n), diagonal=1).bool()
+
+    # Calculate the potential drop in the heuristic value if the edge is chosen
+    heuristic_drop = demands[None, :-1] + demands[:, None] - (remaining_capacity_after_edge = capacity[None, :] - cumulative_demand[None, :-1])
+
+    # Determine if the edge would increase the capacity violation
+    capacity_violation = heuristic_drop > 0
+
+    # Apply the heuristic for valid edges
+    heuristics_values = torch.where(valid_edge_mask,
+                                    -distance_matrix[valid_edge_mask],
+                                    -(heuristic_drop * capacity_violation).sum(-1))
+
+    # Apply additional penalties for Depot-Depot edges and exceeding the last node's demand
+    depot_to_depot = torch.diag(distance_matrix[0])
+    excess_demand = torch.clamp(cumulative_demand[-1] - demands[-1], min=0)
+    Depot_penalty = torch.where(excess_demand < 1e-6, 0, -depot_to_depot[-1])
+
+    # Apply the Depot-Depot edge penalty for all valid edges to the depot
+    heuristics_values = torch.where(valid_edge_mask[-1],
+                                    heuristics_values - Depot_penalty,
+                                    heuristics_values)
+
+    # Apply the excess demand penalty, only if the last node's demand is not small
+    heuristics_values += excess_demand * Depot_penalty
+
+    return heuristics_values
+```

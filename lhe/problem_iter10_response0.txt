@@ -1,0 +1,20 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Normalize demand based on the maximum demand
+    max_demand = demands.max().item()
+    normalized_demands = demands / max_demand
+    
+    # Calculate the inverse of the normalized demand
+    inverse_normalized_demands = 1 / normalized_demands
+
+    # Initialize the attentional bias matrix with negative infinity
+    attentional_bias = torch.full_like(distance_matrix, float('-inf'))
+    
+    # Calculate the attentional bias for non-negative distances
+    non_negative_distances = distance_matrix >= 0
+    attentional_bias[non_negative_distances] = distance_matrix[non_negative_distances] * inverse_normalized_demands.unsqueeze(1)
+    
+    return attentional_bias
+```

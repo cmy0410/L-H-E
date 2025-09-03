@@ -1,0 +1,11 @@
+```python
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    max_demand = demands.max().item()
+    normalized_demands = demands / max_demand
+    
+    attentional_bias = distance_matrix / normalized_demands.unsqueeze(1)
+    attentional_bias = torch.where(attentional_bias <= 0, float('-inf'), attentional_bias)
+    attentional_bias[torch.eye(distance_matrix.shape[0], dtype=torch.bool)] = 0
+    
+    return attentional_bias
+```

@@ -1,0 +1,11 @@
+```python
+def heuristics_v2(distance_matrix, demands):
+    total_capacity = demands.sum()
+    normalized_demands = demands / total_capacity
+    
+    attentional_bias = distance_matrix * (1 / normalized_demands.unsqueeze(1))
+    attentional_bias[attentional_bias <= 0] = float('-inf')
+    attentional_bias[torch.eye(distance_matrix.shape[0], dtype=torch.bool)] = 0
+    
+    return attentional_bias
+```

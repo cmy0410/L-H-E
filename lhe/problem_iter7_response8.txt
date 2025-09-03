@@ -1,0 +1,41 @@
+```python
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """
+    Heuristics function for CVRP that assesses the promise of including each edge in a solution.
+
+    Args:
+    - distance_matrix: tensor of shape (n, n) representing distances between nodes.
+    - demands: tensor of shape (n,) representing demands of nodes normalized by vehicle capacity.
+
+    Returns:
+    - heuristics_values: tensor of shape (n, n) representing the heuristic value for each edge.
+    """
+    n = demands.shape[0]
+    demands = demands / (n * 1.0)  # Normalize demands
+    capacity = torch.ones(n)
+
+    # Calculate cumulative demand and heuristic drop
+    cumulative_demands = torch.cumsum(demands, dim=0)
+    heuristic_drop = demands[None, :-1] + demands[:, None] - (
+        remaining_capacity_after_edge=capacity[None, :] - cumulative_demands[None, :-1])
+
+    # Identify valid edges and those that would exceed capacity
+    valid_edges = torch.triu(torch.ones(n, n), diagonal=1).bool()
+    capacity_violation = heuristic_drop > 0
+
+    # Apply the heuristic: negative distance for valid edges, otherwise a large negative value
+    heuristics_values = torch.where(valid_edges,
+                                    -distance_matrix * (1 - capacity_violation),
+                                    torch.full_like(distance_matrix, float('-inf')))
+
+    # Penalty for returning to the depot (visiting the depot more than once)
+    depot_penalty = torch.where(cumulative_demands[-1] < 1e-6,
+                                torch.full_like(distance_matrix[-1, :], float('-inf')),
+                                -distance_matrix[-1, :])
+
+    heuristics_values = torch.where(torch.eye(n, dtype=torch.bool),
+                                    depot_penalty,
+                                    heuristics_values)
+
+    return heuristics_values
+```

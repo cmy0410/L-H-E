@@ -1,0 +1,17 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    total_demand = demands.sum().item()
+    normalized_demands = demands / total_demand
+    inverse_normalized_demands = 1 / normalized_demands
+
+    attentional_bias = distance_matrix * inverse_normalized_demands.unsqueeze(1)
+    attentional_bias[~(attentional_bias >= 0)] = float('-inf')
+    attentional_bias[(torch.isnan(attentional_bias) | torch.isinf(attentional_bias))] = 0
+    attentional_bias[torch.eye(distance_matrix.shape[0], dtype=torch.bool)] = 0
+
+    return attentional_bias
+```
+  
+In this improved version, we directly mask the attentional bias matrix using a combination of logical operations instead of using `masked_fill_` function multiple times. This simplifies the code and makes it more efficient.

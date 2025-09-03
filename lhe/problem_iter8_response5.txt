@@ -1,0 +1,18 @@
+```python
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Normalize demand based on the maximum demand
+    max_demand = demands.max().item()
+    normalized_demands = demands / max_demand
+
+    # Calculate the attentional bias
+    attentional_bias = distance_matrix / normalized_demands.unsqueeze(1)
+
+    # Set negative values and nan/inf values to -inf
+    attentional_bias[(attentional_bias <= 0) | (~torch.isfinite(attentional_bias))] = float('-inf')
+
+    # Set self-edges values to 0
+    attentional_bias[torch.eye(distance_matrix.shape[0], dtype=torch.bool)] = 0
+
+    return attentional_bias
+```
+The improved `heuristics_v2` function checks for negative values, nan, and inf values in the attentional bias matrix using `(attentional_bias <= 0) | (~torch.isfinite(attentional_bias))`. This condition sets these values to `-inf` for better clarity and to avoid using invalid values during optimization.

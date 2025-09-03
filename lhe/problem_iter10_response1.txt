@@ -1,0 +1,14 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Normalize demand based on the maximum demand
+    max_demand = demands.max().item()
+    normalized_demands = demands / max_demand
+
+    # Calculate the attentional bias
+    attentional_bias = torch.where(distance_matrix > 0, distance_matrix / normalized_demands.unsqueeze(1), 0)
+
+    return attentional_bias
+```
+The `heuristics_v2` function improves on the previous versions by using a single `torch.where` call to handle both the filtering of negative values and the multiplication with the inverse normalized demands. This results in a more concise and efficient implementation.

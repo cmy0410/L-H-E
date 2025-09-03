@@ -1,0 +1,58 @@
+```python
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """
+    Heuristics function for the Capacitated Vehicle Routing Problem (CVRP).
+    
+    :param distance_matrix: Torch tensor of shape (n, n) representing the distance between each pair of nodes.
+    :param demands: Torch tensor of shape (n,) representing the demand of each node, normalized by the total vehicle capacity.
+    :return: Torch tensor of shape (n, n) representing the heuristic value for each edge.
+    """
+    # Normalize demands and create a tensor of zeros like the distance matrix for the heuristic values
+    demands_flat = demands.flatten()
+    max_demand = demands_flat.max()
+    heuristic_values = torch.zeros_like(distance_matrix)
+    
+    # Compute a mask for nodes that are not the depot (1 for nodes, 0 for the depot)
+    nodes_mask = torch.ones_like(demands)
+    nodes_mask[0] = 0
+    
+    # Compute a mask for the depot to avoid double counting when backtracking from the depot
+    depot_mask = torch.zeros_like(demands)
+    depot_mask[0] = 1
+    
+    # Compute the forward and backward passes for the heuristic values
+    current_demand = 0.0
+    for i in range(1, demands.size(0)):
+        if demands_flat[i] > 0:
+            # Check if adding the current node's demand exceeds capacity
+            if current_demand + demands_flat[i] <= max_demand:
+                # If not, add the demand and update the heuristic value
+                heuristic_values[0, i] = distance_matrix[0, i] + current_demand
+                current_demand += demands_flat[i]
+            else:
+                # If so, the heuristic value is set to a large number (negative value indicating it's not promising)
+                heuristic_values[0, i] = float('-inf')
+        else:
+            # If the node's demand is zero, it does not contribute to the capacity, but we still need to visit it
+            heuristic_values[0, i] = distance_matrix[0, i]
+    
+    # Backward pass: from all other nodes to the depot
+    for i in range(demands.size(0) - 2, -1, -1):
+        if demands_flat[i] > 0:
+            # Check if the current node can be visited without exceeding capacity
+            if current_demand + demands_flat[i] <= max_demand:
+                # Update the heuristic value considering the current node's demand
+                heuristic_values[i, 0] = distance_matrix[i, 0] + current_demand
+                current_demand += demands_flat[i]
+            else:
+                # If adding the current node's demand exceeds capacity, set to a large number
+                heuristic_values[i, 0] = float('-inf')
+        else:
+            # If the node's demand is zero, it does not contribute to the capacity
+            heuristic_values[i, 0] = distance_matrix[i, 0]
+    
+    # Apply a mask to ensure the depot has a heuristic value of 0 and no negative values for other nodes
+    heuristic_values = heuristic_values * nodes_mask + depot_mask
+    
+    return heuristic_values
+```

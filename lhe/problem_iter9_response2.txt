@@ -1,0 +1,41 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """
+    Heuristics function for the Capacitated Vehicle Routing Problem (CVRP).
+    
+    :param distance_matrix: Torch tensor of shape (n, n) representing the distance between each pair of nodes.
+    :param demands: Torch tensor of shape (n,) representing the demand of each node, normalized by the total vehicle capacity.
+    :return: Torch tensor of shape (n, n) representing the heuristic value for each edge.
+    """
+    # Normalize demands and create a tensor of zeros like the distance matrix for the heuristic values
+    demands_flat = demands.flatten()
+    max_demand = demands_flat.max()
+    heuristic_values = torch.zeros_like(distance_matrix)
+    
+    # Create a mask for nodes that are not the depot (1 for nodes, 0 for the depot)
+    nodes_mask = torch.ones_like(demands)
+    nodes_mask[0] = 0
+    
+    # Calculate the heuristic values using a single pass approach
+    current_demand = 0.0
+    for i in range(1, demands.size(0)):
+        if demands_flat[i] > 0:
+            # Check if adding the current node's demand exceeds capacity
+            if current_demand + demands_flat[i] <= max_demand:
+                # Update the heuristic value considering the current node's demand
+                heuristic_values[0, i] = distance_matrix[0, i] + current_demand
+                current_demand += demands_flat[i]
+            else:
+                # If adding the current node's demand exceeds capacity, set to a large number
+                heuristic_values[0, i] = float('-inf')
+        else:
+            # If the node's demand is zero, it does not contribute to the capacity
+            heuristic_values[0, i] = distance_matrix[0, i]
+    
+    # Apply a mask to ensure the depot has a heuristic value of 0 and no negative values for other nodes
+    heuristic_values = heuristic_values * nodes_mask
+    
+    return heuristic_values
+```

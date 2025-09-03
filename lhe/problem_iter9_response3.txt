@@ -1,0 +1,49 @@
+```python
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """
+    Heuristics function for the Capacitated Vehicle Routing Problem (CVRP).
+    
+    :param distance_matrix: Torch tensor of shape (n, n) representing the distance between each pair of nodes.
+    :param demands: Torch tensor of shape (n,) representing the demand of each node, normalized by the total vehicle capacity.
+    :return: Torch tensor of shape (n, n) representing the heuristic value for each edge.
+    """
+    # Normalize demands and create a tensor of zeros like the distance matrix for the heuristic values
+    demands_normalized = demands / demands.max()
+    heuristic_values = torch.zeros_like(distance_matrix)
+    
+    # Create a mask for nodes that are not the depot (1 for nodes, 0 for the depot)
+    nodes_mask = torch.ones_like(demands)
+    nodes_mask[0] = 0
+    
+    # Set the depot heuristic value to 0
+    heuristic_values[0, 0] = 0
+    
+    # Calculate the forward and backward passes for the heuristic values
+    current_demand = 0.0
+    for i in range(1, demands.size(0)):
+        if demands_normalized[i] > 0:
+            heuristic_values[0, i] = distance_matrix[0, i] + current_demand
+            if current_demand + demands_normalized[i] > 1:
+                heuristic_values[0, i] = float('-inf')
+                current_demand = 0
+            else:
+                current_demand += demands_normalized[i]
+        else:
+            heuristic_values[0, i] = distance_matrix[0, i]
+    
+    current_demand = 0.0
+    for i in range(demands.size(0) - 2, -1, -1):
+        if demands_normalized[i] > 0:
+            heuristic_values[i, 0] = distance_matrix[i, 0] + current_demand
+            if current_demand + demands_normalized[i] > 1:
+                heuristic_values[i, 0] = float('-inf')
+            else:
+                current_demand += demands_normalized[i]
+        else:
+            heuristic_values[i, 0] = distance_matrix[i, 0]
+    
+    # Apply a mask to ensure the depot has a heuristic value of 0 and no negative values for other nodes
+    heuristic_values = heuristic_values * nodes_mask
+    
+    return heuristic_values
+```

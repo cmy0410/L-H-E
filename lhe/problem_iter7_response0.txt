@@ -1,0 +1,26 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Normalize demand based on the sum of demands
+    total_demand = demands.sum().item()
+    normalized_demands = demands / total_demand
+
+    # Calculate the inverse of the normalized demand
+    inverse_normalized_demands = 1 / normalized_demands
+
+    # Calculate the attentional bias
+    attentional_bias = distance_matrix * inverse_normalized_demands.unsqueeze(1)
+
+    # Set negative and nan/inf values to -inf
+    attentional_bias.masked_fill_(attentional_bias < 0, float('-inf'))
+    attentional_bias.fill_(0.0)
+
+    return attentional_bias
+```
+The code above reflects the improvements mentioned in the prior reflection:
+
+1. Normalizes the demand based on the sum of demands.
+2. Uses `fill_()` method instead of direct indexing to set negative values.
+3. Fills the attentional bias tensor with zeros instead of using a specific fill value for `float('-inf')`.
+Please note that this code assumes the availability of torch module for tensor operations.

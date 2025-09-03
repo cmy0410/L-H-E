@@ -1,0 +1,40 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    n = demands.shape[0]
+    demands = demands / (1.0 * n)
+    capacity = torch.ones(n) - demands
+    cumulative_demand = torch.cumsum(demands, dim=0)
+
+    # Create a mask for valid edges (not to the depot and not from the depot)
+    depot_mask = torch.eye(n, dtype=torch.bool)
+    valid_edge_mask = ~depot_mask & torch.triu(torch.ones(n, n), diagonal=1).bool()
+
+    # Calculate the potential drop in the heuristic value if the edge is chosen
+    heuristic_drop = demands.unsqueeze(0) + demands.unsqueeze(1) - (capacity.unsqueeze(-1) - cumulative_demand.unsqueeze(1))
+
+    # Determine if the edge would increase the capacity violation
+    capacity_violation = heuristic_drop > 0
+
+    # Apply the heuristic: negative distance for valid edges, otherwise penalty
+    heuristics_values = torch.where(valid_edge_mask,
+                                    -distance_matrix[valid_edge_mask],
+                                    -(heuristic_drop * capacity_violation).sum(-1))
+
+    # Penalize edges that would not increase the violation less than the depot to depot distance
+    depot_to_depot = torch.diag(distance_matrix[0])
+    depot_to_depot_penalty = torch.where(cumulative_demand[-1] < 1e-6, 0, -depot_to_depot[-1])
+    heuristics_values = torch.where(~capacity_violation & valid_edge_mask,
+                                    heuristics_values - depot_to_depot_penalty,
+                                    heuristics_values)
+
+    # Penalize returning to the depot if not the last node
+    last_node_mask = torch.zeros_like(depot_mask, dtype=torch.bool)
+    last_node_mask[n - 1] = True
+    heuristics_values = torch.where(last_node_mask,
+                                    heuristics_values,
+                                    heuristics_values - distance_matrix[-1, :])
+
+    return heuristics_values
+```

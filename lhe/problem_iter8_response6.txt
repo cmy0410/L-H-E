@@ -1,0 +1,22 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    max_demand = demands.max().item()
+    normalized_demands = demands / max_demand
+    inverse_normalized_demands = 1 / normalized_demands
+
+    attentional_bias = distance_matrix * inverse_normalized_demands.unsqueeze(1)
+    attentional_bias.masked_fill_(attentional_bias < 0, float('-inf'))
+    attentional_bias[torch.isnan(attentional_bias)] = float('-inf')
+    attentional_bias[torch.isinf(attentional_bias)] = float('-inf')
+    attentional_bias[torch.eye(distance_matrix.shape[0], dtype=torch.bool)] = 0
+
+    return attentional_bias
+```
+Explanation:
+1. The code first calculates the maximum demand and normalizes the demands based on the maximum demand, same as the previous version.
+2. Instead of directly multiplying the distance matrix with the normalized demands, the code calculates the inverse of the normalized demands.
+3. The multiplication is done between the distance matrix and the inverse normalized demands, ensuring efficient vectorized calculation.
+4. The code then applies the necessary transformations to handle negative values, NaN, and Inf values in the attentional bias matrix.
+5. Lastly, it sets the diagonal elements of the attentional bias matrix to 0 since self-loops are not allowed in the CVRP.

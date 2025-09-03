@@ -1,0 +1,1093 @@
+[2024-12-17 15:27:20,942][root][INFO] - Workspace: /root/reevo-main/outputs/mvmoe_pomo-nco/2024-12-17_15-27-20
+[2024-12-17 15:27:20,942][root][INFO] - Project Root: /root/reevo-main
+[2024-12-17 15:27:20,943][root][INFO] - Using LLM: GLM-3-turbo
+[2024-12-17 15:27:20,943][root][INFO] - Using Algorithm: reevo
+[2024-12-17 15:27:24,182][root][INFO] - Problem: mvmoe_pomo
+[2024-12-17 15:27:24,183][root][INFO] - Problem description: Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+[2024-12-17 15:27:24,183][root][INFO] - Function name: heuristics
+[2024-12-17 15:27:24,183][root][INFO] - Evaluating seed function...
+[2024-12-17 15:27:24,183][root][INFO] - Seed function code: 
+import torch
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """A trivial implementation to improve upon."""
+    return torch.zeros_like(distance_matrix)
+[2024-12-17 15:27:24,183][root][INFO] - Iteration 0: Running Code 0
+[2024-12-17 15:27:26,493][root][INFO] - Iteration 0: Code Run 0 successful!
+[2024-12-17 15:27:44,801][root][INFO] - Iteration 0, response_id 0: Objective value: 10.39310359954834
+[2024-12-17 15:27:44,802][root][INFO] - Iteration 0, response_id 0: obj
+[2024-12-17 15:27:44,802][root][INFO] - Iteration 0: Elitist: 10.39310359954834
+[2024-12-17 15:27:44,802][root][INFO] - Iteration 0 finished...
+[2024-12-17 15:27:44,802][root][INFO] - Best obj: 10.39310359954834, Best Code Path: problem_iter0_code0.py
+[2024-12-17 15:27:44,802][root][INFO] - Function Evals: 1
+[2024-12-17 15:27:45,240][root][INFO] - Initial Population Prompt: 
+System Prompt: 
+You are an expert in the domain of optimization heuristics. Your task is to design heuristics that can effectively solve optimization problems.
+Your response outputs Python code and nothing else. Format your code as a Python code string: "```python ... ```".
+
+User Prompt: 
+Write a heuristics function for Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+The `heuristics` function takes as input a distance matrix (shape: n by n) and a vector of customer demands (shape: n), where the depot node is indexed by 0 and the customer demands are normalized by the total vehicle capacity. It returns prior indicators of how promising it is to include each edge in a solution. The return is of the same shape as the distance matrix. The heuristics should contain negative values for undesirable edges and positive values for promising ones. Use efficient vectorized implementations.
+
+def heuristics_v1(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """A trivial implementation to improve upon."""
+    return torch.zeros_like(distance_matrix)
+
+
+Refer to the format of a trivial design above. Be very creative and give `heuristics_v2`. Output code only and enclose your code with Python code block: ```python ... ```.
+
+- Calculation of the output attentional bias matrix does not allow to produce nan or inf values
+[2024-12-17 15:27:55,720][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:27:55,804][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:27:56,071][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:27:56,317][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:27:56,474][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:27:57,152][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:27:57,680][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:27:57,835][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:27:58,073][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:27:58,317][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:27:59,131][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:27:59,138][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:27:59,375][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:28:00,618][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:28:00,846][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:28:00,878][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:28:01,103][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:28:01,162][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:28:01,545][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:28:03,356][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:28:03,447][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:28:03,853][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:28:04,113][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:28:04,315][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:28:05,570][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:28:06,409][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:28:07,073][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:28:07,835][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:28:08,900][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:28:11,620][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:28:11,644][root][INFO] - Iteration 1: Running Code 0
+[2024-12-17 15:28:14,254][root][INFO] - Iteration 1: Code Run 0 successful!
+[2024-12-17 15:28:14,255][root][INFO] - Iteration 1: Running Code 1
+[2024-12-17 15:28:16,806][root][INFO] - Iteration 1: Code Run 1 successful!
+[2024-12-17 15:28:16,806][root][INFO] - Iteration 1: Running Code 2
+[2024-12-17 15:28:19,108][root][INFO] - Iteration 1: Code Run 2 successful!
+[2024-12-17 15:28:19,109][root][INFO] - Iteration 1: Running Code 3
+[2024-12-17 15:28:21,537][root][INFO] - Iteration 1: Code Run 3 successful!
+[2024-12-17 15:28:21,537][root][INFO] - Iteration 1: Running Code 4
+[2024-12-17 15:28:24,525][root][INFO] - Iteration 1: Code Run 4 successful!
+[2024-12-17 15:28:24,526][root][INFO] - Iteration 1: Running Code 5
+[2024-12-17 15:28:27,517][root][INFO] - Iteration 1: Code Run 5 successful!
+[2024-12-17 15:28:27,518][root][INFO] - Iteration 1: Running Code 6
+[2024-12-17 15:28:30,294][root][INFO] - Iteration 1: Code Run 6 successful!
+[2024-12-17 15:28:30,294][root][INFO] - Iteration 1: Running Code 7
+[2024-12-17 15:28:33,189][root][INFO] - Iteration 1: Code Run 7 successful!
+[2024-12-17 15:28:33,190][root][INFO] - Iteration 1: Running Code 8
+[2024-12-17 15:28:35,755][root][INFO] - Iteration 1: Code Run 8 successful!
+[2024-12-17 15:28:35,755][root][INFO] - Iteration 1: Running Code 9
+[2024-12-17 15:28:38,280][root][INFO] - Iteration 1: Code Run 9 successful!
+[2024-12-17 15:28:38,280][root][INFO] - Iteration 1: Running Code 10
+[2024-12-17 15:28:41,309][root][INFO] - Iteration 1: Code Run 10 successful!
+[2024-12-17 15:28:41,309][root][INFO] - Iteration 1: Running Code 11
+[2024-12-17 15:28:44,289][root][INFO] - Iteration 1: Code Run 11 successful!
+[2024-12-17 15:28:44,289][root][INFO] - Iteration 1: Running Code 12
+[2024-12-17 15:28:46,724][root][INFO] - Iteration 1: Code Run 12 successful!
+[2024-12-17 15:28:46,724][root][INFO] - Iteration 1: Running Code 13
+[2024-12-17 15:28:49,326][root][INFO] - Iteration 1: Code Run 13 successful!
+[2024-12-17 15:28:49,326][root][INFO] - Iteration 1: Running Code 14
+[2024-12-17 15:28:52,254][root][INFO] - Iteration 1: Code Run 14 successful!
+[2024-12-17 15:28:52,254][root][INFO] - Iteration 1: Running Code 15
+[2024-12-17 15:28:55,462][root][INFO] - Iteration 1: Code Run 15 successful!
+[2024-12-17 15:28:55,463][root][INFO] - Iteration 1: Running Code 16
+[2024-12-17 15:28:58,390][root][INFO] - Iteration 1: Code Run 16 successful!
+[2024-12-17 15:28:58,391][root][INFO] - Iteration 1: Running Code 17
+[2024-12-17 15:29:01,418][root][INFO] - Iteration 1: Code Run 17 successful!
+[2024-12-17 15:29:01,418][root][INFO] - Iteration 1: Running Code 18
+[2024-12-17 15:29:05,049][root][INFO] - Iteration 1: Code Run 18 successful!
+[2024-12-17 15:29:05,049][root][INFO] - Iteration 1: Running Code 19
+[2024-12-17 15:29:09,029][root][INFO] - Iteration 1: Code Run 19 successful!
+[2024-12-17 15:29:09,029][root][INFO] - Iteration 1: Running Code 20
+[2024-12-17 15:29:13,378][root][INFO] - Iteration 1: Code Run 20 successful!
+[2024-12-17 15:29:13,378][root][INFO] - Iteration 1: Running Code 21
+[2024-12-17 15:29:17,709][root][INFO] - Iteration 1: Code Run 21 successful!
+[2024-12-17 15:29:17,709][root][INFO] - Iteration 1: Running Code 22
+[2024-12-17 15:29:23,029][root][INFO] - Iteration 1: Code Run 22 successful!
+[2024-12-17 15:29:23,029][root][INFO] - Iteration 1: Running Code 23
+[2024-12-17 15:29:28,282][root][INFO] - Iteration 1: Code Run 23 successful!
+[2024-12-17 15:29:28,282][root][INFO] - Iteration 1: Running Code 24
+[2024-12-17 15:29:34,214][root][INFO] - Iteration 1: Code Run 24 successful!
+[2024-12-17 15:29:34,215][root][INFO] - Iteration 1: Running Code 25
+[2024-12-17 15:29:39,880][root][INFO] - Iteration 1: Code Run 25 successful!
+[2024-12-17 15:29:39,880][root][INFO] - Iteration 1: Running Code 26
+[2024-12-17 15:29:47,424][root][INFO] - Iteration 1: Code Run 26 successful!
+[2024-12-17 15:29:47,424][root][INFO] - Iteration 1: Running Code 27
+[2024-12-17 15:29:53,984][root][INFO] - Iteration 1: Code Run 27 successful!
+[2024-12-17 15:29:53,984][root][INFO] - Iteration 1: Running Code 28
+[2024-12-17 15:29:58,996][root][INFO] - Iteration 1: Code Run 28 successful!
+[2024-12-17 15:29:58,996][root][INFO] - Iteration 1: Running Code 29
+[2024-12-17 15:30:05,088][root][INFO] - Iteration 1: Code Run 29 successful!
+[2024-12-17 15:31:45,090][root][INFO] - Error for response_id 0: Command '['python', '-u', '/root/reevo-main/problems/mvmoe_pomo/eval_train.py', '50', '/root/reevo-main', 'train']' timed out after 99.99983021244407 seconds
+[2024-12-17 15:33:25,091][root][INFO] - Error for response_id 1: Command '['python', '-u', '/root/reevo-main/problems/mvmoe_pomo/eval_train.py', '50', '/root/reevo-main', 'train']' timed out after 99.99992828816175 seconds
+[2024-12-17 15:35:05,092][root][INFO] - Error for response_id 2: Command '['python', '-u', '/root/reevo-main/problems/mvmoe_pomo/eval_train.py', '50', '/root/reevo-main', 'train']' timed out after 99.99997381679714 seconds
+[2024-12-17 15:36:35,434][root][INFO] - Iteration 1, response_id 3: Objective value: 10.40393352508545
+[2024-12-17 15:37:11,257][root][INFO] - Iteration 1, response_id 4: Objective value: 10.412251472473145
+[2024-12-17 15:37:31,479][root][INFO] - Iteration 1, response_id 5: Objective value: 10.388594627380371
+[2024-12-17 15:37:42,547][root][INFO] - Iteration 1, response_id 6: Objective value: 10.398329734802246
+[2024-12-17 15:37:42,576][root][INFO] - Iteration 1, response_id 7: Objective value: 10.41856575012207
+[2024-12-17 15:38:04,856][root][INFO] - Iteration 1, response_id 8: Objective value: 10.40648365020752
+[2024-12-17 15:38:10,151][root][INFO] - Iteration 1, response_id 9: Objective value: 10.391111373901367
+[2024-12-17 15:38:10,151][root][INFO] - Iteration 1, response_id 10: Objective value: 10.401518821716309
+[2024-12-17 15:38:21,041][root][INFO] - Iteration 1, response_id 11: Objective value: 10.39794921875
+[2024-12-17 15:38:24,111][root][INFO] - Iteration 1, response_id 12: Objective value: 10.407434463500977
+[2024-12-17 15:38:24,112][root][INFO] - Iteration 1, response_id 13: Objective value: 10.407074928283691
+[2024-12-17 15:38:32,491][root][INFO] - Iteration 1, response_id 14: Objective value: 10.40837574005127
+[2024-12-17 15:38:32,491][root][INFO] - Iteration 1, response_id 15: Objective value: 10.410086631774902
+[2024-12-17 15:38:34,360][root][INFO] - Iteration 1, response_id 16: Objective value: 10.395703315734863
+[2024-12-17 15:38:34,361][root][INFO] - Iteration 1, response_id 17: Objective value: 10.403212547302246
+[2024-12-17 15:38:37,882][root][INFO] - Iteration 1, response_id 18: Objective value: 10.399825096130371
+[2024-12-17 15:38:40,853][root][INFO] - Iteration 1, response_id 19: Objective value: 10.389823913574219
+[2024-12-17 15:38:41,669][root][INFO] - Iteration 1, response_id 20: Objective value: 10.424078941345215
+[2024-12-17 15:38:41,669][root][INFO] - Iteration 1, response_id 21: Objective value: 10.398907661437988
+[2024-12-17 15:38:43,137][root][INFO] - Iteration 1, response_id 22: Objective value: 10.40110969543457
+[2024-12-17 15:38:44,455][root][INFO] - Iteration 1, response_id 23: Objective value: 10.394181251525879
+[2024-12-17 15:38:44,456][root][INFO] - Iteration 1, response_id 24: Objective value: 10.393363952636719
+[2024-12-17 15:38:45,672][root][INFO] - Iteration 1, response_id 25: Objective value: 10.409750938415527
+[2024-12-17 15:38:45,680][root][INFO] - Iteration 1, response_id 26: Objective value: 10.397144317626953
+[2024-12-17 15:38:45,681][root][INFO] - Iteration 1, response_id 27: Objective value: 10.413618087768555
+[2024-12-17 15:38:46,447][root][INFO] - Iteration 1, response_id 28: Objective value: 10.404528617858887
+[2024-12-17 15:38:46,562][root][INFO] - Iteration 1, response_id 29: Objective value: 10.412814140319824
+[2024-12-17 15:38:46,563][root][INFO] - Iteration 1, response_id 0: obj
+[2024-12-17 15:38:46,563][root][INFO] - Iteration 1, response_id 1: obj
+[2024-12-17 15:38:46,563][root][INFO] - Iteration 1, response_id 2: obj
+[2024-12-17 15:38:46,564][root][INFO] - Iteration 1, response_id 3: obj
+[2024-12-17 15:38:46,564][root][INFO] - Iteration 1, response_id 4: obj
+[2024-12-17 15:38:46,564][root][INFO] - Iteration 1, response_id 5: obj
+[2024-12-17 15:38:46,564][root][INFO] - Iteration 1, response_id 6: obj
+[2024-12-17 15:38:46,564][root][INFO] - Iteration 1, response_id 7: obj
+[2024-12-17 15:38:46,564][root][INFO] - Iteration 1, response_id 8: obj
+[2024-12-17 15:38:46,564][root][INFO] - Iteration 1, response_id 9: obj
+[2024-12-17 15:38:46,564][root][INFO] - Iteration 1, response_id 10: obj
+[2024-12-17 15:38:46,564][root][INFO] - Iteration 1, response_id 11: obj
+[2024-12-17 15:38:46,564][root][INFO] - Iteration 1, response_id 12: obj
+[2024-12-17 15:38:46,564][root][INFO] - Iteration 1, response_id 13: obj
+[2024-12-17 15:38:46,564][root][INFO] - Iteration 1, response_id 14: obj
+[2024-12-17 15:38:46,565][root][INFO] - Iteration 1, response_id 15: obj
+[2024-12-17 15:38:46,565][root][INFO] - Iteration 1, response_id 16: obj
+[2024-12-17 15:38:46,565][root][INFO] - Iteration 1, response_id 17: obj
+[2024-12-17 15:38:46,565][root][INFO] - Iteration 1, response_id 18: obj
+[2024-12-17 15:38:46,565][root][INFO] - Iteration 1, response_id 19: obj
+[2024-12-17 15:38:46,565][root][INFO] - Iteration 1, response_id 20: obj
+[2024-12-17 15:38:46,565][root][INFO] - Iteration 1, response_id 21: obj
+[2024-12-17 15:38:46,565][root][INFO] - Iteration 1, response_id 22: obj
+[2024-12-17 15:38:46,565][root][INFO] - Iteration 1, response_id 23: obj
+[2024-12-17 15:38:46,565][root][INFO] - Iteration 1, response_id 24: obj
+[2024-12-17 15:38:46,565][root][INFO] - Iteration 1, response_id 25: obj
+[2024-12-17 15:38:46,565][root][INFO] - Iteration 1, response_id 26: obj
+[2024-12-17 15:38:46,565][root][INFO] - Iteration 1, response_id 27: obj
+[2024-12-17 15:38:46,566][root][INFO] - Iteration 1, response_id 28: obj
+[2024-12-17 15:38:46,566][root][INFO] - Iteration 1, response_id 29: obj
+[2024-12-17 15:38:46,567][root][INFO] - Iteration 1: Elitist: 10.388594627380371
+[2024-12-17 15:38:46,567][root][INFO] - Iteration 1 finished...
+[2024-12-17 15:38:46,567][root][INFO] - Best obj: 10.388594627380371, Best Code Path: problem_iter1_code5.py
+[2024-12-17 15:38:46,567][root][INFO] - Function Evals: 31
+[2024-12-17 15:38:47,792][root][INFO] - Short-term Reflection Prompt: 
+System Prompt: 
+You are an expert in the domain of optimization heuristics. Your task is to give hints to design better heuristics.
+
+User Prompt: 
+Below are two heuristics functions for Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+The `heuristics` function takes as input a distance matrix (shape: n by n) and a vector of customer demands (shape: n), where the depot node is indexed by 0 and the customer demands are normalized by the total vehicle capacity. It returns prior indicators of how promising it is to include each edge in a solution. The return is of the same shape as the distance matrix. The heuristics should contain negative values for undesirable edges and positive values for promising ones. Use efficient vectorized implementations.
+
+You are provided with two code versions below, where the second version performs better than the first one.
+
+[Worse code]
+
+    """
+    Heuristics function for the Capacitated Vehicle Routing Problem (CVRP).
+    
+    :param distance_matrix: Torch tensor representing the distance matrix, shape (n, n).
+    :param demands: Torch tensor representing the demands for each node, shape (n,).
+    :return: Torch tensor representing the heuristic values for each edge, shape (n, n).
+    """
+    # Assuming the first row and column of the distance matrix are for the depot node and should not be used.
+    # Calculate the maximum capacity normalized demand that can be handled by a vehicle.
+    max_demand = demands.max()
+    
+    # Create a tensor of ones for the depot node, to ensure no vehicle is assigned to it.
+    depot_tensor = torch.ones(demands.shape[0], device=demands.device, dtype=demands.dtype)
+    depot_tensor[0] = 0  # Set the depot node's demand to zero.
+    
+    # Create an attention bias matrix where higher values indicate less preference for that edge.
+    attentional_bias = (demands * depot_tensor).unsqueeze(-1) - max_demand
+    
+    # Ensure no negative values are present, as they indicate a violation of capacity constraints.
+    attentional_bias = torch.where(attentional_bias < 0, torch.zeros_like(attentional_bias), attentional_bias)
+    
+    # Compute the heuristic value as the negative distance (as we want to minimize distance) times the attention bias.
+    heuristic_values = -distance_matrix * attentional_bias
+    
+    return heuristic_values
+
+[Better code]
+
+    """
+    Heuristics function for CVRP that provides a measure of promise for each edge.
+    Edges with negative values are less desirable, while edges with positive values are more promising.
+    The function emphasizes reducing the total distance while considering the demand constraints.
+    """
+    # Assume the total vehicle capacity is the maximum demand value, normalized later
+    total_capacity = demands.max()
+    
+    # Create a tensor of zeros with the same shape as the distance matrix
+    bias_matrix = torch.zeros_like(distance_matrix)
+    
+    # Calculate the attentional bias for each edge
+    # Prioritize shorter distances and penalize exceeding the vehicle capacity
+    for i in range(1, demands.shape[0]):  # Skip the depot node (index 0)
+        for j in range(i + 1, demands.shape[0]):  # Avoid loops
+            # Calculate the remaining capacity of the vehicle visiting the current node
+            remaining_capacity = total_capacity - demands[j-1]
+            
+            # Check if the current edge would exceed the vehicle's capacity
+            if demands[i-1] + demands[j-1] > remaining_capacity:
+                # If so, set the bias to a negative value to discourage this edge
+                bias_matrix[i-1, j-1] = -(demands[i-1] + demands[j-1] - remaining_capacity)
+            else:
+                # If not, set the bias to a positive value proportional to the remaining capacity
+                bias_matrix[i-1, j-1] = demands[i-1] + demands[j-1] - remaining_capacity
+                
+            # Penalize edges that do not reduce the total distance
+            bias_matrix[i-1, j-1] -= distance_matrix[i-1, j-1]
+            
+    return bias_matrix
+
+You respond with some hints for designing better heuristics, based on the two code versions and using less than 20 words.
+[2024-12-17 15:38:49,778][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:38:49,804][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:38:49,964][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:38:50,513][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:38:50,763][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:38:50,839][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:38:50,944][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:38:51,781][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:38:51,929][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:38:53,034][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:38:53,040][root][INFO] - Crossover Prompt: 
+System Prompt: 
+You are an expert in the domain of optimization heuristics. Your task is to design heuristics that can effectively solve optimization problems.
+Your response outputs Python code and nothing else. Format your code as a Python code string: "```python ... ```".
+
+User Prompt: 
+Write a heuristics function for Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+The `heuristics` function takes as input a distance matrix (shape: n by n) and a vector of customer demands (shape: n), where the depot node is indexed by 0 and the customer demands are normalized by the total vehicle capacity. It returns prior indicators of how promising it is to include each edge in a solution. The return is of the same shape as the distance matrix. The heuristics should contain negative values for undesirable edges and positive values for promising ones. Use efficient vectorized implementations.
+
+
+[Worse code]
+def heuristics_v0(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+
+    """
+    Heuristics function for the Capacitated Vehicle Routing Problem (CVRP).
+    
+    :param distance_matrix: Torch tensor representing the distance matrix, shape (n, n).
+    :param demands: Torch tensor representing the demands for each node, shape (n,).
+    :return: Torch tensor representing the heuristic values for each edge, shape (n, n).
+    """
+    # Assuming the first row and column of the distance matrix are for the depot node and should not be used.
+    # Calculate the maximum capacity normalized demand that can be handled by a vehicle.
+    max_demand = demands.max()
+    
+    # Create a tensor of ones for the depot node, to ensure no vehicle is assigned to it.
+    depot_tensor = torch.ones(demands.shape[0], device=demands.device, dtype=demands.dtype)
+    depot_tensor[0] = 0  # Set the depot node's demand to zero.
+    
+    # Create an attention bias matrix where higher values indicate less preference for that edge.
+    attentional_bias = (demands * depot_tensor).unsqueeze(-1) - max_demand
+    
+    # Ensure no negative values are present, as they indicate a violation of capacity constraints.
+    attentional_bias = torch.where(attentional_bias < 0, torch.zeros_like(attentional_bias), attentional_bias)
+    
+    # Compute the heuristic value as the negative distance (as we want to minimize distance) times the attention bias.
+    heuristic_values = -distance_matrix * attentional_bias
+    
+    return heuristic_values
+
+[Better code]
+def heuristics_v1(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+
+    """
+    Heuristics function for CVRP that provides a measure of promise for each edge.
+    Edges with negative values are less desirable, while edges with positive values are more promising.
+    The function emphasizes reducing the total distance while considering the demand constraints.
+    """
+    # Assume the total vehicle capacity is the maximum demand value, normalized later
+    total_capacity = demands.max()
+    
+    # Create a tensor of zeros with the same shape as the distance matrix
+    bias_matrix = torch.zeros_like(distance_matrix)
+    
+    # Calculate the attentional bias for each edge
+    # Prioritize shorter distances and penalize exceeding the vehicle capacity
+    for i in range(1, demands.shape[0]):  # Skip the depot node (index 0)
+        for j in range(i + 1, demands.shape[0]):  # Avoid loops
+            # Calculate the remaining capacity of the vehicle visiting the current node
+            remaining_capacity = total_capacity - demands[j-1]
+            
+            # Check if the current edge would exceed the vehicle's capacity
+            if demands[i-1] + demands[j-1] > remaining_capacity:
+                # If so, set the bias to a negative value to discourage this edge
+                bias_matrix[i-1, j-1] = -(demands[i-1] + demands[j-1] - remaining_capacity)
+            else:
+                # If not, set the bias to a positive value proportional to the remaining capacity
+                bias_matrix[i-1, j-1] = demands[i-1] + demands[j-1] - remaining_capacity
+                
+            # Penalize edges that do not reduce the total distance
+            bias_matrix[i-1, j-1] -= distance_matrix[i-1, j-1]
+            
+    return bias_matrix
+
+[Reflection]
+1. Consider using vectorized operations to improve efficiency.
+2. Avoid loops whenever possible to increase performance.
+3. Take advantage of parallelism when dealing with large datasets.
+4. Optimize data structures to minimize memory usage.
+5. Experiment with different heuristics and combining them to improve results.
+6. Use machine learning techniques to learn heuristics from data.
+7. Consider domain-specific knowledge when designing heuristics.
+8. Test heuristics on various problem instances to evaluate their performance.
+9. Keep heuristics simple and easy to understand to facilitate debugging and maintenance.
+10. Continuously refine and improve heuristics based on feedback and performance metrics.
+
+[Improved code]
+Please write an improved function `heuristics_v2`, according to the reflection. Output code only and enclose your code with Python code block: ```python ... ```.
+[2024-12-17 15:39:03,329][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:39:03,695][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:39:04,417][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:39:04,721][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:39:06,656][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:39:06,913][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:39:07,741][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:39:08,103][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:39:09,809][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:39:09,875][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:39:09,886][root][INFO] - Iteration 2: Running Code 0
+[2024-12-17 15:39:11,813][root][INFO] - Iteration 2: Code Run 0 successful!
+[2024-12-17 15:39:11,813][root][INFO] - Iteration 2: Running Code 1
+[2024-12-17 15:39:14,515][root][INFO] - Iteration 2: Code Run 1 successful!
+[2024-12-17 15:39:14,515][root][INFO] - Iteration 2: Running Code 2
+[2024-12-17 15:39:17,207][root][INFO] - Iteration 2: Code Run 2 successful!
+[2024-12-17 15:39:17,207][root][INFO] - Iteration 2: Running Code 3
+[2024-12-17 15:39:19,696][root][INFO] - Iteration 2: Code Run 3 successful!
+[2024-12-17 15:39:19,696][root][INFO] - Iteration 2: Running Code 4
+[2024-12-17 15:39:22,127][root][INFO] - Iteration 2: Code Run 4 successful!
+[2024-12-17 15:39:22,128][root][INFO] - Iteration 2: Running Code 5
+[2024-12-17 15:39:24,537][root][INFO] - Iteration 2: Code Run 5 successful!
+[2024-12-17 15:39:24,537][root][INFO] - Iteration 2: Running Code 6
+[2024-12-17 15:39:27,120][root][INFO] - Iteration 2: Code Run 6 successful!
+[2024-12-17 15:39:27,120][root][INFO] - Iteration 2: Running Code 7
+[2024-12-17 15:39:29,938][root][INFO] - Iteration 2: Code Run 7 successful!
+[2024-12-17 15:39:29,938][root][INFO] - Iteration 2: Running Code 8
+[2024-12-17 15:39:32,688][root][INFO] - Iteration 2: Code Run 8 successful!
+[2024-12-17 15:39:32,689][root][INFO] - Iteration 2: Running Code 9
+[2024-12-17 15:39:35,589][root][INFO] - Iteration 2: Code Run 9 successful!
+[2024-12-17 15:40:53,912][root][INFO] - Iteration 2, response_id 0: Objective value: 10.401752471923828
+[2024-12-17 15:41:13,674][root][INFO] - Iteration 2, response_id 1: Objective value: 10.398750305175781
+[2024-12-17 15:41:23,011][root][INFO] - Iteration 2, response_id 2: Objective value: 10.397232055664062
+[2024-12-17 15:41:27,937][root][INFO] - Iteration 2, response_id 3: Objective value: 10.393068313598633
+[2024-12-17 15:41:31,160][root][INFO] - Iteration 2, response_id 4: Objective value: 10.402323722839355
+[2024-12-17 15:41:34,083][root][INFO] - Iteration 2, response_id 5: Objective value: 10.403032302856445
+[2024-12-17 15:41:35,450][root][INFO] - Iteration 2, response_id 6: Objective value: 10.405792236328125
+[2024-12-17 15:41:37,168][root][INFO] - Iteration 2, response_id 7: Objective value: 10.417465209960938
+[2024-12-17 15:41:37,634][root][INFO] - Iteration 2, response_id 8: Objective value: 10.410826683044434
+[2024-12-17 15:41:38,049][root][INFO] - Iteration 2, response_id 9: Objective value: 10.396878242492676
+[2024-12-17 15:41:38,049][root][INFO] - Iteration 2, response_id 0: obj
+[2024-12-17 15:41:38,049][root][INFO] - Iteration 2, response_id 1: obj
+[2024-12-17 15:41:38,049][root][INFO] - Iteration 2, response_id 2: obj
+[2024-12-17 15:41:38,049][root][INFO] - Iteration 2, response_id 3: obj
+[2024-12-17 15:41:38,049][root][INFO] - Iteration 2, response_id 4: obj
+[2024-12-17 15:41:38,050][root][INFO] - Iteration 2, response_id 5: obj
+[2024-12-17 15:41:38,050][root][INFO] - Iteration 2, response_id 6: obj
+[2024-12-17 15:41:38,050][root][INFO] - Iteration 2, response_id 7: obj
+[2024-12-17 15:41:38,050][root][INFO] - Iteration 2, response_id 8: obj
+[2024-12-17 15:41:38,050][root][INFO] - Iteration 2, response_id 9: obj
+[2024-12-17 15:41:38,050][root][INFO] - Iteration 2 finished...
+[2024-12-17 15:41:38,050][root][INFO] - Best obj: 10.388594627380371, Best Code Path: problem_iter1_code5.py
+[2024-12-17 15:41:38,051][root][INFO] - Function Evals: 41
+[2024-12-17 15:41:38,391][root][INFO] - Long-term Reflection Prompt: 
+System Prompt: 
+You are an expert in the domain of optimization heuristics. Your task is to give hints to design better heuristics.
+
+User Prompt: 
+Below is your prior long-term reflection on designing heuristics for Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+- Calculation of the output attentional bias matrix does not allow to produce nan or inf values
+
+Below are some newly gained insights.
+1. Consider using vectorized operations to improve efficiency.
+2. Avoid loops whenever possible to increase performance.
+3. Take advantage of parallelism when dealing with large datasets.
+4. Optimize data structures to minimize memory usage.
+5. Experiment with different heuristics and combining them to improve results.
+6. Use machine learning techniques to learn heuristics from data.
+7. Consider domain-specific knowledge when designing heuristics.
+8. Test heuristics on various problem instances to evaluate their performance.
+9. Keep heuristics simple and easy to understand to facilitate debugging and maintenance.
+10. Continuously refine and improve heuristics based on feedback and performance metrics.
+1. Consider objective function: Ensure heuristics align with the objective of the problem (e.g., minimizing distance or maximizing coverage).
+2. Efficient implementation: Use vectorized operations to avoid nested loops for better performance.
+3. Demand distribution: Account for how demands are distributed across vehicles to avoid capacity violations.
+4. Penalty for violations: Implement a strong penalty for edges that would cause a vehicle to exceed its capacity.
+1. Use vectorized operations to improve efficiency.
+2. Avoid unnecessary computations.
+3. Normalize demands to a common scale.
+4. Prioritize edges that do not require returning to the depot.
+5. Consider the overall problem structure when defining heuristics.
+1. Use vectorized operations to improve efficiency.
+2. Avoid nested loops when possible.
+3. Normalize demands to vehicle capacity outside of the heuristic function.
+4. Consider the total demand when evaluating edge promise.
+5. Prioritize edges that do not require returning to the depot.
+1. Use vectorized operations for efficiency.
+2. Avoid redundant calculations.
+3. Normalize demands to simplify calculations.
+4. Consider demand magnitudes in heuristic values.
+1. Consider using dynamic programming to efficiently calculate the heuristic values.
+2. Avoid redundant calculations by vectorizing operations.
+3. Normalize demands and distances to a common scale, if applicable.
+4. Use appropriate penalties for constraints, such as vehicle capacity.
+5. Focus on the most influential factors for the problem at hand.
+6. Experiment with different heuristic components and their weights.
+7. Consider using machine learning techniques to improve heuristics.
+1. Consider demand distribution across vehicles.
+2. Vectorize calculations for efficiency.
+3. Penalize edges that exceed vehicle capacity.
+4. Avoid negative values in heuristic matrix.
+1. Focus on vectorized operations for efficiency.
+2. Avoid unnecessary computations.
+3. Use masks effectively to reduce computations.
+4. Normalize demands properly.
+5. Consider demand matching and capacity constraints.
+6. Optimize the heuristic function for the specific problem structure.
+Version 2 is better as it normalizes demands, uses vectorized operations, and avoids a costly depot constraint.
+1. Consider demand imbalance and proximity.
+2. Use vectorized operations for efficiency.
+3. Prioritize depot connections carefully.
+4. Mask invalid edges effectively.
+5. Simplify the logic for clarity and speed.
+
+Write constructive hints for designing better heuristics, based on prior reflections and new insights and using less than 50 words.
+[2024-12-17 15:41:43,060][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:41:43,069][root][INFO] - Mutation Prompt: 
+System Prompt: 
+You are an expert in the domain of optimization heuristics. Your task is to design heuristics that can effectively solve optimization problems.
+Your response outputs Python code and nothing else. Format your code as a Python code string: "```python ... ```".
+
+User Prompt: 
+Write a heuristics function for Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+The `heuristics` function takes as input a distance matrix (shape: n by n) and a vector of customer demands (shape: n), where the depot node is indexed by 0 and the customer demands are normalized by the total vehicle capacity. It returns prior indicators of how promising it is to include each edge in a solution. The return is of the same shape as the distance matrix. The heuristics should contain negative values for undesirable edges and positive values for promising ones. Use efficient vectorized implementations.
+
+
+[Prior reflection]
+1. Leverage vectorized operations to enhance efficiency in heuristic calculations.
+2. Avoid unnecessary computations and loops to improve performance.
+3. Normalize demands and distances for simplified calculations.
+4. Consider demand distribution and capacity constraints when evaluating edges.
+5. Prioritize edges that do not require returning to the depot.
+6. Utilize machine learning techniques to refine heuristics based on data.
+7. Apply domain-specific knowledge to design heuristics tailored to the problem.
+8. Test heuristics on various problem instances to assess performance.
+9. Maintain simplicity and clarity in heuristic design for easier debugging and maintenance.
+10. Continuously refine and optimize heuristics based on feedback and performance metrics.- Calculation of the output attentional bias matrix does not allow to produce nan or inf values
+
+[Code]
+def heuristics_v1(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+
+    """
+    Heuristics function for the Capacitated Vehicle Routing Problem (CVRP).
+    
+    :param distance_matrix: Torch tensor of shape (n, n) representing the distance between each pair of nodes.
+    :param demands: Torch tensor of shape (n,) representing the demand of each node, normalized by the total vehicle capacity.
+    :return: Torch tensor of shape (n, n) representing the heuristic value for each edge.
+    """
+    # Ensure the demands tensor is flattened to work with in vectorized operations
+    demands_flat = demands.flatten()
+    
+    # Calculate the maximum demand that can be carried by a single vehicle
+    max_capacity = demands_flat.max()
+    
+    # Create a tensor of zeros like the distance matrix for the heuristic values
+    heuristic_values = torch.zeros_like(distance_matrix)
+    
+    # Compute a mask for nodes that are not the depot (1 for nodes, 0 for the depot)
+    nodes_mask = torch.ones_like(demands)
+    nodes_mask[0] = 0
+    
+    # Compute a mask for the depot to avoid double counting when backtracking from the depot
+    depot_mask = torch.zeros_like(demands)
+    depot_mask[0] = 1
+    
+    # Calculate the forward and backward passes for the heuristic values
+    # Forward pass: from depot to all other nodes
+    current_demand = 0.0
+    for i in range(1, demands.size(0)):
+        if demands_flat[i] > 0:
+            # Check if adding the current node's demand exceeds capacity
+            if current_demand + demands_flat[i] <= max_capacity:
+                # If not, add the demand and update the heuristic value
+                heuristic_values[0, i] = distance_matrix[0, i] + current_demand
+                current_demand += demands_flat[i]
+            else:
+                # If so, the heuristic value is set to a large number (negative value indicating it's not promising)
+                heuristic_values[0, i] = float('inf')
+        else:
+            # If the node's demand is zero, it does not contribute to the capacity, but we still need to visit it
+            heuristic_values[0, i] = distance_matrix[0, i]
+    
+    # Backward pass: from all other nodes to the depot
+    for i in range(demands.size(0) - 2, -1, -1):
+        if demands_flat[i] > 0:
+            # Check if the current node can be visited without exceeding capacity
+            if current_demand + demands_flat[i] <= max_capacity:
+                # Update the heuristic value considering the current node's demand
+                heuristic_values[i, 0] = distance_matrix[i, 0] + current_demand
+                current_demand += demands_flat[i]
+            else:
+                # If adding the current node's demand exceeds capacity, set to a large number
+                heuristic_values[i, 0] = float('inf')
+        else:
+            # If the node's demand is zero, it does not contribute to the capacity
+            heuristic_values[i, 0] = distance_matrix[i, 0]
+    
+    # Apply a mask to ensure the depot has a heuristic value of 0 and no negative values for other nodes
+    heuristic_values = heuristic_values * nodes_mask + depot_mask
+    
+    return heuristic_values
+
+[Improved code]
+Please write a mutated function `heuristics_v2`, according to the reflection. Output code only and enclose your code with Python code block: ```python ... ```.
+[2024-12-17 15:41:57,998][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:42:01,002][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:42:01,662][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:42:02,907][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:42:03,360][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:42:03,367][root][INFO] - Iteration 3: Running Code 0
+[2024-12-17 15:42:05,873][root][INFO] - Iteration 3: Code Run 0 successful!
+[2024-12-17 15:42:05,873][root][INFO] - Iteration 3: Running Code 1
+[2024-12-17 15:42:08,435][root][INFO] - Iteration 3: Code Run 1 successful!
+[2024-12-17 15:42:08,435][root][INFO] - Iteration 3: Running Code 2
+[2024-12-17 15:42:10,683][root][INFO] - Iteration 3: Code Run 2 successful!
+[2024-12-17 15:42:10,683][root][INFO] - Iteration 3: Running Code 3
+[2024-12-17 15:42:12,897][root][INFO] - Iteration 3: Code Run 3 successful!
+[2024-12-17 15:42:12,897][root][INFO] - Iteration 3: Running Code 4
+[2024-12-17 15:42:15,156][root][INFO] - Iteration 3: Code Run 4 successful!
+[2024-12-17 15:43:06,157][root][INFO] - Iteration 3, response_id 0: Objective value: 10.403192520141602
+[2024-12-17 15:43:16,549][root][INFO] - Iteration 3, response_id 1: Objective value: 10.39429759979248
+[2024-12-17 15:43:19,272][root][INFO] - Iteration 3, response_id 2: Objective value: 10.390421867370605
+[2024-12-17 15:43:20,840][root][INFO] - Iteration 3, response_id 3: Objective value: 10.394784927368164
+[2024-12-17 15:43:21,104][root][INFO] - Iteration 3, response_id 4: Objective value: 10.412111282348633
+[2024-12-17 15:43:21,105][root][INFO] - Iteration 3, response_id 0: obj
+[2024-12-17 15:43:21,105][root][INFO] - Iteration 3, response_id 1: obj
+[2024-12-17 15:43:21,105][root][INFO] - Iteration 3, response_id 2: obj
+[2024-12-17 15:43:21,105][root][INFO] - Iteration 3, response_id 3: obj
+[2024-12-17 15:43:21,105][root][INFO] - Iteration 3, response_id 4: obj
+[2024-12-17 15:43:21,105][root][INFO] - Iteration 3, response_id 5: obj
+[2024-12-17 15:43:21,105][root][INFO] - Iteration 3, response_id 6: obj
+[2024-12-17 15:43:21,105][root][INFO] - Iteration 3, response_id 7: obj
+[2024-12-17 15:43:21,105][root][INFO] - Iteration 3, response_id 8: obj
+[2024-12-17 15:43:21,105][root][INFO] - Iteration 3, response_id 9: obj
+[2024-12-17 15:43:21,105][root][INFO] - Iteration 3, response_id 10: obj
+[2024-12-17 15:43:21,105][root][INFO] - Iteration 3, response_id 11: obj
+[2024-12-17 15:43:21,105][root][INFO] - Iteration 3, response_id 12: obj
+[2024-12-17 15:43:21,105][root][INFO] - Iteration 3, response_id 13: obj
+[2024-12-17 15:43:21,105][root][INFO] - Iteration 3, response_id 14: obj
+[2024-12-17 15:43:21,106][root][INFO] - Iteration 3 finished...
+[2024-12-17 15:43:21,106][root][INFO] - Best obj: 10.388594627380371, Best Code Path: problem_iter1_code5.py
+[2024-12-17 15:43:21,106][root][INFO] - Function Evals: 46
+[2024-12-17 15:43:24,276][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:43:24,286][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:43:24,404][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:43:24,503][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:43:24,897][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:43:24,937][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:43:25,031][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:43:25,534][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:43:26,625][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:43:27,163][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:43:39,119][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:43:39,617][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:43:41,113][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:43:41,840][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:43:43,546][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:43:45,717][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:43:48,137][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:43:48,260][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:43:48,310][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:43:51,722][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:43:51,735][root][INFO] - Iteration 4: Running Code 0
+[2024-12-17 15:43:54,090][root][INFO] - Iteration 4: Code Run 0 successful!
+[2024-12-17 15:43:54,090][root][INFO] - Iteration 4: Running Code 1
+[2024-12-17 15:43:56,683][root][INFO] - Iteration 4: Code Run 1 successful!
+[2024-12-17 15:43:56,684][root][INFO] - Iteration 4: Running Code 2
+[2024-12-17 15:43:59,416][root][INFO] - Iteration 4: Code Run 2 successful!
+[2024-12-17 15:43:59,417][root][INFO] - Iteration 4: Running Code 3
+[2024-12-17 15:44:01,825][root][INFO] - Iteration 4: Code Run 3 successful!
+[2024-12-17 15:44:01,825][root][INFO] - Iteration 4: Running Code 4
+[2024-12-17 15:44:04,117][root][INFO] - Iteration 4: Code Run 4 successful!
+[2024-12-17 15:44:04,117][root][INFO] - Iteration 4: Running Code 5
+[2024-12-17 15:44:06,293][root][INFO] - Iteration 4: Code Run 5 successful!
+[2024-12-17 15:44:06,293][root][INFO] - Iteration 4: Running Code 6
+[2024-12-17 15:44:08,801][root][INFO] - Iteration 4: Code Run 6 successful!
+[2024-12-17 15:44:08,802][root][INFO] - Iteration 4: Running Code 7
+[2024-12-17 15:44:11,490][root][INFO] - Iteration 4: Code Run 7 successful!
+[2024-12-17 15:44:11,491][root][INFO] - Iteration 4: Running Code 8
+[2024-12-17 15:44:13,837][root][INFO] - Iteration 4: Code Run 8 successful!
+[2024-12-17 15:44:13,838][root][INFO] - Iteration 4: Running Code 9
+[2024-12-17 15:44:16,159][root][INFO] - Iteration 4: Code Run 9 successful!
+[2024-12-17 15:45:39,725][root][INFO] - Iteration 4, response_id 0: Objective value: 10.410487174987793
+[2024-12-17 15:45:56,935][root][INFO] - Iteration 4, response_id 1: Objective value: 10.388699531555176
+[2024-12-17 15:46:07,027][root][INFO] - Iteration 4, response_id 2: Objective value: 10.392919540405273
+[2024-12-17 15:46:12,006][root][INFO] - Iteration 4, response_id 3: Objective value: 10.41174602508545
+[2024-12-17 15:46:14,978][root][INFO] - Iteration 4, response_id 4: Objective value: 10.396927833557129
+[2024-12-17 15:46:17,299][root][INFO] - Iteration 4, response_id 5: Objective value: 10.3975248336792
+[2024-12-17 15:46:19,118][root][INFO] - Iteration 4, response_id 6: Objective value: 10.41236400604248
+[2024-12-17 15:46:19,984][root][INFO] - Iteration 4, response_id 7: Objective value: 10.407231330871582
+[2024-12-17 15:46:20,750][root][INFO] - Iteration 4, response_id 8: Objective value: 10.399540901184082
+[2024-12-17 15:46:21,065][root][INFO] - Iteration 4, response_id 9: Objective value: 10.403913497924805
+[2024-12-17 15:46:21,065][root][INFO] - Iteration 4, response_id 0: obj
+[2024-12-17 15:46:21,065][root][INFO] - Iteration 4, response_id 1: obj
+[2024-12-17 15:46:21,065][root][INFO] - Iteration 4, response_id 2: obj
+[2024-12-17 15:46:21,065][root][INFO] - Iteration 4, response_id 3: obj
+[2024-12-17 15:46:21,065][root][INFO] - Iteration 4, response_id 4: obj
+[2024-12-17 15:46:21,065][root][INFO] - Iteration 4, response_id 5: obj
+[2024-12-17 15:46:21,065][root][INFO] - Iteration 4, response_id 6: obj
+[2024-12-17 15:46:21,066][root][INFO] - Iteration 4, response_id 7: obj
+[2024-12-17 15:46:21,066][root][INFO] - Iteration 4, response_id 8: obj
+[2024-12-17 15:46:21,066][root][INFO] - Iteration 4, response_id 9: obj
+[2024-12-17 15:46:21,066][root][INFO] - Iteration 4 finished...
+[2024-12-17 15:46:21,066][root][INFO] - Best obj: 10.388594627380371, Best Code Path: problem_iter1_code5.py
+[2024-12-17 15:46:21,066][root][INFO] - Function Evals: 56
+[2024-12-17 15:46:26,557][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:46:44,491][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:46:45,272][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:46:49,038][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:46:50,733][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:46:51,487][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:46:51,498][root][INFO] - Iteration 5: Running Code 0
+[2024-12-17 15:46:53,901][root][INFO] - Iteration 5: Code Run 0 successful!
+[2024-12-17 15:46:53,902][root][INFO] - Iteration 5: Running Code 1
+[2024-12-17 15:46:56,370][root][INFO] - Iteration 5: Code Run 1 successful!
+[2024-12-17 15:46:56,370][root][INFO] - Iteration 5: Running Code 2
+[2024-12-17 15:46:59,232][root][INFO] - Iteration 5: Code Run 2 successful!
+[2024-12-17 15:46:59,232][root][INFO] - Iteration 5: Running Code 3
+[2024-12-17 15:47:02,034][root][INFO] - Iteration 5: Code Run 3 successful!
+[2024-12-17 15:47:02,034][root][INFO] - Iteration 5: Running Code 4
+[2024-12-17 15:47:04,548][root][INFO] - Iteration 5: Code Run 4 successful!
+[2024-12-17 15:47:56,261][root][INFO] - Iteration 5, response_id 0: Objective value: 10.413146018981934
+[2024-12-17 15:48:04,499][root][INFO] - Iteration 5, response_id 1: Objective value: 10.403436660766602
+[2024-12-17 15:48:07,974][root][INFO] - Iteration 5, response_id 2: Objective value: 10.408370018005371
+[2024-12-17 15:48:10,195][root][INFO] - Iteration 5, response_id 3: Objective value: 10.403913497924805
+[2024-12-17 15:48:10,410][root][INFO] - Iteration 5, response_id 4: Objective value: 10.404438018798828
+[2024-12-17 15:48:10,410][root][INFO] - Iteration 5, response_id 0: obj
+[2024-12-17 15:48:10,411][root][INFO] - Iteration 5, response_id 1: obj
+[2024-12-17 15:48:10,411][root][INFO] - Iteration 5, response_id 2: obj
+[2024-12-17 15:48:10,411][root][INFO] - Iteration 5, response_id 3: obj
+[2024-12-17 15:48:10,411][root][INFO] - Iteration 5, response_id 4: obj
+[2024-12-17 15:48:10,411][root][INFO] - Iteration 5, response_id 5: obj
+[2024-12-17 15:48:10,411][root][INFO] - Iteration 5, response_id 6: obj
+[2024-12-17 15:48:10,411][root][INFO] - Iteration 5, response_id 7: obj
+[2024-12-17 15:48:10,411][root][INFO] - Iteration 5, response_id 8: obj
+[2024-12-17 15:48:10,411][root][INFO] - Iteration 5, response_id 9: obj
+[2024-12-17 15:48:10,411][root][INFO] - Iteration 5, response_id 10: obj
+[2024-12-17 15:48:10,411][root][INFO] - Iteration 5, response_id 11: obj
+[2024-12-17 15:48:10,411][root][INFO] - Iteration 5, response_id 12: obj
+[2024-12-17 15:48:10,412][root][INFO] - Iteration 5, response_id 13: obj
+[2024-12-17 15:48:10,412][root][INFO] - Iteration 5, response_id 14: obj
+[2024-12-17 15:48:10,412][root][INFO] - Iteration 5 finished...
+[2024-12-17 15:48:10,412][root][INFO] - Best obj: 10.388594627380371, Best Code Path: problem_iter1_code5.py
+[2024-12-17 15:48:10,412][root][INFO] - Function Evals: 61
+[2024-12-17 15:48:13,426][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:48:13,891][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:48:13,983][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:48:14,126][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:48:14,368][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:48:14,601][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:48:14,738][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:48:14,864][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:48:15,258][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:48:15,679][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:48:30,478][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:48:32,412][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:48:35,542][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:48:35,646][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:48:35,906][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:48:36,103][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:48:36,384][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:48:37,269][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:48:39,229][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:48:42,906][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:48:42,918][root][INFO] - Iteration 6: Running Code 0
+[2024-12-17 15:48:44,828][root][INFO] - Iteration 6: Code Run 0 successful!
+[2024-12-17 15:48:44,829][root][INFO] - Iteration 6: Running Code 1
+[2024-12-17 15:48:47,425][root][INFO] - Iteration 6: Code Run 1 successful!
+[2024-12-17 15:48:47,425][root][INFO] - Iteration 6: Running Code 2
+[2024-12-17 15:48:49,894][root][INFO] - Iteration 6: Code Run 2 successful!
+[2024-12-17 15:48:49,894][root][INFO] - Iteration 6: Running Code 3
+[2024-12-17 15:48:52,113][root][INFO] - Iteration 6: Code Run 3 successful!
+[2024-12-17 15:48:52,113][root][INFO] - Iteration 6: Running Code 4
+[2024-12-17 15:48:54,502][root][INFO] - Iteration 6: Code Run 4 successful!
+[2024-12-17 15:48:54,502][root][INFO] - Iteration 6: Running Code 5
+[2024-12-17 15:48:56,812][root][INFO] - Iteration 6: Code Run 5 successful!
+[2024-12-17 15:48:56,812][root][INFO] - Iteration 6: Running Code 6
+[2024-12-17 15:48:59,541][root][INFO] - Iteration 6: Code Run 6 successful!
+[2024-12-17 15:48:59,542][root][INFO] - Iteration 6: Running Code 7
+[2024-12-17 15:49:01,963][root][INFO] - Iteration 6: Code Run 7 successful!
+[2024-12-17 15:49:01,963][root][INFO] - Iteration 6: Running Code 8
+[2024-12-17 15:49:04,160][root][INFO] - Iteration 6: Code Run 8 successful!
+[2024-12-17 15:49:04,160][root][INFO] - Iteration 6: Running Code 9
+[2024-12-17 15:49:06,485][root][INFO] - Iteration 6: Code Run 9 successful!
+[2024-12-17 15:50:20,239][root][INFO] - Iteration 6, response_id 0: Objective value: 10.410489082336426
+[2024-12-17 15:50:47,823][root][INFO] - Iteration 6, response_id 1: Objective value: 10.402228355407715
+[2024-12-17 15:50:55,906][root][INFO] - Iteration 6, response_id 2: Objective value: 10.395621299743652
+[2024-12-17 15:51:01,283][root][INFO] - Iteration 6, response_id 3: Objective value: 10.409280776977539
+[2024-12-17 15:51:03,954][root][INFO] - Iteration 6, response_id 4: Objective value: 10.395907402038574
+[2024-12-17 15:51:06,073][root][INFO] - Iteration 6, response_id 5: Objective value: 10.397649765014648
+[2024-12-17 15:51:08,242][root][INFO] - Iteration 6, response_id 6: Objective value: 10.398070335388184
+[2024-12-17 15:51:09,209][root][INFO] - Iteration 6, response_id 7: Objective value: 10.400352478027344
+[2024-12-17 15:51:09,925][root][INFO] - Iteration 6, response_id 8: Objective value: 10.408523559570312
+[2024-12-17 15:51:10,089][root][INFO] - Iteration 6, response_id 9: Objective value: 10.400471687316895
+[2024-12-17 15:51:10,089][root][INFO] - Iteration 6, response_id 0: obj
+[2024-12-17 15:51:10,090][root][INFO] - Iteration 6, response_id 1: obj
+[2024-12-17 15:51:10,090][root][INFO] - Iteration 6, response_id 2: obj
+[2024-12-17 15:51:10,090][root][INFO] - Iteration 6, response_id 3: obj
+[2024-12-17 15:51:10,090][root][INFO] - Iteration 6, response_id 4: obj
+[2024-12-17 15:51:10,090][root][INFO] - Iteration 6, response_id 5: obj
+[2024-12-17 15:51:10,090][root][INFO] - Iteration 6, response_id 6: obj
+[2024-12-17 15:51:10,090][root][INFO] - Iteration 6, response_id 7: obj
+[2024-12-17 15:51:10,090][root][INFO] - Iteration 6, response_id 8: obj
+[2024-12-17 15:51:10,090][root][INFO] - Iteration 6, response_id 9: obj
+[2024-12-17 15:51:10,090][root][INFO] - Iteration 6 finished...
+[2024-12-17 15:51:10,090][root][INFO] - Best obj: 10.388594627380371, Best Code Path: problem_iter1_code5.py
+[2024-12-17 15:51:10,090][root][INFO] - Function Evals: 71
+[2024-12-17 15:51:16,362][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:51:41,885][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:51:42,395][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:51:42,426][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:51:42,557][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:51:42,638][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:51:42,643][root][INFO] - Iteration 7: Running Code 0
+[2024-12-17 15:51:45,085][root][INFO] - Iteration 7: Code Run 0 successful!
+[2024-12-17 15:51:45,085][root][INFO] - Iteration 7: Running Code 1
+[2024-12-17 15:51:47,941][root][INFO] - Iteration 7: Code Run 1 successful!
+[2024-12-17 15:51:47,942][root][INFO] - Iteration 7: Running Code 2
+[2024-12-17 15:51:50,592][root][INFO] - Iteration 7: Code Run 2 successful!
+[2024-12-17 15:51:50,593][root][INFO] - Iteration 7: Running Code 3
+[2024-12-17 15:51:53,478][root][INFO] - Iteration 7: Code Run 3 successful!
+[2024-12-17 15:51:53,478][root][INFO] - Iteration 7: Running Code 4
+[2024-12-17 15:51:56,437][root][INFO] - Iteration 7: Code Run 4 successful!
+[2024-12-17 15:52:45,681][root][INFO] - Iteration 7, response_id 0: Objective value: 10.399563789367676
+[2024-12-17 15:52:54,167][root][INFO] - Iteration 7, response_id 1: Objective value: 10.403365135192871
+[2024-12-17 15:52:58,242][root][INFO] - Iteration 7, response_id 2: Objective value: 10.392416954040527
+[2024-12-17 15:53:00,162][root][INFO] - Iteration 7, response_id 3: Objective value: 10.399450302124023
+[2024-12-17 15:53:00,828][root][INFO] - Iteration 7, response_id 4: Objective value: 10.393712997436523
+[2024-12-17 15:53:00,828][root][INFO] - Iteration 7, response_id 0: obj
+[2024-12-17 15:53:00,828][root][INFO] - Iteration 7, response_id 1: obj
+[2024-12-17 15:53:00,828][root][INFO] - Iteration 7, response_id 2: obj
+[2024-12-17 15:53:00,828][root][INFO] - Iteration 7, response_id 3: obj
+[2024-12-17 15:53:00,828][root][INFO] - Iteration 7, response_id 4: obj
+[2024-12-17 15:53:00,828][root][INFO] - Iteration 7, response_id 5: obj
+[2024-12-17 15:53:00,829][root][INFO] - Iteration 7, response_id 6: obj
+[2024-12-17 15:53:00,829][root][INFO] - Iteration 7, response_id 7: obj
+[2024-12-17 15:53:00,829][root][INFO] - Iteration 7, response_id 8: obj
+[2024-12-17 15:53:00,829][root][INFO] - Iteration 7, response_id 9: obj
+[2024-12-17 15:53:00,829][root][INFO] - Iteration 7, response_id 10: obj
+[2024-12-17 15:53:00,829][root][INFO] - Iteration 7, response_id 11: obj
+[2024-12-17 15:53:00,829][root][INFO] - Iteration 7, response_id 12: obj
+[2024-12-17 15:53:00,829][root][INFO] - Iteration 7, response_id 13: obj
+[2024-12-17 15:53:00,829][root][INFO] - Iteration 7, response_id 14: obj
+[2024-12-17 15:53:00,830][root][INFO] - Iteration 7 finished...
+[2024-12-17 15:53:00,830][root][INFO] - Best obj: 10.388594627380371, Best Code Path: problem_iter1_code5.py
+[2024-12-17 15:53:00,830][root][INFO] - Function Evals: 76
+[2024-12-17 15:53:03,992][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:53:04,224][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:53:04,402][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:53:04,445][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:53:04,469][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:53:04,635][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:53:04,656][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:53:05,178][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:53:10,218][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:53:12,657][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:53:27,025][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:53:31,647][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:53:32,836][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:53:33,644][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:53:33,681][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:53:34,093][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:53:36,947][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:53:37,892][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:53:40,291][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:53:42,017][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:53:42,028][root][INFO] - Iteration 8: Running Code 0
+[2024-12-17 15:53:44,477][root][INFO] - Iteration 8: Code Run 0 successful!
+[2024-12-17 15:53:44,477][root][INFO] - Iteration 8: Running Code 1
+[2024-12-17 15:53:47,285][root][INFO] - Iteration 8: Code Run 1 successful!
+[2024-12-17 15:53:47,285][root][INFO] - Iteration 8: Running Code 2
+[2024-12-17 15:53:50,045][root][INFO] - Iteration 8: Code Run 2 successful!
+[2024-12-17 15:53:50,045][root][INFO] - Iteration 8: Running Code 3
+[2024-12-17 15:53:52,717][root][INFO] - Iteration 8: Code Run 3 successful!
+[2024-12-17 15:53:52,717][root][INFO] - Iteration 8: Running Code 4
+[2024-12-17 15:53:54,802][root][INFO] - Iteration 8: Code Run 4 successful!
+[2024-12-17 15:53:54,802][root][INFO] - Iteration 8: Running Code 5
+[2024-12-17 15:53:57,189][root][INFO] - Iteration 8: Code Run 5 successful!
+[2024-12-17 15:53:57,189][root][INFO] - Iteration 8: Running Code 6
+[2024-12-17 15:53:59,831][root][INFO] - Iteration 8: Code Run 6 successful!
+[2024-12-17 15:53:59,831][root][INFO] - Iteration 8: Running Code 7
+[2024-12-17 15:54:02,576][root][INFO] - Iteration 8: Code Run 7 successful!
+[2024-12-17 15:54:02,576][root][INFO] - Iteration 8: Running Code 8
+[2024-12-17 15:54:05,196][root][INFO] - Iteration 8: Code Run 8 successful!
+[2024-12-17 15:54:05,196][root][INFO] - Iteration 8: Running Code 9
+[2024-12-17 15:54:07,990][root][INFO] - Iteration 8: Code Run 9 successful!
+[2024-12-17 15:55:28,614][root][INFO] - Iteration 8, response_id 0: Objective value: 10.400733947753906
+[2024-12-17 15:55:47,277][root][INFO] - Iteration 8, response_id 1: Objective value: 10.389876365661621
+[2024-12-17 15:55:57,318][root][INFO] - Iteration 8, response_id 2: Objective value: 10.394049644470215
+[2024-12-17 15:56:02,497][root][INFO] - Iteration 8, response_id 3: Objective value: 10.39820671081543
+[2024-12-17 15:56:05,269][root][INFO] - Iteration 8, response_id 4: Objective value: 10.411328315734863
+[2024-12-17 15:56:07,640][root][INFO] - Iteration 8, response_id 5: Objective value: 10.412126541137695
+[2024-12-17 15:56:09,609][root][INFO] - Iteration 8, response_id 6: Objective value: 10.407217025756836
+[2024-12-17 15:56:10,876][root][INFO] - Iteration 8, response_id 7: Objective value: 10.416641235351562
+[2024-12-17 15:56:11,592][root][INFO] - Iteration 8, response_id 8: Objective value: 10.392976760864258
+[2024-12-17 15:56:11,858][root][INFO] - Iteration 8, response_id 9: Objective value: 10.398737907409668
+[2024-12-17 15:56:11,858][root][INFO] - Iteration 8, response_id 0: obj
+[2024-12-17 15:56:11,858][root][INFO] - Iteration 8, response_id 1: obj
+[2024-12-17 15:56:11,858][root][INFO] - Iteration 8, response_id 2: obj
+[2024-12-17 15:56:11,858][root][INFO] - Iteration 8, response_id 3: obj
+[2024-12-17 15:56:11,859][root][INFO] - Iteration 8, response_id 4: obj
+[2024-12-17 15:56:11,859][root][INFO] - Iteration 8, response_id 5: obj
+[2024-12-17 15:56:11,859][root][INFO] - Iteration 8, response_id 6: obj
+[2024-12-17 15:56:11,859][root][INFO] - Iteration 8, response_id 7: obj
+[2024-12-17 15:56:11,859][root][INFO] - Iteration 8, response_id 8: obj
+[2024-12-17 15:56:11,859][root][INFO] - Iteration 8, response_id 9: obj
+[2024-12-17 15:56:11,859][root][INFO] - Iteration 8 finished...
+[2024-12-17 15:56:11,859][root][INFO] - Best obj: 10.388594627380371, Best Code Path: problem_iter1_code5.py
+[2024-12-17 15:56:11,860][root][INFO] - Function Evals: 86
+[2024-12-17 15:56:16,875][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:56:31,813][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:56:33,292][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:56:34,725][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:56:37,426][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:56:39,473][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:56:39,481][root][INFO] - Iteration 9: Running Code 0
+[2024-12-17 15:56:41,672][root][INFO] - Iteration 9: Code Run 0 successful!
+[2024-12-17 15:56:41,672][root][INFO] - Iteration 9: Running Code 1
+[2024-12-17 15:56:43,976][root][INFO] - Iteration 9: Code Run 1 successful!
+[2024-12-17 15:56:43,976][root][INFO] - Iteration 9: Running Code 2
+[2024-12-17 15:56:46,851][root][INFO] - Iteration 9: Code Run 2 successful!
+[2024-12-17 15:56:46,851][root][INFO] - Iteration 9: Running Code 3
+[2024-12-17 15:56:49,535][root][INFO] - Iteration 9: Code Run 3 successful!
+[2024-12-17 15:56:49,535][root][INFO] - Iteration 9: Running Code 4
+[2024-12-17 15:56:52,083][root][INFO] - Iteration 9: Code Run 4 successful!
+[2024-12-17 15:57:43,137][root][INFO] - Iteration 9, response_id 0: Objective value: 10.406023979187012
+[2024-12-17 15:57:49,719][root][INFO] - Iteration 9, response_id 1: Objective value: 10.400081634521484
+[2024-12-17 15:57:54,446][root][INFO] - Iteration 9, response_id 2: Objective value: 10.393487930297852
+[2024-12-17 15:57:56,364][root][INFO] - Iteration 9, response_id 3: Objective value: 10.40621280670166
+[2024-12-17 15:57:57,130][root][INFO] - Iteration 9, response_id 4: Objective value: 10.393251419067383
+[2024-12-17 15:57:57,131][root][INFO] - Iteration 9, response_id 0: obj
+[2024-12-17 15:57:57,131][root][INFO] - Iteration 9, response_id 1: obj
+[2024-12-17 15:57:57,131][root][INFO] - Iteration 9, response_id 2: obj
+[2024-12-17 15:57:57,131][root][INFO] - Iteration 9, response_id 3: obj
+[2024-12-17 15:57:57,131][root][INFO] - Iteration 9, response_id 4: obj
+[2024-12-17 15:57:57,131][root][INFO] - Iteration 9, response_id 5: obj
+[2024-12-17 15:57:57,131][root][INFO] - Iteration 9, response_id 6: obj
+[2024-12-17 15:57:57,131][root][INFO] - Iteration 9, response_id 7: obj
+[2024-12-17 15:57:57,131][root][INFO] - Iteration 9, response_id 8: obj
+[2024-12-17 15:57:57,131][root][INFO] - Iteration 9, response_id 9: obj
+[2024-12-17 15:57:57,132][root][INFO] - Iteration 9, response_id 10: obj
+[2024-12-17 15:57:57,132][root][INFO] - Iteration 9, response_id 11: obj
+[2024-12-17 15:57:57,132][root][INFO] - Iteration 9, response_id 12: obj
+[2024-12-17 15:57:57,132][root][INFO] - Iteration 9, response_id 13: obj
+[2024-12-17 15:57:57,132][root][INFO] - Iteration 9, response_id 14: obj
+[2024-12-17 15:57:57,132][root][INFO] - Iteration 9 finished...
+[2024-12-17 15:57:57,132][root][INFO] - Best obj: 10.388594627380371, Best Code Path: problem_iter1_code5.py
+[2024-12-17 15:57:57,132][root][INFO] - Function Evals: 91
+[2024-12-17 15:58:00,234][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:58:00,281][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:58:00,414][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:58:00,470][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:58:00,598][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:58:00,619][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:58:00,736][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:58:00,938][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:58:01,281][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:58:01,594][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:58:15,481][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:58:21,477][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:58:21,510][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:58:22,134][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:58:22,396][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:58:22,710][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:58:23,306][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:58:25,291][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:58:25,907][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:58:28,143][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 15:58:28,160][root][INFO] - Iteration 10: Running Code 0
+[2024-12-17 15:58:30,590][root][INFO] - Iteration 10: Code Run 0 successful!
+[2024-12-17 15:58:30,590][root][INFO] - Iteration 10: Running Code 1
+[2024-12-17 15:58:33,392][root][INFO] - Iteration 10: Code Run 1 successful!
+[2024-12-17 15:58:33,392][root][INFO] - Iteration 10: Running Code 2
+[2024-12-17 15:58:36,268][root][INFO] - Iteration 10: Code Run 2 successful!
+[2024-12-17 15:58:36,268][root][INFO] - Iteration 10: Running Code 3
+[2024-12-17 15:58:38,998][root][INFO] - Iteration 10: Code Run 3 successful!
+[2024-12-17 15:58:38,998][root][INFO] - Iteration 10: Running Code 4
+[2024-12-17 15:58:41,530][root][INFO] - Iteration 10: Code Run 4 successful!
+[2024-12-17 15:58:41,530][root][INFO] - Iteration 10: Running Code 5
+[2024-12-17 15:58:44,337][root][INFO] - Iteration 10: Code Run 5 successful!
+[2024-12-17 15:58:44,337][root][INFO] - Iteration 10: Running Code 6
+[2024-12-17 15:58:47,292][root][INFO] - Iteration 10: Code Run 6 successful!
+[2024-12-17 15:58:47,292][root][INFO] - Iteration 10: Running Code 7
+[2024-12-17 15:58:50,155][root][INFO] - Iteration 10: Code Run 7 successful!
+[2024-12-17 15:58:50,155][root][INFO] - Iteration 10: Running Code 8
+[2024-12-17 15:58:52,595][root][INFO] - Iteration 10: Code Run 8 successful!
+[2024-12-17 15:58:52,596][root][INFO] - Iteration 10: Running Code 9
+[2024-12-17 15:58:54,884][root][INFO] - Iteration 10: Code Run 9 successful!
+[2024-12-17 16:00:09,855][root][INFO] - Iteration 10, response_id 0: Objective value: 10.400411605834961
+[2024-12-17 16:00:30,584][root][INFO] - Iteration 10, response_id 1: Objective value: 10.404955863952637
+[2024-12-17 16:00:40,826][root][INFO] - Iteration 10, response_id 2: Objective value: 10.408320426940918
+[2024-12-17 16:00:46,557][root][INFO] - Iteration 10, response_id 3: Objective value: 10.390772819519043
+[2024-12-17 16:00:51,086][root][INFO] - Iteration 10, response_id 4: Objective value: 10.392146110534668
+[2024-12-17 16:00:53,157][root][INFO] - Iteration 10, response_id 5: Objective value: 10.40758228302002
+[2024-12-17 16:00:55,328][root][INFO] - Iteration 10, response_id 6: Objective value: 10.405219078063965
+[2024-12-17 16:00:56,494][root][INFO] - Iteration 10, response_id 7: Objective value: 10.392729759216309
+[2024-12-17 16:00:57,110][root][INFO] - Iteration 10, response_id 8: Objective value: 10.39957332611084
+[2024-12-17 16:00:57,726][root][INFO] - Iteration 10, response_id 9: Objective value: 10.404730796813965
+[2024-12-17 16:00:57,726][root][INFO] - Iteration 10, response_id 0: obj
+[2024-12-17 16:00:57,726][root][INFO] - Iteration 10, response_id 1: obj
+[2024-12-17 16:00:57,727][root][INFO] - Iteration 10, response_id 2: obj
+[2024-12-17 16:00:57,727][root][INFO] - Iteration 10, response_id 3: obj
+[2024-12-17 16:00:57,727][root][INFO] - Iteration 10, response_id 4: obj
+[2024-12-17 16:00:57,727][root][INFO] - Iteration 10, response_id 5: obj
+[2024-12-17 16:00:57,727][root][INFO] - Iteration 10, response_id 6: obj
+[2024-12-17 16:00:57,727][root][INFO] - Iteration 10, response_id 7: obj
+[2024-12-17 16:00:57,727][root][INFO] - Iteration 10, response_id 8: obj
+[2024-12-17 16:00:57,727][root][INFO] - Iteration 10, response_id 9: obj
+[2024-12-17 16:00:57,727][root][INFO] - Iteration 10 finished...
+[2024-12-17 16:00:57,728][root][INFO] - Best obj: 10.388594627380371, Best Code Path: problem_iter1_code5.py
+[2024-12-17 16:00:57,728][root][INFO] - Function Evals: 101
+[2024-12-17 16:01:07,427][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 16:01:20,840][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 16:01:30,898][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 16:01:32,374][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 16:01:34,110][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 16:01:35,549][httpx][INFO] - HTTP Request: POST https://open.bigmodel.cn/api/paas/v4/chat/completions "HTTP/1.1 200 OK"
+[2024-12-17 16:01:35,560][root][INFO] - Iteration 11: Running Code 0
+[2024-12-17 16:01:37,868][root][INFO] - Iteration 11: Code Run 0 successful!
+[2024-12-17 16:01:37,868][root][INFO] - Iteration 11: Running Code 1
+[2024-12-17 16:01:40,472][root][INFO] - Iteration 11: Code Run 1 successful!
+[2024-12-17 16:01:40,472][root][INFO] - Iteration 11: Running Code 2
+[2024-12-17 16:01:43,219][root][INFO] - Iteration 11: Code Run 2 successful!
+[2024-12-17 16:01:43,219][root][INFO] - Iteration 11: Running Code 3
+[2024-12-17 16:01:45,819][root][INFO] - Iteration 11: Code Run 3 successful!
+[2024-12-17 16:01:45,819][root][INFO] - Iteration 11: Running Code 4
+[2024-12-17 16:01:48,462][root][INFO] - Iteration 11: Code Run 4 successful!
+[2024-12-17 16:02:40,756][root][INFO] - Iteration 11, response_id 0: Objective value: 10.413771629333496
+[2024-12-17 16:02:48,186][root][INFO] - Iteration 11, response_id 1: Objective value: 10.407877922058105
+[2024-12-17 16:02:52,211][root][INFO] - Iteration 11, response_id 2: Objective value: 10.393941879272461
+[2024-12-17 16:02:53,980][root][INFO] - Iteration 11, response_id 3: Objective value: 10.415483474731445
+[2024-12-17 16:02:54,646][root][INFO] - Iteration 11, response_id 4: Objective value: 10.39311408996582
+[2024-12-17 16:02:54,646][root][INFO] - Iteration 11, response_id 0: obj
+[2024-12-17 16:02:54,646][root][INFO] - Iteration 11, response_id 1: obj
+[2024-12-17 16:02:54,646][root][INFO] - Iteration 11, response_id 2: obj
+[2024-12-17 16:02:54,646][root][INFO] - Iteration 11, response_id 3: obj
+[2024-12-17 16:02:54,646][root][INFO] - Iteration 11, response_id 4: obj
+[2024-12-17 16:02:54,646][root][INFO] - Iteration 11, response_id 5: obj
+[2024-12-17 16:02:54,646][root][INFO] - Iteration 11, response_id 6: obj
+[2024-12-17 16:02:54,646][root][INFO] - Iteration 11, response_id 7: obj
+[2024-12-17 16:02:54,646][root][INFO] - Iteration 11, response_id 8: obj
+[2024-12-17 16:02:54,647][root][INFO] - Iteration 11, response_id 9: obj
+[2024-12-17 16:02:54,647][root][INFO] - Iteration 11, response_id 10: obj
+[2024-12-17 16:02:54,647][root][INFO] - Iteration 11, response_id 11: obj
+[2024-12-17 16:02:54,647][root][INFO] - Iteration 11, response_id 12: obj
+[2024-12-17 16:02:54,647][root][INFO] - Iteration 11, response_id 13: obj
+[2024-12-17 16:02:54,647][root][INFO] - Iteration 11, response_id 14: obj
+[2024-12-17 16:02:54,647][root][INFO] - Iteration 11 finished...
+[2024-12-17 16:02:54,647][root][INFO] - Best obj: 10.388594627380371, Best Code Path: problem_iter1_code5.py
+[2024-12-17 16:02:54,648][root][INFO] - Function Evals: 106
+[2024-12-17 16:02:55,437][root][INFO] - Best Code Overall: import torch
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """
+    Heuristics function for the Capacitated Vehicle Routing Problem (CVRP).
+    
+    :param distance_matrix: Torch tensor of shape (n, n) representing the distance between each pair of nodes.
+    :param demands: Torch tensor of shape (n,) representing the demand of each node, normalized by the total vehicle capacity.
+    :return: Torch tensor of shape (n, n) representing the heuristic value for each edge.
+    """
+    # Ensure the demands tensor is flattened to work with in vectorized operations
+    demands_flat = demands.flatten()
+    
+    # Calculate the maximum demand that can be carried by a single vehicle
+    max_capacity = demands_flat.max()
+    
+    # Create a tensor of zeros like the distance matrix for the heuristic values
+    heuristic_values = torch.zeros_like(distance_matrix)
+    
+    # Compute a mask for nodes that are not the depot (1 for nodes, 0 for the depot)
+    nodes_mask = torch.ones_like(demands)
+    nodes_mask[0] = 0
+    
+    # Compute a mask for the depot to avoid double counting when backtracking from the depot
+    depot_mask = torch.zeros_like(demands)
+    depot_mask[0] = 1
+    
+    # Calculate the forward and backward passes for the heuristic values
+    # Forward pass: from depot to all other nodes
+    current_demand = 0.0
+    for i in range(1, demands.size(0)):
+        if demands_flat[i] > 0:
+            # Check if adding the current node's demand exceeds capacity
+            if current_demand + demands_flat[i] <= max_capacity:
+                # If not, add the demand and update the heuristic value
+                heuristic_values[0, i] = distance_matrix[0, i] + current_demand
+                current_demand += demands_flat[i]
+            else:
+                # If so, the heuristic value is set to a large number (negative value indicating it's not promising)
+                heuristic_values[0, i] = float('inf')
+        else:
+            # If the node's demand is zero, it does not contribute to the capacity, but we still need to visit it
+            heuristic_values[0, i] = distance_matrix[0, i]
+    
+    # Backward pass: from all other nodes to the depot
+    for i in range(demands.size(0) - 2, -1, -1):
+        if demands_flat[i] > 0:
+            # Check if the current node can be visited without exceeding capacity
+            if current_demand + demands_flat[i] <= max_capacity:
+                # Update the heuristic value considering the current node's demand
+                heuristic_values[i, 0] = distance_matrix[i, 0] + current_demand
+                current_demand += demands_flat[i]
+            else:
+                # If adding the current node's demand exceeds capacity, set to a large number
+                heuristic_values[i, 0] = float('inf')
+        else:
+            # If the node's demand is zero, it does not contribute to the capacity
+            heuristic_values[i, 0] = distance_matrix[i, 0]
+    
+    # Apply a mask to ensure the depot has a heuristic value of 0 and no negative values for other nodes
+    heuristic_values = heuristic_values * nodes_mask + depot_mask
+    
+    return heuristic_values
+[2024-12-17 16:02:55,437][root][INFO] - Best Code Path Overall: problem_iter1_code5.py
+[2024-12-17 16:02:55,438][root][INFO] - Running validation script...: /root/reevo-main/problems/mvmoe_pomo/eval_test.py
+[2024-12-17 16:04:24,613][root][INFO] - Time: 89.175 s
+[2024-12-17 16:04:24,613][root][INFO] - Validation script finished. Results are saved in best_code_overall_val_stdout.txt.
+[2024-12-17 16:04:24,613][root][INFO] - [*] Running ...
+[2024-12-17 16:04:24,613][root][INFO] - There are 3698944 (3.70 million) parameters in this neural network
+[2024-12-17 16:04:24,613][root][INFO] - >> Checkpoint (Epoch: 5000) Loaded!
+[2024-12-17 16:04:24,613][root][INFO] - episode  64/ 64, Elapsed[1.44m], Remain[0.00m], score:10.468, aug_score:10.367
+[2024-12-17 16:04:24,613][root][INFO] - score_AM.在这
+[2024-12-17 16:04:24,613][root][INFO] - <utils.AverageMeter object at 0x7fa6ecc64a90>
+[2024-12-17 16:04:24,614][root][INFO] - 
+[2024-12-17 16:04:24,614][root][INFO] - *** Test Done on CVRP ***
+[2024-12-17 16:04:24,614][root][INFO] - NO-AUG SCORE: 10.4680, Gap: 2.0134
+[2024-12-17 16:04:24,614][root][INFO] - AUGMENTATION SCORE: 10.3674, Gap: 1.0251
+[2024-12-17 16:04:24,614][root][INFO] - 10.468 (2.013%)
+[2024-12-17 16:04:24,614][root][INFO] - 10.367 (1.025%)
+[2024-12-17 16:04:24,614][root][INFO] - [*] Average for -1: (10.467985153198242, 10.367430686950684)
+[2024-12-17 16:04:24,614][root][INFO] - Time: 89.175 s

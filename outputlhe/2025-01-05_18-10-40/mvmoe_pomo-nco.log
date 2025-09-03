@@ -1,0 +1,226 @@
+[2025-01-05 18:10:40,292][root][INFO] - Workspace: /root/reevo-main/outputs/mvmoe_pomo-nco/2025-01-05_18-10-40
+[2025-01-05 18:10:40,292][root][INFO] - Project Root: /root/reevo-main
+[2025-01-05 18:10:40,292][root][INFO] - Using LLM: openai/gpt-3.5-turbo-0613
+[2025-01-05 18:10:40,292][root][INFO] - Using Algorithm: reevo
+[2025-01-05 18:10:43,656][root][INFO] - Problem: mvmoe_pomo
+[2025-01-05 18:10:43,657][root][INFO] - Problem description: Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+[2025-01-05 18:10:43,657][root][INFO] - Function name: heuristics
+[2025-01-05 18:10:43,657][root][INFO] - Evaluating seed function...
+[2025-01-05 18:10:43,657][root][INFO] - Seed function code: 
+import torch
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """A trivial implementation to improve upon."""
+    return torch.zeros_like(distance_matrix)
+[2025-01-05 18:10:43,657][root][INFO] - Iteration 0: Running Code 0
+[2025-01-05 18:10:45,966][root][INFO] - Iteration 0: Code Run 0 successful!
+[2025-01-05 18:11:05,175][root][INFO] - Iteration 0, response_id 0: Objective value: 10.391669273376465
+[2025-01-05 18:11:05,175][root][INFO] - Iteration 0, response_id 0: 0bj
+[2025-01-05 18:11:05,175][root][INFO] - Iteration 0: Elitist: 10.391669273376465
+[2025-01-05 18:11:05,175][root][INFO] - Iteration 0 finished...
+[2025-01-05 18:11:05,175][root][INFO] - Best obj: 10.391669273376465, Best Code Path: problem_iter0_code0.py
+[2025-01-05 18:11:05,175][root][INFO] - Function Evals: 1
+[2025-01-05 18:11:05,175][root][INFO] - Initial Population Prompt: 
+System Prompt: 
+You are an expert in the domain of optimization heuristics. Your task is to design heuristics that can effectively solve optimization problems.
+Your response outputs Python code and nothing else. Format your code as a Python code string: "```python ... ```".
+
+User Prompt: 
+Write a heuristics function for Assisting in solving Capacitated Vehicle Routing Problem (CVRP) with some prior heuristics. CVRP requires finding the shortest path that visits all given nodes and returns to the starting node. Each node has a demand and each vehicle has a capacity. The total demand of the nodes visited by a vehicle cannot exceed the vehicle capacity. When the total demand exceeds the vehicle capacity, the vehicle must return to the starting node.
+The `heuristics` function takes as input a distance matrix (shape: n by n) and a vector of customer demands (shape: n), where the depot node is indexed by 0 and the customer demands are normalized by the total vehicle capacity. It returns prior indicators of how promising it is to include each edge in a solution. The return is of the same shape as the distance matrix. The heuristics should contain negative values for undesirable edges and positive values for promising ones. Use efficient vectorized implementations.
+
+def heuristics_v1(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """A trivial implementation to improve upon."""
+    return torch.zeros_like(distance_matrix)
+
+
+Refer to the format of a trivial design above. Be very creative and give `heuristics_v2`. Output code only and enclose your code with Python code block: ```python ... ```.
+
+- Calculation of the output attentional bias matrix does not allow to produce nan or inf values
+[2025-01-05 18:11:10,957][openai._base_client][INFO] - Retrying request to /chat/completions in 0.453261 seconds
+[2025-01-05 18:11:16,455][openai._base_client][INFO] - Retrying request to /chat/completions in 0.824056 seconds
+[2025-01-05 18:11:22,324][utils.llm_client.base][ERROR] - Connection error.
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpcore/_sync/connection.py", line 101, in handle_request
+    raise exc
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpcore/_sync/connection.py", line 78, in handle_request
+    stream = self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpcore/_sync/connection.py", line 124, in _connect
+    stream = self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpcore/_backends/sync.py", line 207, in connect_tcp
+    with map_exceptions(exc_map):
+  File "/root/miniconda3/envs/myenv/lib/python3.11/contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno 99] Cannot assign requested address
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/openai/_base_client.py", line 993, in _request
+    response = self._client.send(
+               ^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+  File "/root/miniconda3/envs/myenv/lib/python3.11/contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 99] Cannot assign requested address
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/openai/_utils/_utils.py", line 275, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/openai/resources/chat/completions.py", line 829, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/openai/_base_client.py", line 1280, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/openai/_base_client.py", line 957, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/openai/_base_client.py", line 1017, in _request
+    return self._retry_request(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/openai/_base_client.py", line 1095, in _retry_request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/openai/_base_client.py", line 1017, in _request
+    return self._retry_request(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/openai/_base_client.py", line 1095, in _retry_request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/openai/_base_client.py", line 1027, in _request
+    raise APIConnectionError(request=request) from err
+openai.APIConnectionError: Connection error.
+[2025-01-05 18:11:22,329][utils.llm_client.base][INFO] - Attempt 1 failed with error: Connection error.
+[2025-01-05 18:11:28,380][openai._base_client][INFO] - Retrying request to /chat/completions in 0.468389 seconds
+[2025-01-05 18:11:33,892][openai._base_client][INFO] - Retrying request to /chat/completions in 0.880240 seconds
+[2025-01-05 18:11:39,818][utils.llm_client.base][ERROR] - Connection error.
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpcore/_sync/connection.py", line 101, in handle_request
+    raise exc
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpcore/_sync/connection.py", line 78, in handle_request
+    stream = self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpcore/_sync/connection.py", line 124, in _connect
+    stream = self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpcore/_backends/sync.py", line 207, in connect_tcp
+    with map_exceptions(exc_map):
+  File "/root/miniconda3/envs/myenv/lib/python3.11/contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectError: [Errno 99] Cannot assign requested address
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/openai/_base_client.py", line 993, in _request
+    response = self._client.send(
+               ^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+  File "/root/miniconda3/envs/myenv/lib/python3.11/contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectError: [Errno 99] Cannot assign requested address
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/reevo-main/utils/llm_client/base.py", line 31, in chat_completion
+    response_cur = self._chat_completion_api(messages, temperature, n)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/reevo-main/utils/llm_client/openai.py", line 33, in _chat_completion_api
+    response = self.client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/openai/_utils/_utils.py", line 275, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/openai/resources/chat/completions.py", line 829, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/openai/_base_client.py", line 1280, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/openai/_base_client.py", line 957, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/openai/_base_client.py", line 1017, in _request
+    return self._retry_request(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/openai/_base_client.py", line 1095, in _retry_request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/openai/_base_client.py", line 1017, in _request
+    return self._retry_request(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/openai/_base_client.py", line 1095, in _retry_request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/root/miniconda3/envs/myenv/lib/python3.11/site-packages/openai/_base_client.py", line 1027, in _request
+    raise APIConnectionError(request=request) from err
+openai.APIConnectionError: Connection error.
+[2025-01-05 18:11:39,821][utils.llm_client.base][INFO] - Attempt 2 failed with error: Connection error.
+[2025-01-05 18:11:45,868][openai._base_client][INFO] - Retrying request to /chat/completions in 0.481146 seconds
+[2025-01-05 18:11:51,392][openai._base_client][INFO] - Retrying request to /chat/completions in 0.951540 seconds

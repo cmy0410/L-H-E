@@ -1,0 +1,8 @@
+```python
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    max_demand = demands.max().item()
+    attentional_bias = distance_matrix * (1 / (demands / max_demand).unsqueeze(1))
+    attentional_bias.masked_fill_(attentional_bias < 0, float('-inf'))
+    attentional_bias[attentional_bias == float('-inf')] = 0
+    return attentional_bias
+```

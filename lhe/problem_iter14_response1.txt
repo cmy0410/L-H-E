@@ -1,0 +1,22 @@
+```python
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    num_nodes = distance_matrix.size(0)
+
+    # Initialize attentional bias matrix
+    attentional_bias = torch.zeros_like(distance_matrix)
+
+    # Calculate the maximum possible demand that can be accommodated
+    max_demand = 1.0 - demands[0]
+
+    mean_distance = torch.mean(distance_matrix)
+
+    # Calculate the attentional bias matrix using efficient vectorized implementation
+    attentional_bias = distance_matrix / mean_distance / demands.view(-1, 1)
+
+    # Set zero values for NaN and Inf
+    attentional_bias[~torch.isfinite(attentional_bias)] = 0
+
+    return attentional_bias
+```
+[Reflection]
+The improved `heuristics_v2` function is similar to the previous implementation (`heuristics_v1`), with the addition of a more efficient way to handle NaN and Inf values. Instead of using separate operations to set zero values for NaN and Inf, the `~torch.isfinite()` function is used directly to identify elements that are not finite (NaN or Inf) and set them to zero. This approach saves computation time by avoiding extra memory operations.

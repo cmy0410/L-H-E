@@ -1,0 +1,19 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    n = distance_matrix.size(0)
+
+    # Calculate the maximum possible demand that can be accommodated
+    max_demand = 1.0 - demands[0]
+
+    mean_distance = distance_matrix.mean()
+
+    # Calculate the attentional bias matrix using efficient vectorized implementation
+    attentional_bias = distance_matrix / mean_distance / demands.view(-1, 1)
+
+    # Set zero values for NaN and Inf
+    attentional_bias[~torch.isfinite(attentional_bias)] = 0
+
+    return attentional_bias
+```

@@ -1,0 +1,20 @@
+```python
+def heuristics_v2(distance_matrix, demands):
+    n = distance_matrix.shape[0]
+
+    # Initialize attentional bias matrix
+    attentional_bias = np.zeros_like(distance_matrix)
+
+    # Calculate the maximum possible demand that can be accommodated
+    max_demand = 1.0 - demands[0]
+
+    mean_distance = np.mean(distance_matrix)
+
+    # Calculate the attentional bias matrix using efficient vectorized implementation
+    attentional_bias = np.divide(distance_matrix, mean_distance) / demands[:,np.newaxis]
+    
+    # Set zero values for NaN and Inf
+    attentional_bias = np.nan_to_num(attentional_bias, nan=0.0, posinf=0.0, neginf=0.0)
+
+    return attentional_bias
+```

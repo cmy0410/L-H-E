@@ -1,0 +1,17 @@
+```python
+def heuristics_v2(distance_matrix, demands):
+    max_demand = demands.max().item()
+    normalized_demands = demands / max_demand
+    
+    inverse_normalized_demands = 1 / normalized_demands
+
+    normalized_distance_matrix = distance_matrix / normalized_demands.unsqueeze(1)
+
+    attentional_bias = normalized_distance_matrix * inverse_normalized_demands.unsqueeze(1)
+
+    attentional_bias.masked_fill_(attentional_bias < 0, float('-inf'))
+    attentional_bias.masked_fill_(torch.isnan(attentional_bias) | torch.isinf(attentional_bias), float('-inf'))
+    attentional_bias[torch.eye(distance_matrix.shape[0], dtype=torch.bool)] = 0
+
+    return attentional_bias
+```

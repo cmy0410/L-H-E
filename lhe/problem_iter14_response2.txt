@@ -1,0 +1,8 @@
+```python
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    normalized_demands = demands / demands[0]
+    mean_distance = distance_matrix.mean()
+    attentional_bias = distance_matrix / (mean_distance * normalized_demands.unsqueeze(1))
+    attentional_bias[~torch.isfinite(attentional_bias)] = 0
+    return attentional_bias
+```

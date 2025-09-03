@@ -1,0 +1,40 @@
+```python
+def heuristics_v2(distance_matrix, demands):
+    capacity = np.sum(demands)
+    n_nodes = len(demands)
+
+    # Mask the diagonal to prevent self-loops
+    mask = np.eye(n_nodes)
+    distance_matrix[mask] = np.inf  # Set diagonal to infinity
+
+    # Normalize demands by capacity
+    normalized_demands = demands / capacity
+
+    # Calculate the edge utilities
+    # Demand difference scaled and inverted to avoid division by zero
+    demand_diff = np.subtract.outer(normalized_demands, normalized_demands)
+    demand_diff[mask] = -np.inf
+    demand_diff[demand_diff == 0] = -np.inf
+    scaled_demand_diff = demand_diff / (1 + np.abs(demand_diff))
+
+    # Invert distance to prioritize shorter routes, avoiding division by zero
+    inverse_distance = 1.0 / (distance_matrix + 1e-10)
+
+    # Combine distance and demand difference for heuristic values
+    heuristic_values = inverse_distance + scaled_demand_diff
+
+    # Penalize heavily any accumulated demand that exceeds the vehicle capacity
+    accumulated_demand = np.cumsum(demands)
+    capacity_violation_mask = (accumulated_demand[:, None] + demands > capacity)
+    heuristic_values[capacity_violation_mask] = -np.inf
+
+    # Penalize returning to the depot except at the end of the route
+    heuristic_values[:, 0] = -np.inf
+
+    # Exclude edges that would result in a node being visited twice
+    # without returning to the depot in between
+    visit_mask = np.triu(np.ones_like(heuristic_values), k=1)
+    heuristic_values[~visit_mask] = -np.inf
+
+    return heuristic_values
+```

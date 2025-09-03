@@ -1,0 +1,14 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    total_demand = torch.sum(demands)
+    vehicle_capacity = total_demand / 4  # Assuming 4 vehicles
+    
+    normalized_demands = demands / vehicle_capacity
+    
+    edge_promising = distance_matrix * (-normalized_demands.unsqueeze(1) - normalized_demands)  # Penalize edges connecting nodes with high demands
+    edge_promising += (1 - torch.eye(distance_matrix.shape[0])) * torch.min(distance_matrix, dim=1).values.unsqueeze(1)  # Prefer minimum distance edges to neighboring nodes
+
+    return edge_promising
+```

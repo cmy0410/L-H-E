@@ -1,0 +1,33 @@
+```python
+import numpy as np
+
+def heuristics_v2(distance_matrix, demands):
+    capacity = np.sum(demands)
+    n_nodes = len(demands)
+    
+    # Mask for self-loops and depot connections
+    mask = np.eye(n_nodes, dtype=bool)
+    distance_matrix[mask] = -np.inf
+    
+    # Calculate the demand difference matrix
+    demand_diff = np.subtract.outer(demands, demands)
+    demand_diff[mask | (demand_diff == 0)] = -np.inf
+    
+    # Scale the demand difference by the capacity
+    scaled_demand_diff = demand_diff / capacity
+    
+    # Calculate inverse distance to prioritize shorter routes
+    epsilon = 1e-10
+    inverse_distance = 1.0 / (distance_matrix + epsilon)
+    
+    # Combine distance and demand difference for heuristic values
+    heuristic_values = inverse_distance + scaled_demand_diff
+    
+    # Penalize edges that would result in overcapacity
+    for i in range(n_nodes):
+        for j in range(n_nodes):
+            if i != 0 and j != 0 and np.any(np.cumsum(demands[:i]) + demands[j] > capacity):
+                heuristic_values[i, j] = -np.inf
+    
+    return heuristic_values
+```

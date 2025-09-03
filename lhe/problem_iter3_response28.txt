@@ -1,0 +1,17 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    vehicle_capacity = 1.0
+    demand_ratio = demands.unsqueeze(0) / vehicle_capacity
+    demand_sum = demand_ratio.unsqueeze(1) + demand_ratio.unsqueeze(0)
+
+    # Penalize large attention values for already-visited nodes
+    attention_bias = -demand_sum
+
+    # Penalize attending to unreachable nodes 
+    inf_mask = torch.isinf(distance_matrix)
+    attention_bias[inf_mask] = -1e9
+
+    return attention_bias
+```

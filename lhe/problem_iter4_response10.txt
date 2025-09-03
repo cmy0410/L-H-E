@@ -1,0 +1,41 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """
+    Improved heuristics for the Capacitated Vehicle Routing Problem (CVRP).
+    
+    Calculates a heuristic value for each edge based on the distance and the impact on the vehicle capacity.
+    Edges that would increase the vehicle's load closer to its capacity are less desirable.
+    
+    Args:
+    - distance_matrix: torch.Tensor of shape (n, n), where n is the number of nodes.
+      Represents the distances between each pair of nodes.
+    - demands: torch.Tensor of shape (n), where n is the number of nodes.
+      Represents the demand of each node, with the depot node indexed by 0.
+      
+    Returns:
+    - heuristics_values: torch.Tensor of shape (n, n), where n is the number of nodes.
+      Represents the heuristic value for each edge.
+    """
+    # Assuming the demands are already normalized by the total vehicle capacity.
+    num_nodes = demands.shape[0]
+    heuristics_values = torch.zeros_like(distance_matrix)
+
+    # Calculate the difference between the current demand and the vehicle capacity.
+    demand_difference = demands.repeat(num_nodes, 1) - demands.repeat(1, num_nodes).T
+    
+    # Create a mask for edges that would not exceed the capacity.
+    capacity_ok_mask = demand_difference <= 0
+    
+    # Heuristic value: negative for undesirable (over capacity) edges, positive for others.
+    heuristics_values[capacity_ok_mask] = -distance_matrix[capacity_ok_mask]
+    heuristics_values[~capacity_ok_mask] = distance_matrix[~capacity_ok_mask]
+    
+    # Ensure there are no NaN or Inf values in the output.
+    # If capacity is exactly met by including an edge, set the heuristic value to a very small number.
+    exact_capacity_mask = demand_difference == 0
+    heuristics_values[exact_capacity_mask] = torch.finfo(distance_matrix.dtype).min
+
+    return heuristics_values
+```

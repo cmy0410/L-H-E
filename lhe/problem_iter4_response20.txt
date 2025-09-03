@@ -1,0 +1,39 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """
+    Heuristics function for Capacitated Vehicle Routing Problem (CVRP).
+    
+    :param distance_matrix: tensor of shape (n, n) representing distances between nodes
+    :param demands: tensor of shape (n,) representing demands of nodes normalized by vehicle capacity
+    :return: tensor of same shape as distance_matrix, with negative values for undesirable edges
+            and positive values for promising ones
+    """
+    # Ensure that the demands are always positive by using the maximum demand as a normalization factor
+    max_demand = demands.max()
+    normalized_demands = demands / max_demand
+    
+    # Create a tensor of ones for the depot node to ensure that the depot does not leave the starting node
+    depot_mask = torch.zeros_like(demands, dtype=torch.bool)
+    depot_mask[0] = True
+    
+    # Create a tensor indicating whether the demand of a node exceeds the vehicle capacity
+    exceeds_capacity = normalized_demands > 1
+    
+    # Compute the attentional bias matrix
+    # Edges to the depot are always zero (no capacity exceeded there)
+    # Edges from the depot to a node are negative (as they represent returning to the node)
+    # Edges between nodes are based on the normalized demand of the destination node
+    attentional_bias = torch.where(
+        depot_mask & exceeds_capacity[1:],
+        torch.zeros_like(distance_matrix),
+        -normalized_demands[1:]
+    ) + torch.where(
+        exceeds_capacity,
+        torch.zeros_like(distance_matrix),
+        torch.clamp(distance_matrix, min=0)
+    )
+    
+    return attentional_bias
+```

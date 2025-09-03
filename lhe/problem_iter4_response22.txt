@@ -1,0 +1,42 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """
+    Heuristics function for CVRP that returns a matrix with positive values for promising edges 
+    and negative values for undesirable ones. The priority is given to edges that connect nodes 
+    with demands close to the vehicle capacity and have low distance values.
+    
+    Args:
+    - distance_matrix: torch.Tensor of shape (n, n), representing the distances between nodes.
+    - demands: torch.Tensor of shape (n), representing the demands of nodes normalized by vehicle capacity.
+
+    Returns:
+    - heuristics_matrix: torch.Tensor of shape (n, n), representing the heuristics values for each edge.
+    """
+    # Calculate the difference between the demand of the current node and the vehicle capacity
+    # This will be used to penalize edges that connect nodes with large demand differences
+    demand_differences = demands[None, :] - demands[:, None]
+    
+    # Calculate the absolute value of the demand difference to ensure it's non-negative
+    demand_differences = torch.abs(demand_differences)
+    
+    # Create a mask to ignore the distance between the depot node and itself
+    depot_mask = torch.eye(distance_matrix.size(0), device=distance_matrix.device, dtype=distance_matrix.dtype).bool()
+    
+    # Calculate the heuristics value as the negative of the demand difference scaled by a factor
+    # and the negative of the distance value scaled by another factor
+    heuristics_value = -torch.where(depot_mask, torch.zeros_like(distance_matrix),
+                                    demand_differences / (distance_matrix + 1e-6))
+    
+    # Normalize the heuristics values by the maximum value in the demand difference matrix
+    # to ensure the values are in a similar range to the distances
+    max_demand_diff = torch.max(demand_differences).item()
+    heuristics_value = heuristics_value / (max_demand_diff + 1e-6)
+    
+    # Apply a scaling factor to emphasize the importance of low demand differences
+    scaling_factor = 0.1
+    heuristics_value = heuristics_value * scaling_factor
+    
+    return heuristics_value
+```

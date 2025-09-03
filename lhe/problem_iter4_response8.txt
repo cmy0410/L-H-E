@@ -1,0 +1,37 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Normalize demands by the vehicle capacity
+    total_demand = torch.sum(demands)
+    normalized_demands = demands / total_demand
+
+    # Initialize the heuristics matrix with negative values for all edges
+    heuristics_matrix = -torch.ones_like(distance_matrix)
+
+    # Set the heuristic for self-loops to zero
+    heuristics_matrix[range(len(demands)), range(len(demands))] = 0
+
+    # Avoid division by zero by adding a small constant (epsilon)
+    epsilon = 1e-10
+
+    # Calculate edge utility score considering the inverse of the distance
+    edge_utility = 1 / (distance_matrix + epsilon)
+
+    # Calculate the demand difference heuristic
+    demand_diff = normalized_demands[:, None] - normalized_demands[None, :]
+    demand heuristic = edge_utility * (1 - torch.abs(demand_diff))
+
+    # Update heuristics matrix with demand difference heuristic
+    heuristics_matrix += demand heuristic
+
+    # Penalize edges leading to capacity violations
+    capacity_violation_mask = (normalized_demands[:, None] + normalized_demands[None, :]) > 1
+    heuristics_matrix[capacity_violation_mask] = float('-inf')
+
+    # Adjust heuristics for depot edges
+    heuristics_matrix[:, 0] = 0
+    heuristics_matrix[0, :] = 0
+
+    return heuristics_matrix
+```

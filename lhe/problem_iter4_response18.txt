@@ -1,0 +1,41 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """
+    Calculate a heuristic value for each edge in the CVRP graph.
+    
+    Args:
+    - distance_matrix (torch.Tensor): A tensor representing the distance matrix.
+    - demands (torch.Tensor): A tensor representing the demands for each node.
+    
+    Returns:
+    - torch.Tensor: A tensor of heuristic values for each edge, same shape as the distance matrix.
+    """
+    # Get the number of nodes (customers + depot)
+    n = demands.shape[0]
+    
+    # Normalize demands by the total vehicle capacity, assumes the first node is the depot
+    capacity = demands[0]
+    demands = demands / capacity
+    
+    # Initialize the heuristic matrix with zeros
+    heuristic_matrix = torch.zeros_like(distance_matrix)
+    
+    # Calculate the heuristic value for each edge
+    for i in range(1, n):  # Exclude the depot node (index 0)
+        for j in range(i, n):  # Exclude the depot node (index 0)
+            # Calculate the contribution to the heuristic value based on the demand of the nodes
+            # and the remaining capacity after serving the current node
+            contribution = demands[i] + demands[j]
+            
+            # Set the heuristic value to be negative if the contribution exceeds the capacity
+            # or if it is the same node (no edge involved)
+            if contribution > 1 or i == j:
+                heuristic_matrix[i, j] = -float('inf')
+            else:
+                # Otherwise, set the heuristic value to be the negative of the distance
+                heuristic_matrix[i, j] = -distance_matrix[i, j]
+    
+    return heuristic_matrix
+```

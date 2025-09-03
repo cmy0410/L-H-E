@@ -1,0 +1,20 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    total_demand = torch.sum(demands)
+    max_demand = torch.max(demands)
+    demand_ratio = demands / total_demand
+    
+    # Calculate the demand-radius ratio
+    demand_radius_ratio = torch.sqrt(demand_ratio * distance_matrix)
+    
+    # Normalize demand-radius ratio
+    normalized_demand_radius_ratio = demand_radius_ratio / torch.max(demand_radius_ratio)
+    
+    # Heavily penalize edges where demand exceeds maximum capacity
+    penalty = 100 * (demands > max_demand)
+    
+    return normalized_demand_radius_ratio - penalty
+
+```

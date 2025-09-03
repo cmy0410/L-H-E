@@ -1,0 +1,35 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    n = len(demands)
+    total_demand = torch.sum(demands)
+    vehicle_capacity = 1.0
+
+    # Avoid division by zero by adding a small constant
+    epsilon = 1e-10
+    # Inverse distance heuristic, penalize longer distances
+    inverse_distance = 1 / (distance_matrix + epsilon)
+
+    # Normalize demands by vehicle capacity
+    normalized_demands = demands / vehicle_capacity
+
+    # Demand proximity factor
+    demand_proximity = 1 / (1 + torch.abs(normalized_demands[:, None] - normalized_demands[None, :]))
+
+    # Initial heuristic score considering distance and demand proximity
+    heuristic_score = inverse_distance * demand_proximity
+
+    # Create a matrix to track the accumulated demand
+    accumulated_demand = torch.zeros((n, n))
+    for i in range(n):
+        accumulated_demand[i, :] = torch.cumsum(normalized_demands[:i+1]) - normalized_demands[i]
+
+    # Penalize edges leading to overcapacity
+    heuristic_score[accumulated_demand > vehicle_capacity] = -torch.inf
+
+    # Penalize self-loops heavily
+    torch.diag(heuristics_matrix).fill_(-torch.inf)
+
+    return heuristic_score
+```

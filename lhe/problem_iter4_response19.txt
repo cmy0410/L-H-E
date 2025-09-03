@@ -1,0 +1,43 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """
+    Heuristics function for CVRP that calculates a prior indicator for each edge.
+    Promising edges (where adding the demand does not exceed vehicle capacity) have positive values,
+    while undesirable edges (where adding the demand would exceed vehicle capacity) have negative values.
+    
+    Args:
+    - distance_matrix (torch.Tensor): square matrix of distances between nodes, shape (n, n)
+    - demands (torch.Tensor): vector of demands for each node, shape (n,)
+                               where the depot node is indexed by 0 and demands are normalized
+    
+    Returns:
+    - torch.Tensor: heuristics values for each edge, same shape as distance_matrix
+    """
+    # Number of nodes (excluding depot)
+    n = demands.shape[0] - 1
+    
+    # Vehicle capacity (normalized by total demand to avoid division by zero)
+    vehicle_capacity = 1 / demands[0]
+    
+    # Initialize heuristics matrix with zeros
+    heuristics_matrix = torch.zeros_like(distance_matrix)
+    
+    # Create a copy of demands excluding the depot node
+    demands_exclude_depot = demands[1:]
+    
+    # Calculate the remaining capacity for each node after serving the current node
+    remaining_capacity = torch.cumprod(demands_exclude_depot.repeat(1, n), dim=1)
+    
+    # Create a mask for edges where adding the demand does not exceed vehicle capacity
+    capacity_mask = (remaining_capacity > 1).repeat(1, n).transpose(0, 1)
+    
+    # Calculate heuristics value as the product of distance and the capacity mask
+    heuristics_matrix[capacity_mask] = distance_matrix[capacity_mask] * vehicle_capacity
+    
+    # Negate the value for edges that would exceed the vehicle capacity
+    heuristics_matrix[~capacity_mask] = -distance_matrix[~capacity_mask] * vehicle_capacity
+    
+    return heuristics_matrix
+```

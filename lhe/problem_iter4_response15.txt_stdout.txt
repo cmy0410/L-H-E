@@ -1,0 +1,40 @@
+[*] Running ...
+Traceback (most recent call last):
+  File "/data/chiminyan/LLM-as-HH-main/problems/mvmoe_pomo/eval_train.py", line 173, in <module>
+    avg_obj = main()
+              ^^^^^^
+  File "/data/chiminyan/LLM-as-HH-main/problems/mvmoe_pomo/eval_train.py", line 127, in main
+    tester = Tester(env_params=env_params,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/chiminyan/LLM-as-HH-main/problems/mvmoe_pomo/Tester_train.py", line 38, in __init__
+    self.checkpoint = torch.load(checkpoint_fullname, map_location=self.device)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/chiminyan/anaconda3/envs/myenv/lib/python3.11/site-packages/torch/serialization.py", line 809, in load
+    return _load(opened_zipfile, map_location, pickle_module, **pickle_load_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/chiminyan/anaconda3/envs/myenv/lib/python3.11/site-packages/torch/serialization.py", line 1172, in _load
+    result = unpickler.load()
+             ^^^^^^^^^^^^^^^^
+  File "/data/chiminyan/anaconda3/envs/myenv/lib/python3.11/site-packages/torch/serialization.py", line 1142, in persistent_load
+    typed_storage = load_tensor(dtype, nbytes, key, _maybe_decode_ascii(location))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/chiminyan/anaconda3/envs/myenv/lib/python3.11/site-packages/torch/serialization.py", line 1116, in load_tensor
+    wrap_storage=restore_location(storage, location),
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/chiminyan/anaconda3/envs/myenv/lib/python3.11/site-packages/torch/serialization.py", line 1086, in restore_location
+    return default_restore_location(storage, str(map_location))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/chiminyan/anaconda3/envs/myenv/lib/python3.11/site-packages/torch/serialization.py", line 217, in default_restore_location
+    result = fn(storage, location)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/data/chiminyan/anaconda3/envs/myenv/lib/python3.11/site-packages/torch/serialization.py", line 187, in _cuda_deserialize
+    return obj.cuda(device)
+           ^^^^^^^^^^^^^^^^
+  File "/data/chiminyan/anaconda3/envs/myenv/lib/python3.11/site-packages/torch/_utils.py", line 81, in _cuda
+    untyped_storage = torch.UntypedStorage(
+                      ^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: CUDA error: out of memory
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1.
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+

@@ -1,0 +1,47 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """
+    Heuristics for Capacitated Vehicle Routing Problem (CVRP) that emphasizes edges which
+    do not lead to exceeding the vehicle capacity and have reasonable distance.
+    
+    Args:
+    - distance_matrix: tensor of shape (n, n) representing distances between nodes.
+    - demands: tensor of shape (n,) representing demands of nodes, normalized by vehicle capacity.
+
+    Returns:
+    - heuristic_values: tensor of shape (n, n) representing the heuristic value of each edge.
+    """
+    # Ensure that the demands are normalized
+    total_capacity = torch.sum(demands)
+    normalized_demands = demands / total_capacity
+
+    # Initialize heuristic values with a large negative value
+    # which represents an undesirable edge (e.g.,无穷大)
+    heuristic_values = torch.full_like(distance_matrix, float('-inf'), dtype=torch.float64)
+
+    # Set the heuristic value for the diagonal to a small positive value (e.g., 1)
+    # to encourage the use of the depot node
+    depot_index = 0
+    heuristic_values[depot_index, depot_index] = 1e-6
+
+    # Calculate the maximum demand that can be served by a vehicle
+    # by iterating through each node as the last node to visit
+    for last_node in range(1, demands.shape[0]):
+        # Calculate the remaining capacity of the vehicle after visiting the last node
+        remaining_capacity = 1 - normalized_demands[last_node]
+
+        # Update the heuristic values for the current node
+        for current_node in range(1, demands.shape[0]):
+            if current_node != last_node:
+                # Ensure that adding the current node does not exceed the vehicle capacity
+                if normalized_demands[current_node] <= remaining_capacity:
+                    # Calculate the heuristic value as a negative distance (penalty for distance)
+                    heuristic_values[last_node, current_node] = -distance_matrix[last_node, current_node]
+                    # If adding the current node would not exceed capacity, also consider the next node
+                    if current_node != 0:
+                        heuristic_values[last_node, current_node] += -distance_matrix[current_node, current_node]
+                        
+    return heuristic_values
+```

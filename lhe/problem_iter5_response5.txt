@@ -1,0 +1,34 @@
+```python
+def heuristics_v2(distance_matrix, demands):
+    capacity = np.sum(demands)
+    n_nodes = len(demands)
+    epsilon = 1e-10
+
+    # Mask the diagonal to prevent self-loops and connections to/from the depot
+    mask = np.eye(n_nodes, dtype=bool)
+    mask[0, :] = True
+    mask[:, 0] = True
+    distance_matrix[mask] = -np.inf
+
+    # Normalize demands
+    normalized_demands = demands / capacity
+
+    # Calculate the demand difference matrix
+    demand_diff = np.subtract.outer(normalized_demands, normalized_demands)
+    demand_diff[mask | (demand_diff == 0)] = -np.inf
+
+    # Compute the edge utility score: inverse of distance
+    edge_utility = 1.0 / (distance_matrix + epsilon)
+
+    # Initialize the heuristics matrix
+    heuristic_values = edge_utility + demand_diff
+
+    # Compute combined demands for each pair of nodes
+    combined_demands = np.add.outer(normalized_demands, normalized_demands)
+
+    # Penalize edges where combined demand exceeds 1 (vehicle capacity)
+    exceeds_capacity = combined_demands > 1
+    heuristic_values[exceeds_capacity] = -np.inf
+
+    return heuristic_values
+```

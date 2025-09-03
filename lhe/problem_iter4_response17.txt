@@ -1,0 +1,52 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """
+    Heuristics function for Capacitated Vehicle Routing Problem (CVRP).
+    
+    :param distance_matrix: tensor of shape (n, n) representing distances between nodes.
+    :param demands: tensor of shape (n,) representing demands of nodes normalized by vehicle capacity.
+    :return: tensor of shape (n, n) representing heuristic values for each edge.
+    """
+    # Calculate the maximum demand that can be served by a single vehicle
+    max_demand = demands.max()
+    
+    # Create a tensor of ones for use in element-wise operations
+    ones = torch.ones_like(distance_matrix)
+    
+    # Calculate the leftover capacity after visiting a node
+    # (element-wise subtraction of demands from the maximum demand)
+    leftover_capacity = torch.clamp(max_demand - demands, min=0)
+    
+    # Create a mask for nodes that can be visited without exceeding capacity
+    # (nodes where the leftover capacity is non-zero)
+    can_visit_mask = leftover_capacity != 0
+    
+    # Calculate the maximum possible demand that can be visited after the current node
+    # (element-wise division of the leftover capacity by the demands of the nodes)
+    max_after_visit_demand = leftover_capacity / demands[can_visit_mask]
+    
+    # Calculate the minimum of the maximum possible demands after visiting any node
+    min_after_visit_demand = max_after_visit_demand.min()
+    
+    # Create a mask for edges that connect a node to a node that can be visited
+    # (edges where the destination node can be visited without exceeding capacity)
+    valid_edges_mask = can_visit_mask[None, :] & can_visit_mask[:, None]
+    
+    # Calculate the heuristic value for each edge
+    # (use the minimum of the maximum possible demands after visiting any node)
+    heuristic_values = torch.where(
+        valid_edges_mask,
+        min_after_visit_demand * distance_matrix,
+        -torch.inf
+    )
+    
+    # Ensure that the depot (node 0) has a positive heuristic value for all other nodes
+    depot_mask = torch.zeros_like(distance_matrix, dtype=torch.bool)
+    depot_mask[0, :] = True
+    depot_mask[:, 0] = True
+    heuristic_values[depot_mask] = distance_matrix[depot_mask]
+    
+    return heuristic_values
+```

@@ -1,0 +1,24 @@
+[*] Running ...
+There are 3698944 (3.70 million) parameters in this neural network
+>> Checkpoint (Epoch: 2500) Loaded!
+Traceback (most recent call last):
+  File "/data/chiminyan/LLM-as-HH-main/problems/mvmoe_pomo/eval_train.py", line 173, in <module>
+    avg_obj = main()
+              ^^^^^^
+  File "/data/chiminyan/LLM-as-HH-main/problems/mvmoe_pomo/eval_train.py", line 133, in main
+    score_AM, aug_score_AM  = tester.run()
+                              ^^^^^^^^^^^^
+  File "/data/chiminyan/LLM-as-HH-main/problems/mvmoe_pomo/Tester_train.py", line 79, in run
+    score, aug_score, all_score, all_aug_score = self._test_one_batch(data)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/chiminyan/LLM-as-HH-main/problems/mvmoe_pomo/Tester_train.py", line 139, in _test_one_batch
+    self.model.pre_forward(reset_state)
+  File "/data/chiminyan/LLM-as-HH-main/problems/mvmoe_pomo/models/MOEModel_Light.py", line 140, in pre_forward
+    self.attention_bias = torch.stack([heuristics(distance_matrices[i], all_node_demands[i]) for i in range(all_nodes_xy.size(0))], dim=0)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/chiminyan/LLM-as-HH-main/problems/mvmoe_pomo/models/MOEModel_Light.py", line 140, in <listcomp>
+    self.attention_bias = torch.stack([heuristics(distance_matrices[i], all_node_demands[i]) for i in range(all_nodes_xy.size(0))], dim=0)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/chiminyan/LLM-as-HH-main/problems/mvmoe_pomo/OVRPL/gpt.py", line 47, in heuristics_v2
+    heuristic_values *= distance_matrix.sqrt()
+RuntimeError: The size of tensor a (100) must match the size of tensor b (101) at non-singleton dimension 1

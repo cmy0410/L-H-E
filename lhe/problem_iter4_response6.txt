@@ -1,0 +1,41 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    n = len(demands)
+    bias_matrix = torch.full_like(distance_matrix, fill_value=0)
+    
+    # Set self-loops to a very negative number to discourage inclusion
+    torch.fill_(bias_matrix.diagonal(), -1000)
+
+    # Set the bias for edges from the depot to a neutral value since they are mandatory
+    bias_matrix[:, 0] = 0
+    bias_matrix[0, :] = 0
+
+    # Calculate the cumulative demand from the depot to each node
+    cumulative_demand = torch.cat([torch.tensor([0.]), torch.cumsum(demands, dim=0)])
+
+    # Compute the potential overcapacity for each edge
+    overcapacity = torch.clamp(cumulative_demand[distance_matrix.nonzero(as_tuple=True)] 
+                                - cumulative_demand[:-1][distance_matrix.nonzero(as_tuple=True)] 
+                                - demands[distance_matrix.nonzero(as_tuple=True)], 
+                                min=0)
+
+    # Adjust the bias based on overcapacity, heavily penalizing overcapacity
+    bias_matrix[distance_matrix.nonzero(as_tuple=True)] -= overcapacity * 1000
+
+    # Normalize the distance to a penalty, avoiding division by zero
+    distance_penalty = torch.clamp(1000 / (distance_matrix + 1e-6), min=0)
+
+    # Subtract the distance penalty from the bias matrix
+    bias_matrix -= distance_penalty
+
+    # Apply a heuristic that favors lower demands and shorter distances
+    demand_penalty = (1 - demands) * (1 - (distance_matrix + 1e-6) / torch.max(distance_matrix + 1e-6))
+    bias_matrix += demand_penalty
+
+    # Ensure no infinite or NaN values in the final matrix
+    bias_matrix = torch.nan_to_num(bias_matrix, nan=-1000, posinf=-1000, neginf=-1000)
+
+    return bias_matrix
+```

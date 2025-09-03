@@ -1,0 +1,32 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    n = len(demands)
+    vehicle_capacity = 1.0  # Assuming vehicle capacity is 1 for normalization
+    cumulative_demand = torch.cat([torch.tensor([0.]), torch.cumsum(demands, dim=0)])
+    edge_costs = distance_matrix + 1e-6  # Avoid division by zero
+
+    # Calculate the potential overcapacity for each edge
+    overcapacity = torch.clamp(
+        cumulative_demand[distance_matrix.nonzero(as_tuple=True)] 
+        - cumulative_demand[:-1][distance_matrix.nonzero(as_tuple=True)] 
+        - demands[distance_matrix.nonzero(as_tuple=True)],
+        min=0
+    )
+
+    # Compute penalties
+    overcapacity_penalty = overcapacity * 1000
+    distance_penalty = 1000 / edge_costs
+
+    # Compute heuristic scores
+    heuristics_matrix = 1 / distance_penalty - overcapacity_penalty
+
+    # Set self-loops to a very negative number to discourage inclusion
+    heuristics_matrix[range(n), range(n)] = -1000
+
+    # Ensure no infinite or NaN values in the final matrix
+    heuristics_matrix = torch.nan_to_num(heuristics_matrix, nan=-1000, posinf=-1000, neginf=-1000)
+
+    return heuristics_matrix
+```

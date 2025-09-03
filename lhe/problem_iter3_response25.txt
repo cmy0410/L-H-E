@@ -1,0 +1,13 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Calculate demand ratio as weighted distance metric to consider capacities
+    demand_ratio = torch.exp(demands.unsqueeze(0) - demands)  # Future potential
+    weighted_distance = demand_ratio / (distance_matrix + 1e-6)  # Adding eps to avoid division by zero
+
+    # Apply additional pricing to edges to avoid overflow
+    attention_bias = torch.minimum(weighted_distance, 1e3)
+
+    return attention_bias
+```

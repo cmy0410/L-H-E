@@ -1,0 +1,35 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    n = len(demands)
+    total_demand = torch.sum(demands)
+    vehicle_capacity = 1.0
+
+    # Avoid division by zero by adding a small constant
+    epsilon = 1e-10
+    # Inverse distance heuristic, penalize longer distances
+    inverse_distance = 1 / (distance_matrix + epsilon)
+
+    # Normalize demands by vehicle capacity
+    normalized_demands = demands / vehicle_capacity
+
+    # Demand proximity factor
+    demand_proximity = 1 / (1 + torch.abs(normalized_demands[:, None] - normalized_demands[None, :]))
+
+    # Initial heuristic score considering distance and demand proximity
+    heuristic_score = inverse_distance * demand_proximity
+
+    # Calculate the potential overcapacity
+    demand_pairs = torch.outer(normalized_demands, normalized_demands)
+    overcapacity_mask = demand_pairs > vehicle_capacity
+    heuristic_score[overcapacity_mask] = -torch.inf
+
+    # Penalize self-loops heavily
+    heuristic_score.fill_diagonal_(-torch.inf)
+
+    # No return to the depot is allowed except at the end of the route
+    heuristic_score[:, 0] = -torch.inf
+
+    return heuristic_score
+```

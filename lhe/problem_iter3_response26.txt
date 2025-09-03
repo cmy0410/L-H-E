@@ -1,0 +1,16 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:    
+    vehicle_capacity = 1.0
+    demand_matrix = torch.unsqueeze(demands, 0) * torch.unsqueeze(demands, 1)
+    remaining_capacity_matrix = vehicle_capacity - demand_matrix
+    normalized_distance_matrix = distance_matrix / distance_matrix.max()
+    
+    rewards = torch.sqrt(1 / (normalized_distance_matrix + 1e-12)) * torch.sqrt((demand_matrix * remaining_capacity_matrix) + 1e-12)
+    penalties = torch.sqrt(normalized_distance_matrix + 1e-12) * torch.sqrt((demand_matrix + remaining_capacity_matrix) + 1e-12)
+    
+    return rewards - penalties
+
+heuristics_v2(torch.rand(5, 5), torch.rand(5))
+```

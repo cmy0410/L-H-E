@@ -1,0 +1,32 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """
+    Improved heuristics for CVRP that takes into account the demand of each node.
+    A positive value indicates a promising edge, while a negative value indicates an undesirable edge.
+    """
+    # Get the number of nodes (customers + depot)
+    n = demands.size(0)
+    
+    # Create a tensor for the heuristic values, initialized to zeros
+    heuristic_values = torch.zeros_like(distance_matrix)
+    
+    # Calculate the normalized demands
+    total_capacity = demands[0] # Assuming the first node is the depot
+    normalized_demands = demands / total_capacity
+    
+    # Calculate the heuristic values by considering the impact of an edge on the vehicle's capacity
+    # Prioritize edges that do not lead to capacity constraints
+    for i in range(1, n):  # Starting from 1 since the depot is at index 0
+        for j in range(i + 1, n):  # Iterate over the customers after the current node
+            # Check if adding the current customer's demand does not exceed the vehicle's capacity
+            if normalized_demands[j] + heuristic_values[i - 1, j - 1] <= 1:
+                # If not exceeding capacity, set heuristic value to the distance
+                heuristic_values[i - 1, j - 1] = distance_matrix[i - 1, j - 1]
+            else:
+                # If exceeding capacity, set to a large negative value
+                heuristic_values[i - 1, j - 1] = -float('inf')
+    
+    return heuristic_values
+```

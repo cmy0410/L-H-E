@@ -1,0 +1,31 @@
+```python
+def heuristics_v2(distance_matrix, demands):
+    capacity = np.sum(demands)
+    n_nodes = len(demands)
+    
+    # Normalize demands by capacity
+    normalized_demands = demands / capacity
+
+    # Initialize heuristic scores with inverse distance, adding a small constant to avoid division by zero
+    heuristic_scores = 1.0 / (distance_matrix + 1e-10)
+
+    # Compute the outer product of the normalized demands to get demand differences
+    demand_diff_matrix = np.subtract.outer(normalized_demands, normalized_demands)
+
+    # Set diagonal to -inf to avoid self-loops and zero differences
+    np.fill_diagonal(demand_diff_matrix, -np.inf)
+    demand_diff_matrix[demand_diff_matrix == 0] = -np.inf
+
+    # Apply demand differences to heuristic scores
+    heuristic_scores += demand_diff_matrix
+
+    # Penalize edges that would result in exceeding the vehicle capacity
+    heuristic_scores[demand_diff_matrix > 1] = -np.inf
+
+    # Penalize self-loops and connections to the depot
+    heuristic_scores[np.arange(n_nodes), np.arange(n_nodes)] = -np.inf
+    heuristic_scores[:, 0] = -np.inf
+    heuristic_scores[0, :] = -np.inf
+
+    return heuristic_scores
+```

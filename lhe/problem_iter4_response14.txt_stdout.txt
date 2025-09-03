@@ -1,0 +1,32 @@
+[*] Running ...
+There are 3698944 (3.70 million) parameters in this neural network
+>> Checkpoint (Epoch: 2500) Loaded!
+Traceback (most recent call last):
+  File "/data/chiminyan/LLM-as-HH-main/problems/mvmoe_pomo/eval_train.py", line 173, in <module>
+    avg_obj = main()
+              ^^^^^^
+  File "/data/chiminyan/LLM-as-HH-main/problems/mvmoe_pomo/eval_train.py", line 133, in main
+    score_AM, aug_score_AM  = tester.run()
+                              ^^^^^^^^^^^^
+  File "/data/chiminyan/LLM-as-HH-main/problems/mvmoe_pomo/Tester_train.py", line 79, in run
+    score, aug_score, all_score, all_aug_score = self._test_one_batch(data)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/chiminyan/LLM-as-HH-main/problems/mvmoe_pomo/Tester_train.py", line 144, in _test_one_batch
+    selected, _ = self.model(state)
+                  ^^^^^^^^^^^^^^^^^
+  File "/data/chiminyan/anaconda3/envs/myenv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/chiminyan/LLM-as-HH-main/problems/mvmoe_pomo/models/MOEModel_Light.py", line 198, in forward
+    probs, moe_loss = self.decoder(encoded_last_node, attr, ninf_mask=state.ninf_mask, T=self.T, step=state.selected_count)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/chiminyan/anaconda3/envs/myenv/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/chiminyan/LLM-as-HH-main/problems/mvmoe_pomo/models/MOEModel_Light.py", line 436, in forward
+    out_concat = multi_head_attention(q, self.k, self.v, rank3_ninf_mask=ninf_mask)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/data/chiminyan/LLM-as-HH-main/problems/mvmoe_pomo/models/MOEModel_Light.py", line 515, in multi_head_attention
+    score_scaled = score_scaled + rank3_ninf_mask[:, None, :, :].expand(batch_s, head_num, n, input_s)
+                   ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 26.00 MiB (GPU 0; 23.65 GiB total capacity; 492.93 MiB already allocated; 21.81 MiB free; 580.00 MiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF

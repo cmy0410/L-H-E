@@ -1,0 +1,37 @@
+```python
+def heuristics_v2(distance_matrix, demands):
+    n_nodes = len(demands)
+    vehicle_capacity = 1.0  # Assuming the vehicle capacity is normalized to 1
+    
+    # Normalize demands by the vehicle capacity
+    normalized_demands = demands / vehicle_capacity
+
+    # Epsilon to avoid division by zero
+    epsilon = 1e-10
+    # Calculate inverse distance, clip to avoid extreme values
+    inverse_distance = 1 / (distance_matrix + epsilon)
+    inverse_distance = np.clip(inverse_distance, 0, 1e10)
+
+    # Initialize heuristics matrix with negative infinity
+    heuristics_matrix = np.full_like(distance_matrix, -np.inf)
+
+    # No self-loops or direct connections to/from the depot
+    np.fill_diagonal(heuristics_matrix, -np.inf)
+    heuristics_matrix[:, 0] = heuristics_matrix[0, :] = -np.inf
+
+    # Calculate combined demands for each pair
+    combined_demands = np.dot(np.ones((n_nodes, 1)), normalized_demands) + normalized_demands
+
+    # Penalize edges where combined demand exceeds vehicle capacity
+    overcapacity_mask = (combined_demands > vehicle_capacity).astype(int)
+    heuristics_matrix[overcapacity_mask] = -np.inf
+
+    # Demand satisfaction heuristic: 1 if can be satisfied by one vehicle, 0 otherwise
+    demand_satisfaction = (normalized_demands < vehicle_capacity).astype(float)
+    demand_satisfaction_matrix = np.outer(demand_satisfaction, demand_satisfaction)
+
+    # Update heuristics matrix by adding inverse distance weighted by demand satisfaction
+    heuristics_matrix += inverse_distance * demand_satisfaction_matrix
+
+    return heuristics_matrix
+```

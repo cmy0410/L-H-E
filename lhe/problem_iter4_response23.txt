@@ -1,0 +1,50 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """
+    Calculate a heuristic for the Capacitated Vehicle Routing Problem (CVRP) based on the distance matrix
+    and demands, with the goal of penalizing edges that would exceed the vehicle capacity.
+
+    Args:
+    - distance_matrix: torch.Tensor of shape (n, n), where n is the number of nodes including the depot.
+    - demands: torch.Tensor of shape (n,), where the depot node is indexed by 0 and the customer demands
+                are normalized by the total vehicle capacity.
+
+    Returns:
+    - heuristic_values: torch.Tensor of shape (n, n), containing heuristic values for each possible edge.
+    """
+
+    # Number of nodes excluding the depot
+    n_customers = demands.shape[0]
+    
+    # Create a tensor of ones for the identity matrix, and subtract the demands from it to get the remaining capacity.
+    # Since the depot (index 0) has no demand, it is not subtracted, ensuring it remains as one.
+    capacity_remaining = torch.eye(n_customers + 1, device=distance_matrix.device) - demands
+    
+    # Calculate the heuristic values for the last entry of the capacity_remaining which corresponds to the depot
+    # Since the depot is the origin, no distance is associated with it, and its heuristic value is set to 0
+    depot_heuristic = torch.zeros(n_customers, device=distance_matrix.device)
+
+    # Calculate the heuristic values for the other edges
+    # For each customer, we sum the distances to all other customers and multiply by -1 to create a penalty
+    # since adding a customer with high demand could lead to an exceeding of the vehicle capacity
+    heuristic_values = torch.zeros((n_customers, n_customers), device=distance_matrix.device)
+    for i in range(1, n_customers):
+        heuristic_values[i, :i] = -distance_matrix[i, :i].sum(dim=1) * capacity_remaining[i, :i]
+        heuristic_values[i, i:] = -distance_matrix[i, i:].sum(dim=1) * capacity_remaining[i, i:]
+        # Apply a high penalty for exceeding the capacity, which is proportional to the remaining capacity
+        # but only if adding the customer would actually exceed the capacity
+        if demands[i] > 1:
+            depot_heuristic[i] = -(1 - demands[i]) * capacity_remaining[i, i]
+
+    # For the depot, we calculate the heuristic based on the last entry of the capacity_remaining
+    # Since the depot has no demand, any additional customer would exceed its capacity
+    # Therefore, the heuristic value for the depot is set to a very high negative number
+    depot_heuristic[0] = -float('inf')
+
+    # Concatenate the depot heuristic with the heuristic values for the other edges
+    heuristic_values = torch.cat((depot_heuristic.unsqueeze(0), heuristic_values), dim=0)
+    
+    return heuristic_values
+```

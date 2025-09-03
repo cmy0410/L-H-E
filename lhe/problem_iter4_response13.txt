@@ -1,0 +1,39 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """
+    Improved heuristics function for CVRP that takes into account the demand of the nodes.
+    The function computes a heuristic score for each edge by considering the distance and the potential impact
+    of adding the demand of the neighboring node to the current node's demand.
+    
+    Args:
+    - distance_matrix (torch.Tensor): Distance matrix of shape (n, n) where n is the number of nodes.
+    - demands (torch.Tensor): Demand vector of shape (n) where the depot node is indexed by 0.
+    
+    Returns:
+    - torch.Tensor: Heuristic score matrix of shape (n, n).
+    """
+    # Assume demands are normalized by the total vehicle capacity
+    num_vehicles = demands[0]
+    demands = demands / num_vehicles
+
+    # Calculate the maximum demand that can be carried by a single vehicle
+    max_individual_demand = demands.max()
+
+    # Create an attention matrix where each entry represents the attentional bias for that edge
+    attention_matrix = torch.zeros_like(distance_matrix)
+
+    # Compute the attentional bias for each edge based on the demand of the neighboring node
+    for i in range(1, demands.shape[0]):
+        for j in range(i, demands.shape[0]):
+            # Calculate attentional bias: higher demand of neighboring node makes the edge less promising
+            attention_bias = demands[j] / (1 + max_individual_demand * (i != j))
+            attention_matrix[i, j] = -attention_bias
+            attention_matrix[j, i] = -attention_bias
+
+    # Combine the distance matrix with the attention matrix to get the heuristic score
+    heuristic_scores = distance_matrix + attention_matrix
+
+    return heuristic_scores
+```

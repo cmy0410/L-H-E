@@ -1,0 +1,39 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """
+    Improved heuristics for the Capacitated Vehicle Routing Problem (CVRP).
+    This function calculates a heuristic score for each edge based on the distance
+    and the demand of the nodes involved. It emphasizes shorter distances and
+    penalizes edges that would exceed the vehicle capacity.
+    
+    Args:
+    distance_matrix (torch.Tensor): A tensor representing the distance between each pair of nodes.
+    demands (torch.Tensor): A tensor representing the demand of each node, with the depot node at index 0.
+    
+    Returns:
+    torch.Tensor: A tensor of heuristic scores for each edge, favouring edges with lower distances and lower demand impacts.
+    """
+    # Ensure the demands are normalized by the total vehicle capacity
+    total_capacity = demands[0].item()
+    demands_normalized = demands / total_capacity
+    
+    # Calculate the maximum demand that can be accommodated by a vehicle
+    # This is the vehicle capacity minus the demand of the depot node
+    vehicle_capacity = total_capacity - demands_normalized[0]
+    
+    # Initialize the heuristic scores matrix with zeros
+    heuristic_scores = torch.zeros_like(distance_matrix)
+    
+    # Calculate the score for each edge
+    #penalty = torch.where(demands_normalized[1:] > vehicle_capacity, demands_normalized[1:] - vehicle_capacity, torch.zeros_like(demands_normalized[1:]))
+    penalty = demands_normalized[1:] - vehicle_capacity
+    heuristic_scores[1:, 1:] = distance_matrix[1:, 1:] - penalty.unsqueeze(1)
+    
+    # Ensure that the depot node is not considered as a destination for any edge
+    heuristic_scores[0, 1:] = torch.inf
+    heuristic_scores[1:, 0] = torch.inf
+    
+    return heuristic_scores
+```

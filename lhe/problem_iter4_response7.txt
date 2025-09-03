@@ -1,0 +1,32 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    n = len(demands)
+    vehicle_capacity = 1
+    total_demand = torch.sum(demands)
+    epsilon = 1e-10
+
+    # Compute inverse distance matrix, avoiding division by zero
+    inverse_distance = 1 / (distance_matrix + epsilon)
+    inverse_distance = torch.clamp(inverse_distance, min=0)
+
+    # Initialize the heuristics matrix with high negative values for all pairs except the diagonal
+    heuristics_matrix = torch.full_like(distance_matrix, fill_value=-torch.inf)
+    torch.diag(heuristics_matrix).zero_()
+
+    # Normalize demands by vehicle capacity and calculate the combined demands matrix
+    normalized_demands = demands / vehicle_capacity
+    combined_demands = normalized_demands * normalized_demands[:, None]
+
+    # Identify pairs that exceed the vehicle capacity
+    exceeds_capacity = combined_demands > 1
+
+    # Penalize pairs that exceed the capacity with a large negative value
+    heuristics_matrix[exceeds_capacity] -= 1000
+
+    # Update heuristics matrix for feasible pairs with the inverse distance
+    heuristics_matrix[~exceeds_capacity] += inverse_distance[~exceeds_capacity]
+
+    return heuristics_matrix
+```

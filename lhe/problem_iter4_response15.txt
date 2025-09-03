@@ -1,0 +1,36 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """
+    Heuristics for Capacitated Vehicle Routing Problem (CVRP).
+    
+    :param distance_matrix: torch.Tensor of shape (n, n), distance matrix between nodes
+    :param demands: torch.Tensor of shape (n), customer demands normalized by vehicle capacity
+    :return: torch.Tensor of shape (n, n), heuristic values indicating edge promise
+    """
+    # Ensure that the demands are not zero, which could cause division by zero
+    demands = demands.clamp(min=1e-6)
+
+    # Calculate the maximum demand that can be served by a single vehicle
+    max_demand_per_vehicle = demands.max()
+
+    # Create an attentional bias matrix where the value for each edge (i, j)
+    # is based on the remaining capacity after serving node i
+    capacity_left = torch.zeros_like(demands)
+    capacity_left[1:] = max_demand_per_vehicle - demands[1:]
+
+    # Attentional bias is the negative of the capacity left at the next node
+    # since we want negative values for edges that would exceed capacity
+    attentional_bias = -capacity_left
+
+    # Compute the heuristic values by considering the benefit-to-cost ratio
+    # where the cost is the distance and the benefit is the remaining capacity
+    # We use the negative of the distance matrix to ensure that closer edges are preferred
+    heuristic_values = attentional_bias * torch.negative(distance_matrix)
+
+    # Ensure no negative values since we cannot have infinite demands
+    heuristic_values = heuristic_values.clamp(min=0.0)
+
+    return heuristic_values
+```

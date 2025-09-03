@@ -1,0 +1,36 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Initial bias is set to a large positive value for all edges
+    bias_matrix = torch.full_like(distance_matrix, fill_value=1000)
+
+    # Set the bias for edges from and to the depot to a neutral value
+    bias_matrix[:, 0] = 0
+    bias_matrix[0, :] = 0
+
+    # Calculate the inverse distance as a heuristic, penalizing longer distances
+    inverse_distance = 1 / (distance_matrix + 1e-6)  # Adding a small constant to avoid division by zero
+    inverse_distance = torch.clamp(inverse_distance, min=0)  # Ensure no negative values
+
+    # Demand satisfaction: calculate the penalty for not satisfying the demand
+    demand_satisfaction = torch.full_like(distance_matrix, fill_value=-1000)
+    demand_satisfaction[range(len(demands)), demands == 0] = 0
+    demand_satisfaction[demands == 0, range(len(demands))] = 0
+
+    # Incorporate the inverse distance and demand satisfaction into the bias matrix
+    bias_matrix += inverse_distance + demand_satisfaction
+
+    # Penalize overcapacity: calculate overcapacity penalty for each edge
+    overcapacity_matrix = torch.mm(demands[:, None] >= 0, demands[None, :] >= 0)
+    overcapacity_penalty = torch.where(overcapacity_matrix & (demands[:, None] + demands[None, :] > 1), -1000, 0)
+
+    # Adjust the bias matrix by the overcapacity penalty
+    bias_matrix += overcapacity_penalty
+
+    # Ensure no self-loops except for the depot
+    bias_matrix[range(len(demands)), range(len(demands))] = 0
+    bias_matrix[0, 0] = 1000  # Depot self-loop should not be chosen
+
+    return bias_matrix
+```

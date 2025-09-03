@@ -1,0 +1,50 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    """
+    Improved heuristics function for CVRP that evaluates the promise of including each edge in a solution.
+    Uses vectorized operations to avoid nested loops.
+    
+    Parameters:
+    - distance_matrix: torch.Tensor of shape (n, n), where n is the number of nodes.
+      Represents the distances between each pair of nodes.
+    - demands: torch.Tensor of shape (n,), where n is the number of nodes.
+      Represents the normalized demand of each node, with the depot node indexed by 0.
+      
+    Returns:
+    - heuristic_values: torch.Tensor of shape (n, n), where n is the number of nodes.
+      Contains negative values for undesirable edges and positive values for promising ones.
+    """
+    # Get the number of nodes (excluding the depot)
+    n = demands.shape[0] - 1
+
+    # Create a tensor for the depot node demands, excluding the depot itself
+    depot_demand = demands[1:]
+
+    # Create a tensor for all other nodes demands, excluding the depot
+    all_other_demands = demands[1:]
+
+    # Calculate the maximum demand that can be accommodated by a vehicle visiting a node
+    # without exceeding its capacity (excluding the depot)
+    max_accommodation = torch.clamp(torch.sum(all_other_demands, dim=0) - depot_demand, min=0)
+
+    # Calculate the minimum possible demand after visiting a node (excluding the depot)
+    min_demand_after_visit = torch.clamp(torch.sum(all_other_demands, dim=0) - demands[1:], min=0)
+
+    # Calculate the maximum possible demand that can be accommodated after visiting a node
+    # without exceeding the vehicle capacity (excluding the depot)
+    max_demand_after_visit = torch.clamp(torch.sum(all_other_demands, dim=0) - depot_demand + demands[1:], min=0)
+
+    # Calculate the heuristic value for each edge as the difference between
+    # the minimum and maximum demand after visiting the respective node
+    heuristic_values = min_demand_after_visit - max_demand_after_visit
+
+    # Apply a positive bias to the heuristic values to favor edges with lower values
+    heuristic_values = torch.where(heuristic_values < 0, torch.tensor(-1.0, device=distance_matrix.device), heuristic_values)
+
+    # Multiply the heuristic values by the distances to penalize long distances for poor heuristic values
+    heuristic_values *= distance_matrix.sqrt()
+
+    return heuristic_values
+```

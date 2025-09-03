@@ -1,0 +1,37 @@
+```python
+import torch
+
+def heuristics_v2(distance_matrix: torch.Tensor, demands: torch.Tensor) -> torch.Tensor:
+    # Initialize the bias matrix with negative values for all edges
+    bias_matrix = -torch.ones_like(distance_matrix)
+
+    # Set the bias for edges from the depot to a neutral value since they are mandatory
+    bias_matrix[:, 0] = 0
+    bias_matrix[0, :] = 0
+
+    # Calculate the cumulative demand from the depot to each node
+    cumulative_demand = torch.cat([torch.tensor([0.]), torch.cumsum(demands, dim=0)])
+
+    # Compute the inverse distance avoiding division by zero
+    epsilon = 1e-6
+    inv_distance = 1 / (distance_matrix + epsilon)
+
+    # Iterate over all pairs (i, j) to calculate the heuristic value for each edge
+    for i in range(1, distance_matrix.shape[0]):
+        for j in range(1, distance_matrix.shape[1]):
+            if i != j:
+                # Calculate the total demand for the route i -> j
+                total_demand_ij = cumulative_demand[i] + demands[j] - cumulative_demand[0]
+
+                # Check if the total demand exceeds the capacity (normalized to 1)
+                if total_demand_ij > 1:
+                    # Penalize the edge if the total demand exceeds the capacity
+                    bias_matrix[i, j] = -1000
+                else:
+                    # Calculate a heuristic value based on the distance and demand
+                    # The heuristic favors shorter distances and lower demands
+                    heuristic_value = inv_distance[i, j] * (1 - total_demand_ij)
+                    bias_matrix[i, j] = heuristic_value
+
+    return bias_matrix
+```
